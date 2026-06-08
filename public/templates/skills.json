@@ -1,0 +1,15 @@
+{
+  "visible": true,
+  "categories": [
+    {
+      "visible": true,
+      "name": "Languages",
+      "items": ["TypeScript", "Go", "Python"]
+    },
+    {
+      "visible": true,
+      "name": "Databases",
+      "items": ["Postgres", "Redis", "ClickHouse"]
+    }
+  ]
+}

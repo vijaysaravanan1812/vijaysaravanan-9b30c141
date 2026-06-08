@@ -1,0 +1,13 @@
+{
+  "visible": true,
+  "items": [
+    {
+      "visible": true,
+      "institution": "University Name",
+      "degree": "B.Sc. in Computer Science",
+      "duration": "2018 — 2022",
+      "location": "City, Country",
+      "grade": "GPA 3.9 / 4.0"
+    }
+  ]
+}

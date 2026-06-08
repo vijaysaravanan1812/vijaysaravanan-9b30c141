@@ -186,7 +186,47 @@ page render in that order.
   trailing commas, all keys in double quotes. The overlay shows the parse
   error with line/column.
 
+### Schema-safe templates
+
+Every section ships with a ready-to-use template under `public/templates/`.
+Because they live in `public/`, they're served at the root of the dev server
+and the deployed site — open or download them directly:
+
+```
+public/templates/
+├── site-config.json
+├── profile.json
+├── about.json
+├── experience.json
+├── projects.json
+├── skills.json
+├── education.json
+├── publications.json
+├── certifications.json
+├── achievements.json
+├── contact.json
+└── _item-snippets.json   ← copy-paste a single item into an existing array
+```
+
+From a running dev server: `http://localhost:3000/templates/projects.json`
+(or `curl -O http://localhost:3000/templates/projects.json`). On the
+published site the same paths work: `/templates/projects.json`.
+
+Two ways to use them:
+
+1. **Replacing a whole section** — overwrite `src/data/<file>.json` with the
+   template and edit the values.
+2. **Adding a single item** — open `public/templates/_item-snippets.json`,
+   copy the entry whose key matches what you're adding (e.g. `projects.item`,
+   `skills.category`, `profile.social`), and append it to the matching array
+   in `src/data/<file>.json`.
+
+Every template is verified against the Zod schemas by
+`src/data/__tests__/templates.test.ts`, so a fresh copy is guaranteed to
+pass `bun run test` and the dev-time validator.
+
 ### Updating the resume PDF
+
 
 Drop the new file into `public/` and update `profile.json → resumeUrl` to its
 path (e.g. `/VijaySaravanan_Resume.pdf`).

@@ -1,0 +1,16 @@
+{
+  "visible": true,
+  "items": [
+    {
+      "visible": true,
+      "title": "Project Name",
+      "tags": ["Systems", "Open Source"],
+      "stack": ["TypeScript", "Postgres"],
+      "duration": "Jan 2026 — Mar 2026",
+      "problem": "What was broken or missing.",
+      "outcome": "What you shipped, with numbers if possible.",
+      "github": "https://github.com/your-handle/project",
+      "demo": "https://project.example.com"
+    }
+  ]
+}
