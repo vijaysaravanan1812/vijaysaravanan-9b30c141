@@ -31,6 +31,7 @@ This README is intentionally long. It is the single source of truth for:
 15. [Future expansion roadmap](#future-expansion-roadmap)
 16. [Developer onboarding](#developer-onboarding)
 17. [Tests](#tests)
+18. [Competitive Programming](#competitive-programming)
 
 ---
 
