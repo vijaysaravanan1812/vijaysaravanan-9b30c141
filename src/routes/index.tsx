@@ -11,6 +11,7 @@ import { Education } from "@/components/Education";
 import { Publications } from "@/components/Publications";
 import { Certifications } from "@/components/Certifications";
 import { Achievements } from "@/components/Achievements";
+import { CompetitiveProgramming } from "@/components/CompetitiveProgramming";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { Featured } from "@/components/Featured";
@@ -102,6 +103,7 @@ function Index() {
         <B name="Experience"><Experience /></B>
         <B name="Projects"><Projects /></B>
         <B name="Skills"><Skills /></B>
+        <B name="CompetitiveProgramming"><CompetitiveProgramming /></B>
         <B name="Stats"><Stats /></B>
         <B name="Education"><Education /></B>
         <B name="Publications"><Publications /></B>

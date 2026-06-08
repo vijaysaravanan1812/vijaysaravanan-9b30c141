@@ -412,6 +412,50 @@ export const testimonialsSchema = z.object({
 });
 
 // ──────────────────────────────────────────────────────────────
+// v2 — Competitive Programming
+//
+// Schema is intentionally permissive: every metric is optional/nullable so
+// new platforms (and new metrics on existing platforms) can be added through
+// JSON alone, with zero UI changes. The UI auto-hides any metric that is
+// null or empty.
+// ──────────────────────────────────────────────────────────────
+const cpNumOrNull = z.union([z.number(), z.null()]).optional();
+const cpStr       = z.string().optional().default("");
+
+export const competitiveProgrammingSchema = z.object({
+  schemaVersion,
+  visible,
+  title: z.string().min(1).optional().default("Competitive Programming"),
+  subtitle: z.string().optional().default(""),
+  platforms: z.array(
+    z.object({
+      visible,
+      featured: z.boolean().optional().default(false),
+      platform: z.string().min(1),
+      profileUrl: cpStr,
+      rating: cpNumOrNull,
+      rank: cpStr,
+      problemsSolved: cpNumOrNull,
+      problemsSolvedLabel: cpStr,
+      easySolved: cpNumOrNull,
+      mediumSolved: cpNumOrNull,
+      hardSolved: cpNumOrNull,
+      badges: cpNumOrNull,
+      contestAttended: cpNumOrNull,
+      globalRank: cpNumOrNull,
+      // Future-proof fields — already accepted; UI renders them when populated.
+      peakRating: cpNumOrNull,
+      maxRank: z.union([z.string(), z.number(), z.null()]).optional(),
+      countryRank: cpNumOrNull,
+      streak: cpNumOrNull,
+      lastUpdated: cpStr,
+      peakContest: cpStr,
+      peakContestRank: cpNumOrNull,
+    })
+  ),
+});
+
+// ──────────────────────────────────────────────────────────────
 // Registry
 // ──────────────────────────────────────────────────────────────
 export const dataSchemas = {
@@ -438,6 +482,7 @@ export const dataSchemas = {
   "mentoring.json": mentoringSchema,
   "media.json": mediaSchema,
   "testimonials.json": testimonialsSchema,
+  "competitive-programming.json": competitiveProgrammingSchema,
 } as const;
 
 export type DataFileName = keyof typeof dataSchemas;

@@ -31,6 +31,7 @@ This README is intentionally long. It is the single source of truth for:
 15. [Future expansion roadmap](#future-expansion-roadmap)
 16. [Developer onboarding](#developer-onboarding)
 17. [Tests](#tests)
+18. [Competitive Programming](#competitive-programming)
 
 ---
 
@@ -786,3 +787,199 @@ bunx vitest run -t "visibleOnly"
 - All sections live on a single route (`/`) — fast load, smooth scroll, hash-deep-linkable (`/#projects`).
 - Animations: Tailwind utilities + `IntersectionObserver` fade-in (`src/hooks/use-in-view.ts`).
 - The dev-time JSON validator is in `plugins/data-schema-validator.ts`.
+
+---
+
+## Competitive Programming
+
+A dedicated section for competitive-programming profiles. Like every other
+section, it is 100% JSON-driven — no UI changes needed to add a platform,
+hide one, or surface new metrics.
+
+### Data location
+
+```
+src/data/competitive-programming.json
+```
+
+Validated by `competitiveProgrammingSchema` in `src/data/schema.ts`.
+A blank, schema-valid starter file lives at
+`public/templates/competitive-programming.json`.
+
+### File shape
+
+```json
+{
+  "schemaVersion": "2.0",
+  "visible": true,
+  "title": "Competitive Programming",
+  "subtitle": "Algorithmic depth and problem-solving beyond frameworks.",
+  "platforms": [
+    {
+      "platform": "LeetCode",
+      "visible": true,
+      "featured": true,
+      "profileUrl": "https://leetcode.com/your-handle",
+      "rating": 1797,
+      "rank": "Top 10%",
+      "problemsSolved": 700,
+      "problemsSolvedLabel": "700+",
+      "easySolved": 320,
+      "mediumSolved": 310,
+      "hardSolved": 70,
+      "badges": 4,
+      "contestAttended": 18,
+      "globalRank": 28000,
+      "peakRating": 1820,
+      "maxRank": "Top 8%",
+      "countryRank": 4200,
+      "streak": 180,
+      "lastUpdated": "2026-06-08",
+      "peakContest": "Weekly Contest 438",
+      "peakContestRank": 1188
+    }
+  ]
+}
+```
+
+Every metric is **optional/nullable**. Cards auto-hide any field that is
+`null` or empty — `"problemsSolved": null` simply doesn't render a "Problems
+Solved" stat.
+
+### Adding a platform
+
+Append an entry:
+
+```json
+{
+  "platform": "Codeforces",
+  "visible": true,
+  "rating": 1500
+}
+```
+
+That's the minimum. Add more fields as you have data.
+
+### Hiding a platform
+
+Flip one flag — history is preserved:
+
+```json
+{ "platform": "AtCoder", "visible": false }
+```
+
+If every platform is hidden (or the section's own `visible` is `false`), the
+whole section *and its nav entry* auto-hide.
+
+### Supported platforms (out of the box)
+
+The starter file ships with entries for:
+
+- LeetCode
+- Codeforces
+- CodeChef
+- AtCoder
+- HackerRank
+- HackerEarth
+- GeeksforGeeks
+
+There's no allowlist — `"platform": "<anything>"` works.
+
+### Search integration
+
+Visible platforms are indexed by `<SearchPalette>` (⌘K / Ctrl+K) under the
+kind `Competitive Programming`. Selecting a hit jumps to
+`#competitive-programming` or opens `profileUrl` in a new tab.
+
+### Auto statistics
+
+`autoStats()` in `src/services/content.ts` computes from visible platforms:
+
+- `cpProblemsSolved` — sum of numeric `problemsSolved` across platforms
+- `cpHighestRating` — max numeric `rating`
+- `cpPlatformsActive` — number of visible platforms
+
+These are derived on render; never enter them manually.
+
+### Future-proof fields
+
+`peakRating`, `maxRank`, `countryRank`, `streak`, and `lastUpdated` are
+accepted by the schema today and rendered automatically when populated.
+Adding a brand-new metric is a 2-line change in
+`competitiveProgrammingSchema` plus an optional render branch in
+`src/components/CompetitiveProgramming.tsx`.
+
+### Architecture
+
+#### Current flow (JSON)
+
+```text
+<CompetitiveProgramming />
+        │
+        ▼
+   contentService  (src/services/content.ts)
+        │
+        ▼
+src/data/competitive-programming.json
+```
+
+The component only knows about `competitiveProgramming` from
+`@/services/content`. It never imports JSON, fetch, or any backend SDK.
+
+#### Future flow — public APIs
+
+Swap the JSON adapter for one that calls the public APIs of each platform,
+without changing the component:
+
+```text
+<CompetitiveProgramming />
+        │
+        ▼
+   contentService
+        │
+        ├──► LeetCode GraphQL API
+        ├──► Codeforces user.info / user.status
+        └──► CodeChef / AtCoder scrapers or APIs
+```
+
+How:
+
+1. Implement a new adapter in `src/services/content-source.ts` whose
+   `get("competitiveProgramming")` fetches each platform, normalizes the
+   payload to match `competitiveProgrammingSchema`, and runs it through the
+   same `load(...)` Zod call.
+2. Cache results (e.g. with TanStack Query or a server function) so the
+   page stays static-fast.
+3. Reassign `contentSource = httpContentSource`. UI untouched.
+
+#### Future flow — CMS
+
+```text
+<CompetitiveProgramming />
+        │
+        ▼
+   contentService
+        │
+        ▼
+   Strapi / Contentful / Sanity
+```
+
+How:
+
+1. Model a `competitive_platform` content type in the CMS with the same
+   fields as the JSON schema.
+2. In a new adapter, fetch the collection at build (or request) time,
+   shape it into `{ visible, title, subtitle, platforms }`, and validate
+   with `competitiveProgrammingSchema`.
+3. Swap `contentSource`. No component, no route, no search code changes.
+
+#### Why migrations are cheap
+
+- The component depends on **typed values from `content.ts`**, not on the
+  origin of those values.
+- Every adapter funnels payloads through the **same Zod schema**, so
+  contract drift is caught at the boundary.
+- The **`visible` flag** is preserved across all sources — the CMS just
+  becomes another way to author the same field.
+
+See `docs/adr/0004-content-abstraction.md` for the underlying decision.
