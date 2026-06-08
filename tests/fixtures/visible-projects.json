@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "2.0",
+  "visible": true,
+  "items": [
+    {
+      "visible": true,
+      "featured": true,
+      "title": "Alpha",
+      "problem": "x",
+      "outcome": "y",
+      "tags": ["a"],
+      "stack": ["ts"]
+    },
+    {
+      "visible": true,
+      "featured": false,
+      "title": "Beta",
+      "problem": "x",
+      "outcome": "y"
+    }
+  ]
+}

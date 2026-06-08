@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "2.0",
+  "visible": true,
+  "name": "Test User",
+  "role": "Engineer",
+  "label": "Hello",
+  "tagline": "Building things",
+  "summary": "A short summary.",
+  "resumeUrl": "/resume.pdf",
+  "stats": [
+    { "label": "Years", "value": "5", "visible": true },
+    { "label": "Hidden", "value": "0", "visible": false }
+  ],
+  "socials": [
+    { "type": "github",   "url": "https://github.com/x",   "visible": true },
+    { "type": "linkedin", "url": "https://linkedin.com/x", "visible": false }
+  ]
+}
