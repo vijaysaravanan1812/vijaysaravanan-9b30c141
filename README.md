@@ -89,7 +89,41 @@ bun install
 bun run dev
 ```
 
+## Tests
+
+Unit tests cover the Zod schemas in `src/data/schema.ts`, the typed loaders /
+`visibleOnly` / `isSectionRenderable` / `visibleNavSections` helpers in
+`src/services/content.ts`, and validate every real JSON file in `src/data/`.
+
+```bash
+# one-off run (CI mode)
+bun run test
+# or: bunx vitest run
+
+# watch mode — re-runs on file change
+bun run test:watch
+# or: bunx vitest
+
+# browser UI (opens http://localhost:51204/__vitest__/)
+bun run test:ui
+
+# coverage report (text + HTML in ./coverage/index.html)
+bun run test:coverage
+```
+
+Coverage uses Vitest's V8 provider. First run will prompt to install
+`@vitest/coverage-v8` — accept, or pre-install with
+`bun add -d @vitest/coverage-v8`.
+
+Run a single file or filter by name:
+
+```bash
+bunx vitest run src/data/__tests__/schema.test.ts
+bunx vitest run -t "visibleOnly"
+```
+
 ## Notes
 
 - All section anchors live on a single route (`/`) — fast load, smooth scroll, hash-deep-linkable (`/#projects`).
 - Animations use Tailwind utilities + an `IntersectionObserver` fade-in (`src/hooks/use-in-view.ts`).
+
