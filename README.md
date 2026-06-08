@@ -764,7 +764,9 @@ See [Future API migration guide](#future-api-migration-guide).
 
 ## Tests
 
-Vitest. Schemas, helpers, real JSON files, templates, migrations, and featured logic are all covered.
+Vitest + React Testing Library + jsdom. The suite protects the architectural
+rules of the portfolio (visibility, navigation, schemas, search, migrations)
+so future edits cannot silently break them.
 
 ```bash
 bun run test            # one-off (CI)
@@ -773,12 +775,68 @@ bun run test:ui         # browser UI
 bun run test:coverage   # V8 coverage → ./coverage/index.html
 ```
 
-Run a single file or filter by name:
+### Layout
+
+```
+tests/
+├── unit/         # pure functions
+├── integration/  # JSON ➜ content service ➜ UI flows
+├── schemas/      # Zod schema validation
+├── content/      # visibleOnly / featuredOnly / autoStats / loaders
+├── navigation/   # menu generation + Nav component
+├── visibility/   # site-config + per-item visibility
+├── search/       # SearchPalette indexing
+├── migrations/   # schemaVersion round-trips
+├── fixtures/     # canonical JSON inputs
+└── helpers/      # shared utilities (render, readFixture, …)
+```
+
+Tests inside `src/**/__tests__/` are still picked up; they remain as
+white-box tests next to the code they cover.
+
+### Writing tests
+
+- **Add a new schema test** — drop a JSON file in `tests/fixtures/` and assert
+  with the relevant schema from `@/data/schema`.
+- **Add a visibility test** — toggle `visible` in a fixture or in
+  `site-config.json` and assert via `isSectionRenderable()` and
+  `visibleNavSections()`.
+- **Add a Nav/section component test** — render with
+  `tests/helpers/render.tsx` and use `userEvent` for keyboard / pointer.
+- **Add a search test** — call `<SearchPalette open onOpenChange={…} />`,
+  type into the input, and assert via `document.body.textContent`.
+
+### Coverage thresholds (enforced by CI)
+
+| Metric | Min |
+| --- | --- |
+| Statements | 90 % |
+| Branches | 85 % |
+| Functions | 90 % |
+| Lines | 90 % |
+
+Configured in `vitest.config.ts`. Failing thresholds fail the run.
+
+### CI
+
+`.github/workflows/ci.yml` runs on every push and pull request:
+
+```yaml
+- bun install --frozen-lockfile
+- bun run lint
+- bun run test:coverage
+- bun run build
+```
+
+Any failure blocks the merge.
+
+### Filtering
 
 ```bash
-bunx vitest run src/data/__tests__/schema.test.ts
+bunx vitest run tests/schemas
 bunx vitest run -t "visibleOnly"
 ```
+
 
 ---
 
