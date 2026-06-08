@@ -1,0 +1,11 @@
+{
+  "visible": true,
+  "name": "",
+  "role": "Engineer",
+  "label": "Hello",
+  "tagline": "x",
+  "summary": "x",
+  "resumeUrl": "/r.pdf",
+  "stats": [{ "label": "Years", "value": "5" }],
+  "socials": [{ "type": "myspace", "url": "https://x", "visible": true }]
+}

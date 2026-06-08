@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "2.0",
+  "visible": true,
+  "items": [
+    { "visible": false, "title": "Hidden One", "problem": "x", "outcome": "y" },
+    { "visible": false, "title": "Hidden Two", "problem": "x", "outcome": "y" }
+  ]
+}
