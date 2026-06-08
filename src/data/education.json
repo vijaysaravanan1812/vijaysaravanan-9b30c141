@@ -1,0 +1,21 @@
+{
+  "visible": true,
+  "items": [
+    {
+      "visible": true,
+      "institution": "Indian Institute of Technology, Kharagpur",
+      "degree": "M.Tech, Computer Science and Engineering",
+      "duration": "2024 — 2026",
+      "location": "Kharagpur, West Bengal",
+      "grade": "CGPA 8.22 / 10"
+    },
+    {
+      "visible": true,
+      "institution": "College of Engineering, Guindy — Anna University",
+      "degree": "B.Tech, Information Technology",
+      "duration": "2019 — 2023",
+      "location": "Chennai, Tamil Nadu",
+      "grade": "CGPA 7.78 / 10"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "visible": true,
+  "items": [
+    {
+      "visible": true,
+      "title": "BLINK DB — High-Performance In-Memory Key-Value Store",
+      "tags": ["Systems", "Database"],
+      "stack": ["C++", "Linux", "epoll", "Bash", "Redis"],
+      "duration": "Jan 2025 — Mar 2025",
+      "problem": "Existing in-memory stores hide their cost behind abstraction layers. I wanted to know how close a single-threaded epoll loop in C++ could get to Redis-class throughput from scratch.",
+      "outcome": "58K SET ops/sec and 47K GET ops/sec on a single thread, sustaining 10,000+ concurrent client connections via epoll-based I/O multiplexing. Custom eviction and persistence to control memory under sustained load.",
+      "github": "",
+      "demo": ""
+    },
+    {
+      "visible": true,
+      "title": "Equitable Graph Coloring for Structured Graph Classes",
+      "tags": ["Research", "Algorithms"],
+      "stack": ["C++", "Python", "Graph Theory"],
+      "duration": "Jun 2025 — Apr 2026",
+      "problem": "Equitable coloring — partitioning vertices into color classes of nearly equal size — is NP-hard in general. The question is which structured graph families admit polynomial-time algorithms with tight chromatic bounds.",
+      "outcome": "M.Tech thesis: polynomial-time algorithms for circular-arc graphs, block graphs, and bipartite outerplanar graphs. Formal proofs deriving tight chromatic-number bounds with applications to scheduling and load balancing.",
+      "github": "",
+      "demo": ""
+    },
+    {
+      "visible": true,
+      "title": "Air Quality Monitoring — Real-Time Data Platform",
+      "tags": ["Full Stack", "Real-Time"],
+      "stack": ["React", "Docker", "REST API"],
+      "duration": "Oct 2024 — Nov 2024",
+      "problem": "Public AQI data is fragmented across endpoints and rarely shown as a live, multi-pollutant view that updates without forcing a page reload.",
+      "outcome": "Real-time AQI dashboard integrating the WAQI API across PM2.5, PM10, and other pollutants. Containerized end-to-end with Docker for consistent deploys. React frontend with API-polling for live refresh.",
+      "github": "",
+      "demo": ""
+    },
+    {
+      "visible": true,
+      "title": "BlockCart — Decentralised E-Commerce on Ethereum",
+      "tags": ["Web3", "Smart Contracts"],
+      "stack": ["Solidity", "Ethereum", "Web3"],
+      "duration": "Aug 2024 — Sep 2024",
+      "problem": "Centralised marketplaces require trust in the operator for listing integrity, payment settlement, and ownership transfer.",
+      "outcome": "Solidity contracts covering the full product lifecycle — listing, purchase, ownership transfer — with cryptographic guarantees. Deployed and validated on Ethereum testnet with simulated multi-user flows.",
+      "github": "",
+      "demo": ""
+    },
+    {
+      "visible": true,
+      "title": "Face Super-Resolution using DCGAN + SRGAN",
+      "tags": ["Deep Learning", "Computer Vision"],
+      "stack": ["Python", "TensorFlow", "Flask"],
+      "duration": "Aug 2022 — Apr 2023",
+      "problem": "Surveillance and identity verification systems break on occluded or low-resolution faces — both inpainting and upscaling must work together to preserve identity.",
+      "outcome": "Two-stage pipeline: DCGAN inpaints occluded regions, SRGAN upscales and sharpens the reconstruction. Deployed as a Flask REST API for real-time inference from web clients.",
+      "github": "",
+      "demo": ""
+    },
+    {
+      "visible": true,
+      "title": "Flight Delay Prediction Model",
+      "tags": ["ML", "Data"],
+      "stack": ["Python", "Scikit-learn", "Flask"],
+      "duration": "Aug 2022 — Dec 2022",
+      "problem": "Commercial flight delays depend on weather, route, airline, and historical signals — most simple predictors collapse on imbalanced, high-dimensional aviation data.",
+      "outcome": "Engineered features and handled class imbalance across large-scale flight records. Benchmarked multiple classifiers, deployed the best as a Flask web service exposing live delay-probability endpoints.",
+      "github": "",
+      "demo": ""
+    },
+    {
+      "visible": true,
+      "title": "Hand Gesture Controlled Robot",
+      "tags": ["Embedded", "IoT"],
+      "stack": ["Arduino", "C/C++", "RF"],
+      "duration": "Jan 2022 — May 2022",
+      "problem": "Replace a handheld controller with continuous, intuitive control of a robotic vehicle using real-time hand orientation.",
+      "outcome": "Wearable glove with accelerometer captures 3D hand tilt; Arduino processes input and drives RF link to the chassis. Validated wirelessly at an effective range of 10 metres.",
+      "github": "",
+      "demo": ""
+    }
+  ]
+}

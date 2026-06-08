@@ -1,0 +1,21 @@
+{
+  "visible": true,
+  "name": "Vijay Saravanan",
+  "role": "Backend Engineer & Distributed Systems",
+  "label": "BACKEND ENGINEER · DISTRIBUTED SYSTEMS",
+  "tagline": "\"I build systems that scale, not just ship.\"",
+  "summary": "Backend Engineer with expertise in Go, C++, and distributed systems. M.Tech CSE at IIT Kharagpur with research in graph algorithms and computational complexity. Ex-ColorTokens SDET — automated 50+ API test suites in Golang, cut manual QA effort by 40%, and protected Fortune-class clients on the XShield cybersecurity SaaS platform.",
+  "location": "Bengaluru, India",
+  "resumeUrl": "/VijaySaravanan_Resume.pdf",
+  "stats": [
+    { "label": "API Test Suites",   "value": "50+",  "visible": true },
+    { "label": "Manual QA Reduced", "value": "40%",  "visible": true },
+    { "label": "Ops/sec (BLINK DB)","value": "58K",  "visible": true },
+    { "label": "Concurrent Clients","value": "10K+", "visible": true }
+  ],
+  "socials": [
+    { "type": "github",   "url": "https://github.com/vijaysaravanan1812",          "visible": true },
+    { "type": "linkedin", "url": "https://linkedin.com/in/vijay-s-16b11a19b",      "visible": true },
+    { "type": "email",    "url": "mailto:vijaysaravanan1812@gmail.com",            "visible": true }
+  ]
+}
