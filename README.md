@@ -15,6 +15,32 @@ This README is intentionally long. It is the single source of truth for:
 
 ---
 
+## Documentation
+
+The full documentation set lives under [`docs/`](./docs/README.md). Quick links:
+
+- **Architecture** — [`docs/architecture/`](./docs/architecture/README.md) (Mermaid diagrams for current + future states)
+- **Data Model** — [`docs/data-model.md`](./docs/data-model.md) (every JSON file, every field)
+- **Content Editor Guide** — [`docs/content-editor-guide.md`](./docs/content-editor-guide.md) (for non-developers)
+- **Releases** — [`docs/releases.md`](./docs/releases.md) and [`CHANGELOG.md`](./CHANGELOG.md)
+- **Dependencies** — [`docs/dependencies.md`](./docs/dependencies.md)
+- **Design System** — [`docs/design-system.md`](./docs/design-system.md)
+- **URL Stability** — [`docs/url-policy.md`](./docs/url-policy.md)
+- **Images** — [`docs/image-management.md`](./docs/image-management.md)
+- **Archive Strategy** — [`docs/archive-strategy.md`](./docs/archive-strategy.md)
+- **Sitemap & Robots** — [`docs/sitemap-robots.md`](./docs/sitemap-robots.md)
+- **RSS Feed (planned)** — [`docs/rss-feed.md`](./docs/rss-feed.md)
+- **Future AI** — [`docs/future-ai.md`](./docs/future-ai.md)
+- **Analytics Dashboard (planned)** — [`docs/analytics-dashboard.md`](./docs/analytics-dashboard.md)
+- **Yearly Maintenance** — [`docs/yearly-maintenance.md`](./docs/yearly-maintenance.md)
+- **Licensing** — [`docs/licensing.md`](./docs/licensing.md) and [`LICENSE`](./LICENSE)
+- **Security** — [`SECURITY.md`](./SECURITY.md)
+- **JSON Schemas** — [`public/schema/`](./public/schema/README.md)
+
+---
+
+
+
 ## Table of contents
 
 1. [Stack](#stack)
