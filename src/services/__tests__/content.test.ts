@@ -114,14 +114,7 @@ describe("navigation visibility contract", () => {
     "skills",
     "competitive-programming",
     "education",
-    "publications",
-    "certifications",
     "achievements",
-    "timeline",
-    "open-source",
-    "talks",
-    "awards",
-    "blog",
     "contact",
   ];
 
