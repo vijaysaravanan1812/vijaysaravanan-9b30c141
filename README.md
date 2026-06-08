@@ -15,18 +15,49 @@ Every content file lives in `src/data/`:
 
 ```
 src/data/
-├── site-config.json    ← global section visibility + rotating role chips
+├── site-config.json    ← global section visibility, rotating roles, analyticsEnabled, resumeArchive
 ├── profile.json        ← hero name, role, summary, stats, socials
 ├── about.json          ← long-form bio + "how I work" principles
-├── experience.json     ← timeline entries
-├── projects.json       ← project cards (problem / outcome)
+├── experience.json     ← work history
+├── projects.json       ← project cards (problem / outcome) — supports "featured": true
 ├── skills.json         ← grouped skill chips
 ├── education.json
-├── publications.json
+├── publications.json   ← supports "featured": true
 ├── certifications.json
-├── achievements.json
-└── contact.json
+├── achievements.json   ← supports "featured": true
+├── contact.json
+│
+│  ── v2 additions (visible: false by default) ──
+├── timeline.json       ← career milestones (year, title, description)
+├── open-source.json    ← contribution cards
+├── talks.json          ← conference talks / workshops / lectures / webinars (supports "featured": true)
+├── awards.json         ← separate from achievements
+├── blog.json           ← external blog posts (title, date, summary, url, tags)
+├── startups.json       ← founded / co-founded ventures
+├── products.json       ← shipped products
+├── patents.json
+├── mentoring.json
+├── media.json          ← press / media coverage
+└── testimonials.json
 ```
+
+### Schema versioning
+
+All files now ship with `"schemaVersion": "2.0"` (optional). Future schema changes go through `src/data/migrate.ts` so old JSON keeps working.
+
+### What's new in v2
+
+- **Global search** — press **⌘K** / **Ctrl+K** anywhere to fuzzy-search projects, skills, publications, certifications, achievements, awards, talks, open source, and blog posts. Only `visible: true` items are indexed.
+- **Featured content** — add `"featured": true` to any project, publication, achievement, or talk to surface it in the "Featured" section at the top of the page. The Featured section auto-hides when nothing is featured.
+- **Auto stats** — counts (projects, publications, talks, etc.) are computed from visible items. Never enter them manually.
+- **Resume archive** — add entries to `site-config.json` → `resumeArchive[]` to render an optional "Resume History" subsection. Drop PDFs into `public/resumes/`.
+- **Analytics opt-in** — `"analyticsEnabled": false` by default. Flip it on and wire a provider in `src/services/analytics.ts`.
+- **Section error boundaries** — if one section's data fails to render, only that section shows a small fallback. Everything else keeps working.
+- **SEO** — per-route Open Graph + Twitter + JSON-LD (`Person`, `WebSite`) metadata, `robots.txt`, and a dynamic `/sitemap.xml` generated from your visible sections.
+- **Accessibility** — skip-to-content link, ARIA-labeled icon buttons, keyboard-navigable search.
+- **Content-source abstraction** — `src/services/content-source.ts` lets you swap the JSON adapter for a CMS / API later without touching components.
+
+
 
 ### Visibility model
 
