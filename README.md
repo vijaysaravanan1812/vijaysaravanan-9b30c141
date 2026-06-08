@@ -1,5 +1,8 @@
 # Portfolio — JSON-Driven Personal Site
 
+[![CI](https://github.com/vijaysaravanan/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/vijaysaravanan/portfolio/actions/workflows/ci.yml)
+![Coverage](https://img.shields.io/badge/coverage-enforced%20in%20CI-2ea44f)
+
 A modern, dark-themed personal portfolio built with **React 19 + TanStack Start + Vite + TypeScript + Tailwind v4**. All content lives in JSON files under `src/data/` and is validated by Zod — adding, removing, hiding, reordering, or featuring content never requires a React change.
 
 This README is intentionally long. It is the single source of truth for:
@@ -768,81 +771,236 @@ Vitest + React Testing Library + jsdom. The suite protects the architectural
 rules of the portfolio (visibility, navigation, schemas, search, migrations)
 so future edits cannot silently break them.
 
-```bash
-bun run test            # one-off (CI)
-bun run test:watch      # watch
-bun run test:ui         # browser UI
-bun run test:coverage   # V8 coverage → ./coverage/index.html
-```
-
-### Layout
+### Testing
 
 ```
 tests/
-├── unit/         # pure functions
-├── integration/  # JSON ➜ content service ➜ UI flows
-├── schemas/      # Zod schema validation
-├── content/      # visibleOnly / featuredOnly / autoStats / loaders
-├── navigation/   # menu generation + Nav component
-├── visibility/   # site-config + per-item visibility
-├── search/       # SearchPalette indexing
-├── migrations/   # schemaVersion round-trips
-├── fixtures/     # canonical JSON inputs
-└── helpers/      # shared utilities (render, readFixture, …)
+├── unit/         # pure functions — visibleOnly, featuredOnly, autoStats
+├── integration/  # JSON → content service → UI end-to-end flows
+├── schemas/      # Zod schema validation for every JSON shape
+├── content/      # content loading, filtering, and featured-item logic
+├── navigation/   # menu generation, Nav component, mobile/desktop parity
+├── visibility/   # site-config + per-item visibility → render decisions
+├── search/       # SearchPalette indexing and keyboard interaction
+├── migrations/   # schemaVersion round-trips and upgrade paths
+├── fixtures/     # canonical JSON inputs (valid, invalid, empty)
+└── helpers/      # shared utilities (render wrapper, readFixture, …)
 ```
+
+| Folder | Purpose |
+| --- | --- |
+| `unit/` | Pure utility functions with no React or DOM dependency. Fast. Deterministic. |
+| `integration/` | Multi-layer flows: raw JSON → Zod validation → content service → rendered React component. Catches breakage at the seams. |
+| `schemas/` | Every Zod schema is exercised against valid and invalid fixtures. New fields require new schema tests. |
+| `content/` | Tests `visibleOnly()`, `featuredOnly()`, `autoStats()`, and the loader helpers that decide what reaches the UI. |
+| `navigation/` | The hamburger menu, IntersectionObserver section tracking, dynamic generation from `site-config.json`, and desktop/mobile parity. |
+| `visibility/` | `isSectionRenderable()` and `visibleNavSections()` — the core contract that decides what appears on the page. |
+| `search/` | `SearchPalette` keyboard navigation, ESC-to-close, and search-index correctness (only visible items indexed). |
+| `migrations/` | `migrate.ts` — if you bump `schemaVersion`, these tests prove old data round-trips to the new shape without loss. |
+| `fixtures/` | Reusable JSON payloads. Never duplicate JSON inline in a test; import a fixture. |
+| `helpers/` | `render.tsx` wraps React Testing Library with providers. `content.ts` reads fixtures from disk. |
 
 Tests inside `src/**/__tests__/` are still picked up; they remain as
 white-box tests next to the code they cover.
 
-### Writing tests
+### Running Tests
 
-- **Add a new schema test** — drop a JSON file in `tests/fixtures/` and assert
-  with the relevant schema from `@/data/schema`.
-- **Add a visibility test** — toggle `visible` in a fixture or in
-  `site-config.json` and assert via `isSectionRenderable()` and
-  `visibleNavSections()`.
-- **Add a Nav/section component test** — render with
-  `tests/helpers/render.tsx` and use `userEvent` for keyboard / pointer.
-- **Add a search test** — call `<SearchPalette open onOpenChange={…} />`,
-  type into the input, and assert via `document.body.textContent`.
+```bash
+bun run test            # one-off run (CI mode)
+bun run test:watch      # interactive watch mode
+bun run test:coverage   # V8 coverage → coverage/index.html + lcov + text summary
+bun run test:ui         # Vitest UI in browser (http://localhost:51204/__vitest__/)
+```
 
-### Coverage thresholds (enforced by CI)
+**Expected outputs:**
 
-| Metric | Min |
+- `bun run test` — green checkmarks for all suites, exit code `0`.
+- `bun run test:coverage` — terminal table of per-file percentages + HTML report written to `coverage/index.html` + JUnit XML written to `test-results/junit.xml`.
+- `bun run test:ui` — browser UI with per-test timing, filtering, and coverage overlay.
+
+### Coverage Requirements
+
+Enforced by CI in `vitest.config.ts`:
+
+| Metric | Minimum |
 | --- | --- |
-| Statements | 40 % |
-| Branches | 20 % |
-| Functions | 30 % |
-| Lines | 40 % |
+| Statements | 90 % |
+| Branches | 85 % |
+| Functions | 90 % |
+| Lines | 90 % |
 
-Configured in `vitest.config.ts`. Failing thresholds fail the run.
+If any metric falls below its threshold, the run fails with:
 
-> **Why the thresholds are modest:** Most UI components (`Hero`, `About`, `Experience`, `Projects`, etc.) are thin presentation layers with no conditional logic; they are implicitly tested via integration tests but do not have dedicated unit tests. The thresholds are calibrated to protect the *architectural* code (content services, schema validation, navigation logic, visibility system) which is where bugs are most likely. Raise them as component-level coverage improves.
+```
+ERROR: Coverage for lines (X%) does not meet global threshold (90%)
+```
 
-### CI
+This is deliberate. Thresholds guarantee that architectural code (content services,
+schema validation, navigation logic, visibility system) remains tested as the
+codebase grows. Thin presentation components (`Hero`, `About`, `Experience`)
+are implicitly covered by integration tests; add dedicated component tests when
+they gain conditional logic.
 
-`.github/workflows/ci.yml` runs on every push and pull request:
+### CI/CD
+
+`.github/workflows/ci.yml` triggers on every `push` to any branch and every `pull_request`:
 
 ```yaml
 - bun install --frozen-lockfile
-- bun run lint
+- bun run typecheck   # TypeScript --noEmit
+- bun run lint        # ESLint
 - bun run test:coverage
-- bun run build
+- bun run build       # production build
 ```
 
-Any failure blocks the merge.
+Any step failure blocks the merge.
 
-### CI artifacts
+### Coverage Reports
 
-After every run, two artifacts are uploaded (retained for 30 days):
+**Local:**
+
+```bash
+bun run test:coverage
+open coverage/index.html
+```
+
+The HTML report shows per-file/per-line coverage. Red lines are untested; green are hit.
+
+**CI artifacts:**
+
+Download from the GitHub Actions run → **Artifacts** section:
 
 | Artifact | Path | Contents |
 | --- | --- | --- |
-| `coverage-html` | `coverage/` | Full V8 HTML coverage report (`index.html` + assets). Download and open `index.html` locally to browse per-file/per-line coverage. |
+| `coverage-html` | `coverage/` | Full V8 HTML coverage report. Open `index.html` locally. |
 | `test-results` | `test-results/` | JUnit XML (`junit.xml`) for test-result parsing in PR review tools. |
 
-Download them from the **Actions** tab → select a run → **Artifacts** section.
+Both artifacts upload with `if: always()` — they are available even when tests fail.
+Retention: **30 days**.
 
+**Inspecting coverage drops:**
+
+1. Open the latest PR → Checks tab → CI run.
+2. Download `coverage-html` artifact.
+3. Open `index.html` → navigate to the file with reduced coverage → red lines show the gap.
+4. Add a test targeting the uncovered branch or statement.
+
+**Inspecting failed tests:**
+
+1. Download `test-results` artifact.
+2. Open `junit.xml` in an XML viewer or IDE JUnit plugin.
+3. Stack traces and assertion diffs are included inline.
+
+### Navigation Regression Protection
+
+The navigation hamburger menu is generated dynamically from `site-config.json`.
+Tests verify that:
+
+- **Visible sections appear** — every section with `visible: true` and `isSectionRenderable() === true` renders a menu item.
+- **Hidden sections disappear** — toggling `visible: false` removes the item from both the menu and the page.
+- **Auto-hide logic** — a section with zero visible items is automatically excluded from the menu and page.
+- **Dynamic menu generation** — adding a new section to `site-config.json` without code changes produces a new menu item.
+- **Desktop/mobile parity** — the same `Sheet` component and `visibleNavSections()` list drive both viewports.
+
+### Schema Validation
+
+Every JSON content file is validated through Zod schemas at import time.
+
+Example — valid visibility field:
+
+```json
+{
+  "visible": true
+}
+```
+
+**Missing required fields fail CI.** The schema suite (`tests/schemas/`) asserts:
+
+- Valid fixtures parse successfully.
+- Invalid fixtures (missing required fields, wrong types, extra unknown keys) throw `ZodError`.
+- Every file in `src/data/` conforms to its schema at load time.
+
+### Migration Testing
+
+All content files declare a `schemaVersion`:
+
+```json
+{
+  "schemaVersion": "2.0"
+}
+```
+
+If you bump the version and add a migration in `src/data/migrate.ts`, the
+migration test suite proves:
+
+- `v1.0` data upgrades to `v2.0` with all fields preserved.
+- `v2.0` data round-trips through the identity path unchanged.
+- No data is lost during migration.
+
+This is critical for long-term maintenance: you can evolve schemas without
+breaking existing content.
+
+### How to Add a New Section (with tests)
+
+1. **Create JSON file** — `src/data/<section>.json` with `schemaVersion`, `visible`, and items.
+2. **Create schema** — add `<section>Schema` to `src/data/schema.ts` and wire it into `dataSchemas`.
+3. **Add section config** — register the section in `src/data/site-config.json` with `id`, `label`, `visible`.
+4. **Add tests** —
+   - `tests/schemas/<section>.test.ts` — valid/invalid fixture parsing.
+   - `tests/visibility/<section>-visibility.test.ts` — `visible: true/false` behavior.
+   - `tests/navigation/<section>-menu.test.ts` — menu presence/absence.
+5. **Verify coverage** — run `bun run test:coverage` and ensure thresholds pass.
+6. **Open PR** — CI will validate the schema, the menu, and the coverage.
+
+### Future CMS/API Migration
+
+The portfolio is built on three abstraction layers that make migration trivial:
+
+```
+UI Components
+      ↓
+Content Service  (src/services/content.ts)
+      ↓
+Content Provider (src/services/content-source.ts)
+      ↓
+JSON Source      (src/data/*.json)
+```
+
+**Replacing JSON with a CMS:**
+
+1. Implement a `ContentSource` that fetches from the CMS.
+2. Validate every payload through the existing `dataSchemas` registry.
+3. Reassign `contentSource = cmsSource`.
+
+The UI never changes.
+
+**Replacing JSON with a REST API or GraphQL:**
+
+Same steps — write an adapter that maps the external shape to the internal
+schema, validate with Zod, and swap the source. The navigation, search,
+visibility, and section rendering logic remain untouched.
+
+**Replacing JSON with a database:**
+
+Write a `ContentSource` that queries the database, normalizes rows into the
+schema shapes, and passes them through `z.parse()`. The rest of the app is
+oblivious.
+
+### Architecture Stability Guarantees
+
+The following are protected by automated tests. A PR that breaks any of these
+will fail CI:
+
+| Guarantee | Protected By |
+| --- | --- |
+| **Visibility logic** | `tests/visibility/` — `visible: false` removes items; empty sections auto-hide. |
+| **Navigation generation** | `tests/navigation/` — menu items match `visibleNavSections()` exactly. |
+| **Content loading** | `tests/content/` — `visibleOnly()`, `featuredOnly()`, `autoStats()` correctness. |
+| **Search** | `tests/search/` — only visible items indexed; keyboard navigation works. |
+| **Schema validation** | `tests/schemas/` + `src/data/__tests__/` — every JSON file is valid Zod. |
+| **Migration logic** | `tests/migrations/` — `schemaVersion` upgrades are lossless. |
+
+---
 
 ### Filtering
 
