@@ -68,7 +68,372 @@ bun run start
 
 ---
 
-## Editing content
+## Hosting & Deployment Guide
+
+This portfolio is a **static website**. No backend, no database, no server-side runtime is required. All content is bundled at build time from JSON files under `src/data/`.
+
+```
+React + Vite
+       ↓
+Static Build (bun run build)
+       ↓
+dist/
+       ↓
+Hosting Provider
+```
+
+Because the output is plain HTML, CSS, and JavaScript, it can be served by any static host. The following sections document the exact steps for every common provider.
+
+---
+
+### GitHub Pages
+
+**What already works**
+
+- Static assets
+- JSON content
+- Resume downloads (`public/resumes/`)
+- SPA routing via hash navigation (all sections live on `/` with `#section` anchors)
+
+**Required configuration**
+
+```bash
+bun run build
+```
+
+Deploy the `dist/` folder to GitHub Pages.
+
+If the repository is **not** a user/organization site (`username.github.io`), set the base path in `vite.config.ts`:
+
+```ts
+import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+
+export default defineConfig({
+  vite: {
+    base: "/repository-name/",
+  },
+});
+```
+
+Without `base`, asset URLs will be root-relative and 404 on project pages.
+
+**Migration effort:** Minimal. No React code changes required.
+
+---
+
+### Vercel
+
+**What already works**
+
+- React/Vite build
+- JSON content
+- Static assets
+- Search (client-side only)
+- Navigation (client-side only)
+
+**Required configuration**
+
+| Setting | Value |
+| --- | --- |
+| Framework | Vite |
+| Build Command | `bun run build` |
+| Output Directory | `dist` |
+
+**Migration effort:** None. Connect the GitHub repository and deploy.
+
+---
+
+### Netlify
+
+**Required configuration**
+
+| Setting | Value |
+| --- | --- |
+| Build Command | `bun run build` |
+| Publish Directory | `dist` |
+
+**Migration effort:** None.
+
+---
+
+### Cloudflare Pages
+
+**Required configuration**
+
+| Setting | Value |
+| --- | --- |
+| Build Command | `bun run build` |
+| Output Directory | `dist` |
+
+**Migration effort:** None.
+
+---
+
+### AWS S3 + CloudFront
+
+**Architecture**
+
+```
+React/Vite
+     ↓
+dist/
+     ↓
+S3 Bucket (static website hosting)
+     ↓
+CloudFront Distribution (CDN + SSL)
+```
+
+**Required configuration**
+
+1. Create an S3 bucket and enable **Static website hosting**.
+2. Upload the contents of `dist/` to the bucket.
+3. Create a CloudFront distribution pointing at the S3 bucket.
+4. Set the **default root object** to `index.html`.
+5. For SPA fallback, add a CloudFront function or custom error response:
+   - 404 → `/index.html` (200 OK)
+
+**Migration effort:** Low. No application code changes.
+
+---
+
+### GoDaddy Hosting (cPanel / File Manager)
+
+**Static hosting**
+
+Upload the contents of `dist/` via **File Manager** or **FTP**.
+
+**SPA fallback (`.htaccess`)**
+
+If your plan uses Apache and you need SPA routing support, place this `.htaccess` in the root of the uploaded folder:
+
+```apache
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+```
+
+**Migration effort:** Low. No React code changes.
+
+---
+
+### Self-Hosted VPS (Nginx)
+
+**Example `nginx.conf` snippet**
+
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com;
+
+    root /var/www/portfolio/dist;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Optional: cache static assets
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}
+```
+
+**Migration effort:** Low.
+
+---
+
+### Domain Migration
+
+Moving from one domain to another requires **zero** application changes.
+
+| What | Needs changing? |
+| --- | --- |
+| React components | **No** |
+| JSON content | **No** |
+| Search logic | **No** |
+| Navigation | **No** |
+| Visibility logic | **No** |
+| DNS records | **Yes** — point A/CNAME to new host |
+| SSL certificate | **Yes** — provision for new domain |
+| Hosting provider | **Yes** — deploy `dist/` to new host |
+
+---
+
+### Future CMS Migration
+
+**Today**
+
+```
+UI Components
+      ↓
+Content Service (src/services/content.ts)
+      ↓
+Content Source (src/services/content-source.ts)
+      ↓
+JSON Files (src/data/*.json)
+```
+
+**Future**
+
+```
+UI Components
+      ↓
+Content Service (unchanged)
+      ↓
+Content Source = CMSAdapter
+      ↓
+Strapi / Directus / Sanity / Contentful
+```
+
+**What must change:**
+
+- `src/services/content-source.ts` — write a CMS adapter.
+- `src/services/content.ts` — read from `contentSource.get(...)` instead of static imports (or do it incrementally per section).
+
+**What remains unchanged:**
+
+- All React components (`src/components/*`)
+- All schemas (`src/data/schema.ts`)
+- All types (`src/data/types.ts`)
+- Navigation, search, visibility logic
+- Route definitions (`src/routes/*`)
+
+---
+
+### Future API Migration
+
+**Today**
+
+```
+ProjectsSection
+       ↓
+projects.json
+```
+
+**Future — REST**
+
+```
+ProjectsSection
+       ↓
+ContentSource adapter
+       ↓
+fetch("/api/projects")
+       ↓
+zod.parse(...)
+```
+
+**Future — GraphQL**
+
+```
+ProjectsSection
+       ↓
+ContentSource adapter
+       ↓
+graphqlClient.query(PROJECTS_QUERY)
+       ↓
+zod.parse(...)
+```
+
+**Abstraction layers already implemented:**
+
+- `ContentSource` interface (`src/services/content-source.ts`)
+- Zod schemas (`src/data/schema.ts`) — runtime validation for any payload
+- Helpers (`visibleOnly`, `featuredOnly`, `autoStats`) — pure functions, origin-agnostic
+
+**Files that change:** `src/services/content-source.ts` (new adapter), `src/services/content.ts` (read from adapter).
+
+**Files that never change:** All components, schemas, types, routes.
+
+---
+
+### Future Database Migration
+
+**Today**
+
+```
+JSON Files
+```
+
+**Future**
+
+```
+JSON
+  ↓ (one-time seed script)
+API Layer (TanStack Start server functions)
+  ↓
+ORM (Drizzle / Prisma / Mongoose)
+  ↓
+PostgreSQL / MySQL / MongoDB
+```
+
+**Expected changes:**
+
+1. Create tables mirroring the Zod schemas.
+2. Seed from existing JSON via a one-off script.
+3. Build a thin API layer (server functions or routes).
+4. Write a `dbContentSource` adapter.
+5. Swap `contentSource`.
+
+**Frontend impact:** Effectively zero. Components still call `visibleOnly(projects.items)`.
+
+---
+
+### Vendor Lock-In Analysis
+
+| Component | Vendor Locked? | Migration Difficulty |
+| --- | --- | --- |
+| React UI | **No** | Easy — React is open source and portable |
+| JSON Content | **No** | Easy — plain text, any editor, any framework |
+| Vite Build | **No** | Easy — any bundler can consume the same source |
+| Tailwind Styles | **No** | Easy — CSS is standard; tokens live in `src/styles.css` |
+| Search | **No** | Easy — client-side substring match, no external service |
+| Theme System | **No** | Easy — CSS custom properties + `localStorage` |
+| Hosting (Vercel/Netlify/etc) | **No** | Easy — `dist/` is a static folder; move it anywhere |
+
+**Goal:** No vendor lock-in. Every layer can be replaced independently without a rewrite.
+
+---
+
+### Disaster Recovery
+
+**Backups**
+
+| Strategy | How |
+| --- | --- |
+| Primary | GitHub repository |
+| Mirror | GitLab / Codeberg / Bitbucket second remote |
+| Local | External SSD or NAS with periodic `git clone --mirror` |
+| Cloud | Encrypted archive (Restic / rclone → S3 / B2 / GDrive) |
+| Cold | Annual zip of `src/data/` + `public/resumes/` to long-term storage |
+
+**Recovery process**
+
+1. Clone repository from any mirror.
+2. `bun install && bun run build`
+3. Deploy `dist/` to the new host.
+
+The entire site is reconstructible from git in under five minutes.
+
+---
+
+### Deployment Checklist
+
+Before every deployment:
+
+- [ ] Tests passing (`bun run test`)
+- [ ] Coverage passing (`bun run test:coverage`)
+- [ ] Build passing (`bun run build`)
+- [ ] JSON validation passing (build fails automatically on invalid JSON)
+- [ ] Navigation validation passing (menu items match `visibleNavSections()`)
+
+---
+
+
 
 Every content file lives in `src/data/`:
 
