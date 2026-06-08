@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   projects, publications, certifications, achievements, talks, openSource, blog, skills, awards,
+  competitiveProgramming,
   visibleOnly,
 } from "@/services/content";
 import { Search, X } from "lucide-react";
@@ -92,6 +93,22 @@ function buildIndex(): Hit[] {
         title: s,
         detail: cat.name,
         anchor: "#skills",
+      });
+    }
+  }
+  if (competitiveProgramming.visible) {
+    for (const p of visibleOnly(competitiveProgramming.platforms)) {
+      const detail = [
+        p.rating != null ? `Rating ${p.rating}` : null,
+        p.rank || null,
+        p.problemsSolvedLabel || (p.problemsSolved != null ? `${p.problemsSolved} solved` : null),
+      ].filter(Boolean).join(" · ");
+      items.push({
+        kind: "Competitive Programming",
+        title: p.platform,
+        detail,
+        anchor: "#competitive-programming",
+        url: p.profileUrl || undefined,
       });
     }
   }

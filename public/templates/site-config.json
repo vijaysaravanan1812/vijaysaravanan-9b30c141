@@ -15,6 +15,7 @@
     { "id": "experience",     "label": "Experience",     "visible": true  },
     { "id": "projects",       "label": "Projects",       "visible": true  },
     { "id": "skills",         "label": "Skills",         "visible": true  },
+    { "id": "competitive-programming", "label": "Competitive Programming", "visible": true  },
     { "id": "education",      "label": "Education",      "visible": true  },
     { "id": "publications",   "label": "Publications",   "visible": true  },
     { "id": "certifications", "label": "Certifications", "visible": true  },

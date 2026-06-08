@@ -119,6 +119,8 @@ function hasItems(id: string): boolean {
     case "experience":     return experience.visible    && visibleOnly(experience.items).length    > 0;
     case "projects":       return projects.visible      && visibleOnly(projects.items).length      > 0;
     case "skills":         return skills.visible        && visibleOnly(skills.categories).length   > 0;
+    case "competitive-programming":
+                           return competitiveProgramming.visible && visibleOnly(competitiveProgramming.platforms).length > 0;
     case "education":      return education.visible     && visibleOnly(education.items).length     > 0;
     case "publications":   return publications.visible  && visibleOnly(publications.items).length  > 0;
     case "certifications": return certifications.visible && visibleOnly(certifications.items).length > 0;
@@ -151,6 +153,15 @@ export function visibleNavSections() {
 
 /** Automatic counts — never enter these manually. */
 export function autoStats() {
+  const cpPlatforms = visibleOnly(competitiveProgramming.platforms);
+  const cpProblems = cpPlatforms.reduce(
+    (sum, p) => sum + (typeof p.problemsSolved === "number" ? p.problemsSolved : 0),
+    0
+  );
+  const cpHighestRating = cpPlatforms.reduce(
+    (max, p) => (typeof p.rating === "number" && p.rating > max ? p.rating : max),
+    0
+  );
   return {
     projects:        visibleOnly(projects.items).length,
     publications:    visibleOnly(publications.items).length,
@@ -160,7 +171,10 @@ export function autoStats() {
     openSource:      visibleOnly(openSource.items).length,
     achievements:    visibleOnly(achievements.items).length,
     patents:         visibleOnly(patents.items).length,
+    cpProblemsSolved: cpProblems,
+    cpHighestRating:  cpHighestRating,
+    cpPlatformsActive: cpPlatforms.length,
   };
 }
 
-export type { SectionConfig, ResumeArchive, Project, ExperienceItem, SkillCategory, EducationItem, Publication, Certification, Achievement, ContactLink, Social, Stat, Profile, About, Experience, Projects, Skills, Education, Publications, Certifications, Achievements, Contact, SiteConfig, Timeline, TimelineItem, OpenSource, OpenSourceItem, Talks, Talk, Awards, Award, Blog, BlogPost, Startups, Startup, Products, Product, Patents, Patent, Mentoring, MentoringItem, Media, MediaItem, Testimonials, Testimonial } from "@/data/types";
+export type { SectionConfig, ResumeArchive, Project, ExperienceItem, SkillCategory, EducationItem, Publication, Certification, Achievement, ContactLink, Social, Stat, Profile, About, Experience, Projects, Skills, Education, Publications, Certifications, Achievements, Contact, SiteConfig, Timeline, TimelineItem, OpenSource, OpenSourceItem, Talks, Talk, Awards, Award, Blog, BlogPost, Startups, Startup, Products, Product, Patents, Patent, Mentoring, MentoringItem, Media, MediaItem, Testimonials, Testimonial, CompetitiveProgramming, CompetitivePlatform } from "@/data/types";
