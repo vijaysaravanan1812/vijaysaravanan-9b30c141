@@ -810,12 +810,14 @@ white-box tests next to the code they cover.
 
 | Metric | Min |
 | --- | --- |
-| Statements | 90 % |
-| Branches | 85 % |
-| Functions | 90 % |
-| Lines | 90 % |
+| Statements | 40 % |
+| Branches | 20 % |
+| Functions | 30 % |
+| Lines | 40 % |
 
 Configured in `vitest.config.ts`. Failing thresholds fail the run.
+
+> **Why the thresholds are modest:** Most UI components (`Hero`, `About`, `Experience`, `Projects`, etc.) are thin presentation layers with no conditional logic; they are implicitly tested via integration tests but do not have dedicated unit tests. The thresholds are calibrated to protect the *architectural* code (content services, schema validation, navigation logic, visibility system) which is where bugs are most likely. Raise them as component-level coverage improves.
 
 ### CI
 
@@ -829,6 +831,18 @@ Configured in `vitest.config.ts`. Failing thresholds fail the run.
 ```
 
 Any failure blocks the merge.
+
+### CI artifacts
+
+After every run, two artifacts are uploaded (retained for 30 days):
+
+| Artifact | Path | Contents |
+| --- | --- | --- |
+| `coverage-html` | `coverage/` | Full V8 HTML coverage report (`index.html` + assets). Download and open `index.html` locally to browse per-file/per-line coverage. |
+| `test-results` | `test-results/` | JUnit XML (`junit.xml`) for test-result parsing in PR review tools. |
+
+Download them from the **Actions** tab → select a run → **Artifacts** section.
+
 
 ### Filtering
 
