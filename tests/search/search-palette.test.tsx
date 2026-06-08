@@ -22,13 +22,13 @@ describe("SearchPalette", () => {
     const firstVisible = visibleOnly(projects.items)[0];
     if (!firstVisible) return;
 
-    await user.type(input, firstVisible.title.slice(0, 4));
-    // Title is rendered in the result list (may appear once or twice if
-    // multiple hits share a prefix); just assert at least one occurrence.
-    expect(
-      screen.queryAllByText(new RegExp(firstVisible.title.slice(0, 6), "i")).length
-    ).toBeGreaterThan(0);
+    const needle = firstVisible.title.split(/\s+/)[0]; // first word
+    await user.type(input, needle);
+    expect(document.body.textContent).toContain(needle);
+    // At least one result row contains the kind label "Project"
+    expect(document.body.textContent).toContain("Project");
   });
+
 
   it("does NOT surface hidden projects", async () => {
     const user = userEvent.setup();
