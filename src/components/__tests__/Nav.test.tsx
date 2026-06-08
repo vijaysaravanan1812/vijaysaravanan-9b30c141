@@ -1,16 +1,9 @@
-/**
- * @vitest-environment jsdom
- */
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Nav } from "@/components/Nav";
 import { visibleNavSections } from "@/services/content";
 
 describe("Nav component", () => {
-  beforeEach(() => {
-    // Reset scroll position
-    window.scrollY = 0;
-  });
 
   it("renders the hamburger menu button", () => {
     render(<Nav />);
