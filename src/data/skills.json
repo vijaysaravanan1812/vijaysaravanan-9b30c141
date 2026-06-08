@@ -1,0 +1,40 @@
+{
+  "visible": true,
+  "categories": [
+    {
+      "visible": true,
+      "name": "Languages (Proficient)",
+      "items": ["C++", "Python", "Go"]
+    },
+    {
+      "visible": true,
+      "name": "Languages (Experienced)",
+      "items": ["JavaScript / Node.js", "Java", "Shell", "Solidity", "SQL"]
+    },
+    {
+      "visible": true,
+      "name": "Frameworks & Libraries",
+      "items": ["React.js", "Node.js", "Flask", "TensorFlow"]
+    },
+    {
+      "visible": true,
+      "name": "Systems & Databases",
+      "items": ["Distributed Systems", "Redis", "epoll", "MapReduce", "REST APIs", "Microservices"]
+    },
+    {
+      "visible": true,
+      "name": "DevOps & Cloud",
+      "items": ["Docker", "Kubernetes", "Jenkins", "Git", "GitHub", "Bitbucket", "Azure DevOps"]
+    },
+    {
+      "visible": true,
+      "name": "Tools & Platforms",
+      "items": ["Postman", "JIRA", "Confluence", "Selenium", "Linux", "Bash"]
+    },
+    {
+      "visible": true,
+      "name": "Areas of Interest",
+      "items": ["Backend Engineering", "Cloud", "SaaS", "Operating Systems", "Networks", "Distributed Systems"]
+    }
+  ]
+}

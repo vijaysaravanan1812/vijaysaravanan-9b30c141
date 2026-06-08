@@ -1,0 +1,23 @@
+{
+  "visible": true,
+  "items": [
+    {
+      "visible": true,
+      "category": "Research",
+      "title": "M.Tech Thesis — Equitable Coloring for Structured Graph Classes",
+      "detail": "Polynomial-time algorithms with tight chromatic-number bounds for circular-arc, block, and bipartite outerplanar graphs."
+    },
+    {
+      "visible": true,
+      "category": "Engineering",
+      "title": "BLINK DB — 58K ops/sec single-threaded KV store",
+      "detail": "Redis-class in-memory store in C++ on epoll, sustaining 10,000+ concurrent connections."
+    },
+    {
+      "visible": true,
+      "category": "Professional",
+      "title": "40% reduction in manual QA at ColorTokens (XShield)",
+      "detail": "Authored 50+ Golang API test suites across microservices; built daily regression pipelines."
+    }
+  ]
+}

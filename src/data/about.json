@@ -1,0 +1,20 @@
+{
+  "visible": true,
+  "heading": "I build backend systems that earn their uptime.",
+  "paragraphs": [
+    "I work on the unglamorous half of software — the part that has to stay up at 3am while everything else is on fire. My focus is backend infrastructure, distributed systems, and the discipline of building services that behave predictably under load.",
+    "At ColorTokens, I owned the automation backbone for XShield, a micro-segmentation platform protecting Fortune-class enterprises. I designed Go-based API test suites across microservices, built regression pipelines, and chased down Node.js stability bugs that were costing real uptime.",
+    "On the research side, my M.Tech work at IIT Kharagpur is in graph algorithms and computational complexity — equitable coloring on circular-arc, block, and bipartite outerplanar graphs. Same instinct as the systems work: find the tight bound, prove it, ship it.",
+    "I built BLINK DB — a Redis-class in-memory KV store — from scratch in C++ with epoll-based I/O multiplexing, hitting 58K SET ops/sec on a single thread. I care about that number more than any framework."
+  ],
+  "principles": {
+    "title": "How I work",
+    "items": [
+      "Read the system before writing a line",
+      "Measure first, optimize second",
+      "Design for the failure mode, not the happy path",
+      "Prefer boring infrastructure that survives",
+      "Own the bug end-to-end, including the fix"
+    ]
+  }
+}

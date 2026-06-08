@@ -1,0 +1,21 @@
+{
+  "theme": "dark",
+  "rotatingRoles": [
+    "Backend Engineer",
+    "Distributed Systems",
+    "Platform Engineer",
+    "Research Engineer",
+    "Software Developer"
+  ],
+  "sections": [
+    { "id": "about",          "label": "About",          "visible": true },
+    { "id": "experience",     "label": "Experience",     "visible": true },
+    { "id": "projects",       "label": "Projects",       "visible": true },
+    { "id": "skills",         "label": "Skills",         "visible": true },
+    { "id": "education",      "label": "Education",      "visible": true },
+    { "id": "publications",   "label": "Publications",   "visible": true },
+    { "id": "certifications", "label": "Certifications", "visible": true },
+    { "id": "achievements",   "label": "Achievements",   "visible": true },
+    { "id": "contact",        "label": "Contact",        "visible": true }
+  ]
+}

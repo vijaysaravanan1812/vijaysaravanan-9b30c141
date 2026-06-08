@@ -1,0 +1,31 @@
+{
+  "visible": true,
+  "items": [
+    {
+      "visible": true,
+      "company": "ColorTokens Inc.",
+      "position": "Member of Technical Staff 1 — SDET",
+      "location": "Bengaluru, India",
+      "duration": "Jul 2023 — Mar 2024",
+      "highlights": [
+        "Contributed to XShield, a SaaS cybersecurity platform configuring micro-segmentation policies that prevent lateral malware propagation across enterprise servers, routers, and IoT devices for Fortune-class clients.",
+        "Designed and automated 50+ API test suites in Golang across microservices, cutting manual QA effort by 40% and improving release confidence.",
+        "Built and managed daily regression pipelines with auto-generated stakeholder reports, accelerating release validation and deployment cycles.",
+        "Identified and resolved critical Node.js vulnerabilities and stability bugs, directly improving production uptime and deployment reliability."
+      ],
+      "stack": ["Go", "Node.js", "REST APIs", "Microservices", "Jenkins", "Postman"]
+    },
+    {
+      "visible": true,
+      "company": "IIT Kharagpur",
+      "position": "Teaching Assistant — PDS Lab & PDS Theory",
+      "location": "Kharagpur, India",
+      "duration": "Aug 2025 — Apr 2026",
+      "highlights": [
+        "Mentored 50+ students in Programming, Data Structures, and Algorithms through structured office hours, problem-solving sessions, and tutorials.",
+        "Evaluated and gave detailed feedback on 50+ class test papers and lab assignments, reinforcing core algorithmic principles."
+      ],
+      "stack": ["C", "Data Structures", "Algorithms"]
+    }
+  ]
+}
