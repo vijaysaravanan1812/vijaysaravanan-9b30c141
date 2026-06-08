@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
 import { siteConfig, visibleNavSections } from "@/services/content";
-import { Menu, X, Moon, Sun, Search } from "lucide-react";
+import { Menu, Moon, Sun, Search } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { SearchPalette } from "./SearchPalette";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [roleIdx, setRoleIdx] = useState(0);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const { theme, toggle } = useTheme();
 
   const sections = visibleNavSections();
@@ -37,6 +45,35 @@ export function Nav() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Active section tracking via IntersectionObserver
+  useEffect(() => {
+    if (sections.length === 0) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) setActiveId(visible[0].target.id);
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.25, 0.5, 1] }
+    );
+    sections.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [sections]);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    setMenuOpen(false);
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", `#${id}`);
+    }
+  };
+
   return (
     <>
       <header
@@ -49,17 +86,7 @@ export function Nav() {
             <span key={roleIdx} className="inline-block animate-fade-in">{roles[roleIdx]}</span>
           </a>
 
-          <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
-            {sections.map((s) => (
-              <a
-                key={s.id}
-                href={`#${s.id}`}
-                className="group relative text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:outline-none"
-              >
-                {s.label}
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all group-hover:w-full" />
-              </a>
-            ))}
+          <div className="flex items-center gap-2">
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search (Ctrl/Cmd+K)"
@@ -75,44 +102,58 @@ export function Nav() {
             >
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
-            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px] shadow-emerald-400/60" aria-hidden />
-          </nav>
-
-          <div className="flex items-center gap-2 md:hidden">
+            <span
+              className="hidden md:inline-block h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px] shadow-emerald-400/60"
+              aria-hidden
+            />
             <button
-              onClick={() => setSearchOpen(true)}
-              aria-label="Search"
-              className="rounded-md border border-border p-1.5 text-muted-foreground"
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open navigation menu"
+              aria-expanded={menuOpen}
+              className="rounded-md border border-border p-1.5 text-muted-foreground hover:text-foreground hover:border-accent/50 transition"
             >
-              <Search className="h-4 w-4" />
-            </button>
-            <button className="text-foreground" onClick={() => setOpen((o) => !o)} aria-label="Toggle menu">
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              <Menu className="h-4 w-4" />
             </button>
           </div>
         </div>
+      </header>
 
-        {open && (
-          <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
-            <div className="flex flex-col px-6 py-4 gap-3 max-h-[70vh] overflow-y-auto">
-              {sections.map((s) => (
+      <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+        <SheetContent side="right" className="w-[88vw] sm:max-w-sm">
+          <SheetHeader>
+            <SheetTitle>Navigation</SheetTitle>
+            <SheetDescription className="sr-only">
+              Jump to any section of the portfolio
+            </SheetDescription>
+          </SheetHeader>
+          <nav className="mt-6 flex flex-col gap-1 overflow-y-auto max-h-[calc(100vh-8rem)]" aria-label="Primary">
+            {sections.map((s) => {
+              const isActive = activeId === s.id;
+              return (
                 <a
                   key={s.id}
                   href={`#${s.id}`}
-                  onClick={() => setOpen(false)}
-                  className="text-sm text-muted-foreground hover:text-foreground"
+                  onClick={(e) => handleNavClick(e, s.id)}
+                  aria-current={isActive ? "true" : undefined}
+                  className={`group relative rounded-md px-3 py-2.5 text-sm transition-colors ${
+                    isActive
+                      ? "bg-accent/10 text-foreground"
+                      : "text-muted-foreground hover:bg-accent/5 hover:text-foreground"
+                  }`}
                 >
+                  <span
+                    className={`absolute left-0 top-1/2 -translate-y-1/2 h-5 w-0.5 rounded-full bg-accent transition-all ${
+                      isActive ? "opacity-100" : "opacity-0 group-hover:opacity-40"
+                    }`}
+                    aria-hidden
+                  />
                   {s.label}
                 </a>
-              ))}
-              <button onClick={toggle} className="self-start mt-2 flex items-center gap-2 text-xs text-muted-foreground">
-                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                {theme === "dark" ? "Light" : "Dark"} mode
-              </button>
-            </div>
-          </div>
-        )}
-      </header>
+              );
+            })}
+          </nav>
+        </SheetContent>
+      </Sheet>
 
       <SearchPalette open={searchOpen} onOpenChange={setSearchOpen} />
     </>
