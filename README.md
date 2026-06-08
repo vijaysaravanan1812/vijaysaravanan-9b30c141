@@ -1,5 +1,8 @@
 # Portfolio — JSON-Driven Personal Site
 
+[![CI](https://github.com/vijaysaravanan/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/vijaysaravanan/portfolio/actions/workflows/ci.yml)
+![Coverage](https://img.shields.io/badge/coverage-enforced%20in%20CI-2ea44f)
+
 A modern, dark-themed personal portfolio built with **React 19 + TanStack Start + Vite + TypeScript + Tailwind v4**. All content lives in JSON files under `src/data/` and is validated by Zod — adding, removing, hiding, reordering, or featuring content never requires a React change.
 
 This README is intentionally long. It is the single source of truth for:
