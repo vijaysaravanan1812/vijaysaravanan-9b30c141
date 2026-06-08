@@ -433,7 +433,7 @@ Before every deployment:
 
 ---
 
-
+## Editing content
 
 Every content file lives in `src/data/`:
 
