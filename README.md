@@ -97,25 +97,41 @@ Because the output is plain HTML, CSS, and JavaScript, it can be served by any s
 
 **Required configuration**
 
-```bash
-bun run build
+1. If the repository is **not** a user/organization site (`username.github.io`), set the base path in `vite.config.ts`:
+
+   ```ts
+   import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+
+   export default defineConfig({
+     vite: {
+       base: "/repository-name/",
+     },
+   });
+   ```
+
+   Without `base`, asset URLs will be root-relative and 404 on project pages.
+
+2. Enable GitHub Pages in repository settings:
+   - Go to **Settings → Pages**.
+   - Set **Source** to **GitHub Actions**.
+
+3. The workflow `.github/workflows/deploy-pages.yml` runs automatically on every push to `main` (or `master`).
+
+**Manual trigger**
+
+You can also deploy on-demand from the **Actions → Deploy to GitHub Pages → Run workflow** tab.
+
+**What the workflow does**
+
 ```
-
-Deploy the `dist/` folder to GitHub Pages.
-
-If the repository is **not** a user/organization site (`username.github.io`), set the base path in `vite.config.ts`:
-
-```ts
-import { defineConfig } from "@lovable.dev/vite-tanstack-config";
-
-export default defineConfig({
-  vite: {
-    base: "/repository-name/",
-  },
-});
+git push → main
+       ↓
+GitHub Actions (ubuntu-latest)
+       ↓
+Checkout → Setup Bun → bun install → bun run build
+       ↓
+Upload dist/ → Deploy to GitHub Pages
 ```
-
-Without `base`, asset URLs will be root-relative and 404 on project pages.
 
 **Migration effort:** Minimal. No React code changes required.
 
