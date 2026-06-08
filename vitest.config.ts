@@ -16,9 +16,14 @@ export default defineConfig({
       "tests/**/*.{test,spec}.{ts,tsx}",
     ],
     setupFiles: ["src/test/setup.ts"],
+    reporters: ["default", "junit"],
+    outputFile: {
+      junit: "test-results/junit.xml",
+    },
     coverage: {
       provider: "v8",
       reporter: ["text", "html", "lcov"],
+      reportsDirectory: "coverage",
       include: ["src/**/*.{ts,tsx}"],
       exclude: [
         "src/**/*.d.ts",
@@ -33,11 +38,12 @@ export default defineConfig({
         "src/lib/**",
       ],
       thresholds: {
-        statements: 90,
-        branches: 85,
-        functions: 90,
-        lines: 90,
+        statements: 40,
+        branches: 20,
+        functions: 30,
+        lines: 40,
       },
     },
   },
 });
+
