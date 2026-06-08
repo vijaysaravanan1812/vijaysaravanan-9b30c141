@@ -36,19 +36,22 @@ export function Experience() {
                   </li>
                 ))}
               </ul>
-              {item.stack && item.stack.length > 0 && (
-                <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <span className="text-xs text-muted-foreground/70">Stack:</span>
-                  {item.stack.map((t, i) => (
-                    <span key={t} className="text-xs text-accent">
-                      {t}
-                      {i < item.stack.length - 1 && (
-                        <span className="ml-2 text-muted-foreground/40">·</span>
-                      )}
-                    </span>
-                  ))}
-                </div>
-              )}
+              {item.stack && item.stack.length > 0 && (() => {
+                const stack = item.stack;
+                return (
+                  <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span className="text-xs text-muted-foreground/70">Stack:</span>
+                    {stack.map((t, i) => (
+                      <span key={t} className="text-xs text-accent">
+                        {t}
+                        {i < stack.length - 1 && (
+                          <span className="ml-2 text-muted-foreground/40">·</span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                );
+              })()}
             </div>
           ))}
         </div>
