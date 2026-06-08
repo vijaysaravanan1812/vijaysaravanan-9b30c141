@@ -1,12 +1,10 @@
-import publications from "@/data/publications.json";
+import { publications, visibleOnly } from "@/services/content";
 import { Section } from "./Section";
 import { ExternalLink } from "lucide-react";
 
 export function Publications() {
   if (!publications.visible) return null;
-  const items = (publications.items as Array<{
-    visible: boolean; title: string; authors?: string; venue?: string; year?: number | string; doi?: string; link?: string;
-  }>).filter((p) => p.visible);
+  const items = visibleOnly(publications.items);
   if (items.length === 0) return null;
 
   return (

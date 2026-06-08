@@ -1,9 +1,9 @@
-import skills from "@/data/skills.json";
+import { skills, visibleOnly } from "@/services/content";
 import { Section } from "./Section";
 
 export function Skills() {
   if (!skills.visible) return null;
-  const cats = skills.categories.filter((c) => c.visible && c.items.length > 0);
+  const cats = visibleOnly(skills.categories).filter((c) => c.items.length > 0);
   if (cats.length === 0) return null;
 
   return (
