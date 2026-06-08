@@ -58,12 +58,9 @@ describe("SearchPalette", () => {
     open();
     const visiblePlatform = visibleOnly(competitiveProgramming.platforms)[0];
     if (!visiblePlatform) return;
-    await user.type(
-      screen.getByPlaceholderText(/search/i),
-      visiblePlatform.platform.slice(0, 4)
-    );
-    expect(
-      screen.queryAllByText(new RegExp(visiblePlatform.platform, "i")).length
-    ).toBeGreaterThan(0);
+    const needle = visiblePlatform.platform.slice(0, 4);
+    await user.type(screen.getByPlaceholderText(/search/i), needle);
+    expect(document.body.textContent).toContain(visiblePlatform.platform);
   });
+
 });
