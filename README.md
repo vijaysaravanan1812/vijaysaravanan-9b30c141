@@ -186,7 +186,11 @@ page render in that order.
   trailing commas, all keys in double quotes. The overlay shows the parse
   error with line/column.
 
-### Resume download
+### Updating the resume PDF
+
+Drop the new file into `public/` and update `profile.json → resumeUrl` to its
+path (e.g. `/VijaySaravanan_Resume.pdf`).
+
 
 
 
