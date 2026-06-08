@@ -15,7 +15,7 @@ export function Stats() {
     ["Awards", s.awards],
     ["Achievements", s.achievements],
     ["Patents", s.patents],
-  ].filter(([, n]) => n > 0) as [string, number][];
+  ].filter((e): e is [string, number] => typeof e[1] === "number" && e[1] > 0);
 
   if (entries.length === 0) return null;
 
