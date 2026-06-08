@@ -1,5 +1,8 @@
 {
+  "schemaVersion": "2.0",
   "theme": "dark",
+  "analyticsEnabled": false,
+  "resumeArchive": [],
   "rotatingRoles": [
     "Backend Engineer",
     "Distributed Systems",
@@ -8,14 +11,25 @@
     "Software Developer"
   ],
   "sections": [
-    { "id": "about",          "label": "About",          "visible": true },
-    { "id": "experience",     "label": "Experience",     "visible": true },
-    { "id": "projects",       "label": "Projects",       "visible": true },
-    { "id": "skills",         "label": "Skills",         "visible": true },
-    { "id": "education",      "label": "Education",      "visible": true },
-    { "id": "publications",   "label": "Publications",   "visible": true },
-    { "id": "certifications", "label": "Certifications", "visible": true },
-    { "id": "achievements",   "label": "Achievements",   "visible": true },
-    { "id": "contact",        "label": "Contact",        "visible": true }
+    { "id": "about",          "label": "About",          "visible": true  },
+    { "id": "experience",     "label": "Experience",     "visible": true  },
+    { "id": "projects",       "label": "Projects",       "visible": true  },
+    { "id": "skills",         "label": "Skills",         "visible": true  },
+    { "id": "education",      "label": "Education",      "visible": true  },
+    { "id": "publications",   "label": "Publications",   "visible": true  },
+    { "id": "certifications", "label": "Certifications", "visible": true  },
+    { "id": "achievements",   "label": "Achievements",   "visible": true  },
+    { "id": "timeline",       "label": "Timeline",       "visible": true  },
+    { "id": "open-source",    "label": "Open Source",    "visible": true  },
+    { "id": "talks",          "label": "Talks",          "visible": true  },
+    { "id": "awards",         "label": "Awards",         "visible": true  },
+    { "id": "blog",           "label": "Blog",           "visible": true  },
+    { "id": "startups",       "label": "Startups",       "visible": false },
+    { "id": "products",       "label": "Products",       "visible": false },
+    { "id": "patents",        "label": "Patents",        "visible": false },
+    { "id": "mentoring",      "label": "Mentoring",      "visible": false },
+    { "id": "media",          "label": "Media",          "visible": false },
+    { "id": "testimonials",   "label": "Testimonials",   "visible": false },
+    { "id": "contact",        "label": "Contact",        "visible": true  }
   ]
 }

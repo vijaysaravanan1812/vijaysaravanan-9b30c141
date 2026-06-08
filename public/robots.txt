@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vijaysaravanan.lovable.app/sitemap.xml
