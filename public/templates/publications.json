@@ -1,0 +1,14 @@
+{
+  "visible": true,
+  "items": [
+    {
+      "visible": true,
+      "title": "Paper Title",
+      "authors": "Doe, J., Smith, A.",
+      "venue": "ACM Conference on X",
+      "year": 2025,
+      "doi": "10.1234/abcd",
+      "link": "https://doi.org/10.1234/abcd"
+    }
+  ]
+}

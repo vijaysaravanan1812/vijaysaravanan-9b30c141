@@ -1,0 +1,21 @@
+{
+  "visible": true,
+  "name": "Your Name",
+  "role": "Your Role",
+  "label": "Short greeting line",
+  "tagline": "One-line tagline.",
+  "summary": "Two or three sentences for the hero summary.",
+  "location": "City, Country",
+  "resumeUrl": "/YourName_Resume.pdf",
+  "stats": [
+    { "label": "Years", "value": "5+", "visible": true },
+    { "label": "Projects", "value": "12", "visible": true }
+  ],
+  "socials": [
+    { "type": "github", "url": "https://github.com/your-handle", "visible": true },
+    { "type": "linkedin", "url": "https://linkedin.com/in/your-handle", "visible": true },
+    { "type": "email", "url": "mailto:you@example.com", "visible": true },
+    { "type": "twitter", "url": "https://twitter.com/your-handle", "visible": false },
+    { "type": "website", "url": "https://yourdomain.com", "visible": false }
+  ]
+}

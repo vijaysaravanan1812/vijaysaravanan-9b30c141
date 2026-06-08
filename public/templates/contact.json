@@ -1,0 +1,10 @@
+{
+  "visible": true,
+  "heading": "Get in touch",
+  "subheading": "Open to interesting problems and collaborations.",
+  "email": "you@example.com",
+  "links": [
+    { "label": "GitHub", "url": "https://github.com/your-handle", "visible": true },
+    { "label": "LinkedIn", "url": "https://linkedin.com/in/your-handle", "visible": true }
+  ]
+}

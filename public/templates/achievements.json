@@ -1,0 +1,11 @@
+{
+  "visible": true,
+  "items": [
+    {
+      "visible": true,
+      "category": "Award",
+      "title": "Hackathon Winner — Acme 2024",
+      "detail": "1st place out of 120 teams for project X."
+    }
+  ]
+}

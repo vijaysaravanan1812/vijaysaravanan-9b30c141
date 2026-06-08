@@ -1,0 +1,61 @@
+{
+  "_comment": "Copy any object below into the matching `items` / `categories` / `stats` / `socials` / `links` array. Every item already has the required `visible` flag.",
+  "experience.item": {
+    "visible": true,
+    "company": "Acme Corp",
+    "position": "Senior Engineer",
+    "location": "Remote",
+    "duration": "2024 — Present",
+    "highlights": ["What you did and the measurable impact."],
+    "stack": ["TypeScript", "Postgres"]
+  },
+  "projects.item": {
+    "visible": true,
+    "title": "Project Name",
+    "tags": ["Tag"],
+    "stack": ["TypeScript"],
+    "duration": "Q1 2026",
+    "problem": "What was broken.",
+    "outcome": "What you shipped.",
+    "github": "",
+    "demo": ""
+  },
+  "skills.category": {
+    "visible": true,
+    "name": "Category Name",
+    "items": ["Item A", "Item B"]
+  },
+  "education.item": {
+    "visible": true,
+    "institution": "University Name",
+    "degree": "Degree, Field",
+    "duration": "2020 — 2024",
+    "location": "City, Country",
+    "grade": ""
+  },
+  "publications.item": {
+    "visible": true,
+    "title": "Paper Title",
+    "authors": "Doe, J.",
+    "venue": "Venue",
+    "year": 2025,
+    "doi": "",
+    "link": ""
+  },
+  "certifications.item": {
+    "visible": true,
+    "certificate": "Certificate Name",
+    "organization": "Issuing Org",
+    "year": 2025
+  },
+  "achievements.item": {
+    "visible": true,
+    "category": "Award",
+    "title": "Achievement Title",
+    "detail": "Optional details."
+  },
+  "profile.stat": { "label": "Years", "value": "5+", "visible": true },
+  "profile.social": { "type": "github", "url": "https://github.com/your-handle", "visible": true },
+  "contact.link": { "label": "GitHub", "url": "https://github.com/your-handle", "visible": true },
+  "site-config.section": { "id": "section-id", "label": "Section Label", "visible": true }
+}
