@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "2.0",
+  "visible": true,
+  "title": "Competitive Programming",
+  "subtitle": "Algorithmic depth and problem-solving beyond frameworks.",
+  "platforms": [
+    {
+      "platform": "LeetCode",
+      "visible": true,
+      "featured": true,
+      "profileUrl": "",
+      "rating": 1797,
+      "rank": "Top 10%",
+      "problemsSolved": 700,
+      "problemsSolvedLabel": "700+",
+      "easySolved": null,
+      "mediumSolved": null,
+      "hardSolved": null,
+      "badges": null,
+      "contestAttended": null,
+      "globalRank": null,
+      "peakRating": null,
+      "maxRank": null,
+      "countryRank": null,
+      "streak": null,
+      "lastUpdated": "",
+      "peakContest": "Weekly Contest 438",
+      "peakContestRank": 1188
+    },
+    {
+      "platform": "CodeChef",
+      "visible": false,
+      "featured": false,
+      "profileUrl": "",
+      "rating": 1570,
+      "rank": "2★",
+      "problemsSolved": 250,
+      "problemsSolvedLabel": "250+",
+      "peakContest": "Starters 153",
+      "peakContestRank": 472
+    },
+    {
+      "platform": "Codeforces",
+      "visible": false,
+      "featured": false,
+      "profileUrl": "",
+      "rating": 969,
+      "rank": "Newbie",
+      "problemsSolved": 100,
+      "problemsSolvedLabel": "100+",
+      "peakContest": "Div 3",
+      "peakContestRank": 6677
+    },
+    {
+      "platform": "AtCoder",
+      "visible": false
+    },
+    {
+      "platform": "HackerRank",
+      "visible": false
+    },
+    {
+      "platform": "HackerEarth",
+      "visible": false
+    },
+    {
+      "platform": "GeeksforGeeks",
+      "visible": false
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "visible": false,
+  "title": "Competitive Programming",
+  "subtitle": "Algorithmic depth and problem-solving beyond frameworks.",
+  "platforms": [
+    {
+      "platform": "LeetCode",
+      "visible": false,
+      "featured": false,
+      "profileUrl": "",
+      "rating": null,
+      "rank": "",
+      "problemsSolved": null,
+      "problemsSolvedLabel": "",
+      "easySolved": null,
+      "mediumSolved": null,
+      "hardSolved": null,
+      "badges": null,
+      "contestAttended": null,
+      "globalRank": null,
+      "peakRating": null,
+      "maxRank": null,
+      "countryRank": null,
+      "streak": null,
+      "lastUpdated": "",
+      "peakContest": "",
+      "peakContestRank": null
+    }
+  ]
+}
