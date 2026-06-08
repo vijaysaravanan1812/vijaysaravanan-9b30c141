@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import profile from "@/data/profile.json";
+import { profile } from "@/services/content";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";

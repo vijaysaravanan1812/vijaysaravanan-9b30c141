@@ -1,9 +1,9 @@
-import experience from "@/data/experience.json";
+import { experience, visibleOnly } from "@/services/content";
 import { Section } from "./Section";
 
 export function Experience() {
   if (!experience.visible) return null;
-  const items = experience.items.filter((i) => i.visible);
+  const items = visibleOnly(experience.items);
   if (items.length === 0) return null;
 
   return (

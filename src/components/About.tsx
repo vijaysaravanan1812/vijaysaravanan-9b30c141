@@ -1,4 +1,4 @@
-import about from "@/data/about.json";
+import { about } from "@/services/content";
 import { Section } from "./Section";
 import { ChevronRight } from "lucide-react";
 
@@ -12,7 +12,7 @@ export function About() {
         ))}
       </div>
 
-      {about.principles?.items?.length > 0 && (
+      {about.principles && about.principles.items.length > 0 && (
         <div className="mt-10 rounded-lg border border-border bg-card/60 p-6">
           <div className="mb-4 text-sm text-foreground">
             <span className="text-accent">//</span> {about.principles.title}

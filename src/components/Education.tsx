@@ -1,9 +1,9 @@
-import education from "@/data/education.json";
+import { education, visibleOnly } from "@/services/content";
 import { Section } from "./Section";
 
 export function Education() {
   if (!education.visible) return null;
-  const items = education.items.filter((i) => i.visible);
+  const items = visibleOnly(education.items);
   if (items.length === 0) return null;
 
   return (

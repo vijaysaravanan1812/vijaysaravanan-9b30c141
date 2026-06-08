@@ -1,4 +1,4 @@
-import profile from "@/data/profile.json";
+import { profile } from "@/services/content";
 
 export function Footer() {
   return (

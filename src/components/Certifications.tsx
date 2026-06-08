@@ -1,9 +1,9 @@
-import certifications from "@/data/certifications.json";
+import { certifications, visibleOnly } from "@/services/content";
 import { Section } from "./Section";
 
 export function Certifications() {
   if (!certifications.visible) return null;
-  const items = (certifications.items as Array<{ visible: boolean; certificate: string; organization?: string; year?: string | number }>).filter((c) => c.visible);
+  const items = visibleOnly(certifications.items);
   if (items.length === 0) return null;
 
   return (

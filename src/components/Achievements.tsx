@@ -1,10 +1,10 @@
-import achievements from "@/data/achievements.json";
+import { achievements, visibleOnly } from "@/services/content";
 import { Section } from "./Section";
 import { Trophy } from "lucide-react";
 
 export function Achievements() {
   if (!achievements.visible) return null;
-  const items = achievements.items.filter((a) => a.visible);
+  const items = visibleOnly(achievements.items);
   if (items.length === 0) return null;
 
   return (

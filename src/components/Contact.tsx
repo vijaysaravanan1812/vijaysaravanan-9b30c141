@@ -1,11 +1,11 @@
 import { useState } from "react";
-import contact from "@/data/contact.json";
+import { contact, visibleOnly } from "@/services/content";
 import { Section } from "./Section";
 import { ArrowRight } from "lucide-react";
 
 export function Contact() {
   if (!contact.visible) return null;
-  const links = contact.links.filter((l) => l.visible);
+  const links = visibleOnly(contact.links);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
 

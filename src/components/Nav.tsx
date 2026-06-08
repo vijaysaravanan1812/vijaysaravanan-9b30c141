@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import siteConfig from "@/data/site-config.json";
+import { siteConfig, visibleNavSections } from "@/services/content";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 
@@ -9,7 +9,7 @@ export function Nav() {
   const [roleIdx, setRoleIdx] = useState(0);
   const { theme, toggle } = useTheme();
 
-  const sections = siteConfig.sections.filter((s) => s.visible);
+  const sections = visibleNavSections();
   const roles = siteConfig.rotatingRoles;
 
   useEffect(() => {

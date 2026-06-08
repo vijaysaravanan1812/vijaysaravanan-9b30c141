@@ -1,12 +1,13 @@
-import profile from "@/data/profile.json";
+import { profile } from "@/services/content";
+import { visibleOnly } from "@/services/content";
 import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
 
 const iconMap = { github: Github, linkedin: Linkedin, email: Mail } as const;
 
 export function Hero() {
   if (!profile.visible) return null;
-  const stats = profile.stats.filter((s) => s.visible);
-  const socials = profile.socials.filter((s) => s.visible);
+  const stats = visibleOnly(profile.stats);
+  const socials = visibleOnly(profile.socials);
 
   return (
     <section id="top" className="relative flex min-h-screen items-center overflow-hidden pt-24 pb-16">

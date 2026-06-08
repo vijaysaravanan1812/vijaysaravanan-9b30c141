@@ -1,11 +1,11 @@
 import { useState } from "react";
-import projects from "@/data/projects.json";
+import { projects, visibleOnly, type Project } from "@/services/content";
 import { Section } from "./Section";
 import { ChevronDown, ExternalLink, Github } from "lucide-react";
 
 export function Projects() {
   if (!projects.visible) return null;
-  const items = projects.items.filter((p) => p.visible);
+  const items = visibleOnly(projects.items);
   if (items.length === 0) return null;
 
   return (
@@ -19,7 +19,7 @@ export function Projects() {
   );
 }
 
-function ProjectCard({ project }: { project: typeof projects.items[number] }) {
+function ProjectCard({ project }: { project: Project }) {
   const [open, setOpen] = useState(false);
   return (
     <article className="group rounded-lg border border-border bg-card/60 p-6 transition hover:border-accent/40 hover:bg-card">
