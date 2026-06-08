@@ -67,6 +67,13 @@ describe("Nav component", () => {
     expect(screen.queryByText("Mentoring")).not.toBeInTheDocument();
     expect(screen.queryByText("Media")).not.toBeInTheDocument();
     expect(screen.queryByText("Testimonials")).not.toBeInTheDocument();
+    expect(screen.queryByText("Publications")).not.toBeInTheDocument();
+    expect(screen.queryByText("Certifications")).not.toBeInTheDocument();
+    expect(screen.queryByText("Timeline")).not.toBeInTheDocument();
+    expect(screen.queryByText("Open Source")).not.toBeInTheDocument();
+    expect(screen.queryByText("Talks")).not.toBeInTheDocument();
+    expect(screen.queryByText("Awards")).not.toBeInTheDocument();
+    expect(screen.queryByText("Blog")).not.toBeInTheDocument();
   });
 
   it("renders the expected visible sections in order", async () => {
@@ -82,14 +89,7 @@ describe("Nav component", () => {
       "Skills",
       "Competitive Programming",
       "Education",
-      "Publications",
-      "Certifications",
       "Achievements",
-      "Timeline",
-      "Open Source",
-      "Talks",
-      "Awards",
-      "Blog",
       "Contact",
     ];
 
