@@ -27,8 +27,8 @@ import achievements from "@/data/achievements.json";
 import contact from "@/data/contact.json";
 
 describe("dataSchemas registry", () => {
-  it("registers all 22 data files (11 v1 + 11 v2)", () => {
-    expect(Object.keys(dataSchemas)).toHaveLength(22);
+  it("registers all 23 data files (11 v1 + 12 v2)", () => {
+    expect(Object.keys(dataSchemas)).toHaveLength(23);
   });
 });
 
