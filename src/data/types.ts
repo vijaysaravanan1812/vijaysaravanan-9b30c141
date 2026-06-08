@@ -22,6 +22,7 @@ import {
   mentoringSchema,
   mediaSchema,
   testimonialsSchema,
+  competitiveProgrammingSchema,
 } from "./schema";
 
 // Root file types (inferred from Zod) ─────────────────────────
@@ -47,6 +48,8 @@ export type Patents        = z.infer<typeof patentsSchema>;
 export type Mentoring      = z.infer<typeof mentoringSchema>;
 export type Media          = z.infer<typeof mediaSchema>;
 export type Testimonials   = z.infer<typeof testimonialsSchema>;
+export type CompetitiveProgramming = z.infer<typeof competitiveProgrammingSchema>;
+export type CompetitivePlatform    = CompetitiveProgramming["platforms"][number];
 
 // Convenience item types ──────────────────────────────────────
 export type SectionConfig    = SiteConfig["sections"][number];

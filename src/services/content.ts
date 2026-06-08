@@ -29,6 +29,7 @@ import {
   mentoringSchema,
   mediaSchema,
   testimonialsSchema,
+  competitiveProgrammingSchema,
 } from "@/data/schema";
 
 import siteConfigRaw     from "@/data/site-config.json";
@@ -53,6 +54,7 @@ import patentsRaw        from "@/data/patents.json";
 import mentoringRaw      from "@/data/mentoring.json";
 import mediaRaw          from "@/data/media.json";
 import testimonialsRaw   from "@/data/testimonials.json";
+import competitiveProgrammingRaw from "@/data/competitive-programming.json";
 
 function load<T extends z.ZodTypeAny>(
   schema: T,
@@ -91,6 +93,11 @@ export const patents        = load(patentsSchema,        patentsRaw,        "pat
 export const mentoring      = load(mentoringSchema,      mentoringRaw,      "mentoring.json");
 export const media          = load(mediaSchema,          mediaRaw,          "media.json");
 export const testimonials   = load(testimonialsSchema,   testimonialsRaw,   "testimonials.json");
+export const competitiveProgramming = load(
+  competitiveProgrammingSchema,
+  competitiveProgrammingRaw,
+  "competitive-programming.json"
+);
 
 // ──────────────────────────────────────────────────────────────
 // Helpers
