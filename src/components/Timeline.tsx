@@ -1,5 +1,6 @@
 import { timeline, visibleOnly } from "@/services/content";
 import { Section } from "./Section";
+import { TypingText } from "./TypingText";
 
 export function Timeline() {
   if (!timeline.visible) return null;
@@ -10,22 +11,20 @@ export function Timeline() {
   });
   if (items.length === 0) return null;
 
+  const lines = items.map(
+    (t) => `[${t.year}] ${t.title}${t.description ? ` — ${t.description}` : ""}`
+  );
+
   return (
     <Section id="timeline" eyebrow="career" title="Timeline">
-      <ol className="relative border-l border-border pl-6">
-        {items.map((t, i) => (
-          <li key={i} className="mb-8 last:mb-0">
-            <span className="absolute -left-[5px] mt-1.5 h-2.5 w-2.5 rounded-full bg-accent" />
-            <div className="text-[0.7rem] tracking-[0.2em] text-accent">{t.year}</div>
-            <h3 className="mt-1 text-base font-semibold">{t.title}</h3>
-            {t.description && (
-              <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-                {t.description}
-              </p>
-            )}
-          </li>
-        ))}
-      </ol>
+      <TypingText
+        as="div"
+        variant="chevron"
+        text={lines}
+        speed={18}
+        lineDelay={250}
+        className="font-mono text-sm text-muted-foreground space-y-2 border-l border-border pl-6"
+      />
     </Section>
   );
 }

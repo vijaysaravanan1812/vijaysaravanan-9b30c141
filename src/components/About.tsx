@@ -1,6 +1,6 @@
 import { about } from "@/services/content";
 import { Section } from "./Section";
-import { ChevronRight } from "lucide-react";
+import { TypingText } from "./TypingText";
 
 export function About() {
   if (!about.visible) return null;
@@ -17,15 +17,13 @@ export function About() {
           <div className="mb-4 text-sm text-foreground">
             <span className="text-accent">//</span> {about.principles.title}
           </div>
-          <ul className="space-y-2">
-            {about.principles.items.map((p, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                <span>{p}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-3 inline-block h-4 w-2 animate-pulse bg-accent align-middle" />
+          <TypingText
+            as="div"
+            variant="chevron"
+            text={about.principles.items.slice()}
+            className="space-y-2 text-sm text-muted-foreground font-mono leading-relaxed"
+            persistCursor
+          />
         </div>
       )}
     </Section>
