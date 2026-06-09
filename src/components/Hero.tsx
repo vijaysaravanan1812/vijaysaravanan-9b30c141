@@ -1,6 +1,7 @@
 import { profile } from "@/services/content";
 import { visibleOnly } from "@/services/content";
 import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
+import { TypingText } from "./TypingText";
 
 const iconMap = { github: Github, linkedin: Linkedin, email: Mail } as const;
 
@@ -17,16 +18,28 @@ export function Hero() {
       <div className="relative mx-auto w-full max-w-5xl px-6">
         <div className="mb-6 inline-flex items-center gap-2 text-xs tracking-[0.2em] text-muted-foreground">
           <span className="h-px w-8 bg-accent" />
-          {profile.label}
+          <TypingText
+            as="span"
+            text={profile.label}
+            speed={40}
+            animateOnView={false}
+            persistCursor={false}
+          />
         </div>
 
         <h1 className="text-5xl font-bold leading-[1.05] tracking-tight md:text-7xl">
           {profile.name}
         </h1>
 
-        <p className="mt-4 text-xl italic text-accent md:text-2xl">
-          {profile.tagline}
-        </p>
+        <TypingText
+          as="p"
+          text={profile.tagline}
+          speed={45}
+          animateOnView={false}
+          persistCursor={false}
+          className="mt-4 text-xl italic text-accent md:text-2xl"
+        />
+
 
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
           {profile.summary}

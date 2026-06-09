@@ -2,6 +2,7 @@ import type { CompetitivePlatform } from "@/data/types";
 import { competitiveProgramming, visibleOnly } from "@/services/content";
 import { Section } from "./Section";
 import { ExternalLink, Code2 } from "lucide-react";
+import { TypingText } from "./TypingText";
 
 export function CompetitiveProgramming() {
   if (!competitiveProgramming.visible) return null;
@@ -15,10 +16,24 @@ export function CompetitiveProgramming() {
       title={competitiveProgramming.title || "Competitive Programming"}
     >
       {competitiveProgramming.subtitle && (
-        <p className="-mt-8 mb-10 text-sm text-muted-foreground">
+        <p className="-mt-8 mb-6 text-sm text-muted-foreground">
           {competitiveProgramming.subtitle}
         </p>
       )}
+      <TypingText
+        as="div"
+        variant="dollar"
+        text={platforms.flatMap((p) => {
+          const out: string[] = [`Loading ${p.platform} profile...`];
+          if (p.rating != null) out.push(`  ✓ Rating: ${p.rating}${p.rank ? ` (${p.rank})` : ""}`);
+          if (p.problemsSolved != null) out.push(`  ✓ ${p.problemsSolvedLabel || p.problemsSolved} problems solved`);
+          return out;
+        })}
+        speed={14}
+        lineDelay={180}
+        className="mb-8 font-mono text-xs text-muted-foreground space-y-1"
+        persistCursor={false}
+      />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {platforms.map((p) => (
           <PlatformCard key={p.platform} p={p} />

@@ -2,6 +2,12 @@
   "schemaVersion": "2.0",
   "theme": "dark",
   "analyticsEnabled": false,
+  "typingAnimation": {
+    "enabled": true,
+    "speed": 35,
+    "lineDelay": 500,
+    "showCursor": true
+  },
   "resumeArchive": [],
   "rotatingRoles": [
     "Backend Engineer",
