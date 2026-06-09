@@ -23,6 +23,9 @@ jobs:
       - name: Type check
         run: bun run typecheck
 
+      - name: Format
+        run: bun run format
+
       - name: Lint
         run: bun run lint -- --fix
 
@@ -47,4 +50,3 @@ jobs:
 
       - name: Build
         run: bun run build
-
