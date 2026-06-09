@@ -145,12 +145,13 @@ describe("TypingText", () => {
       <TypingText
         text="hi"
         speed={5}
+        lineDelay={10}
         animateOnView={false}
         persistCursor={false}
       />,
     );
     act(() => {
-      vi.advanceTimersByTime(500);
+      vi.advanceTimersByTime(2000);
     });
     expect(container.textContent).toContain("hi");
     expect(container.querySelector(".animate-pulse")).toBeNull();
