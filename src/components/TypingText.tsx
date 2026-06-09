@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { siteConfig } from "@/services/content";
 
 export type TypingVariant = "plain" | "chevron" | "dollar" | "prompt" | "info";
@@ -42,9 +42,17 @@ function prefixFor(variant: TypingVariant): string {
   }
 }
 
-function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined" || !window.matchMedia) return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function useReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setReduced(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+  return reduced;
 }
 
 /**
