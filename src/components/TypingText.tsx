@@ -168,43 +168,40 @@ export function TypingText({
 
   const Tag = as as "div";
   const showCaret = effectiveShowCursor && !reduced && (persistCursor || !done);
-  const isMulti = lines.length > 1;
+
+  // Active (currently-typing) line index. After completion, caret sits on last line.
+  const activeIdx = reduced || done
+    ? typed.length - 1
+    : (() => {
+        for (let i = 0; i < typed.length; i++) {
+          if (typed[i].length < lines[i].length) return i;
+        }
+        return typed.length - 1;
+      })();
 
   return (
     <Tag
       ref={ref as React.RefObject<HTMLDivElement>}
       className={className}
       style={style}
-      aria-label={finalText}
     >
-      {/* Visible animated text */}
       <span aria-hidden={!reduced}>
         {typed.map((seg, i) => {
-          const isLast = i === typed.length - 1;
-          const lineHasStarted = reduced || seg.length > 0 || (started && i === currentLineIndex(typed));
+          if (!reduced && i > activeIdx) return null;
           return (
             <span key={i} className="block">
-              {linePrefix && lineHasStarted && (
+              {linePrefix && (
                 <span className="text-accent select-none">{linePrefix}</span>
               )}
               <span>{seg}</span>
-              {isLast && showCaret && <Caret />}
+              {i === activeIdx && showCaret && <Caret />}
             </span>
           );
         })}
-        {!isMulti && null}
       </span>
-      {/* SR-only final text for accessibility (when animating). */}
       {!reduced && <span className="sr-only">{finalText}</span>}
     </Tag>
   );
-}
-
-function currentLineIndex(typed: string[]): number {
-  for (let i = 0; i < typed.length; i++) {
-    if (typed[i].length === 0) return i;
-  }
-  return typed.length - 1;
 }
 
 function Caret() {
