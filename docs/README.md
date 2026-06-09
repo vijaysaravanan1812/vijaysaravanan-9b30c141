@@ -25,6 +25,7 @@ Central hub for all project documentation. This portfolio is designed to be main
 ## Editing & Operations
 
 - [Content Editor Guide](./content-editor-guide.md) — for non-developers.
+- [Learning Roadmap](./learning-roadmap.md) — 5-level skill guide for future maintainers.
 - [Image Management Guide](./image-management.md)
 - [URL Stability Policy](./url-policy.md)
 - [Yearly Maintenance Guide](./yearly-maintenance.md)
