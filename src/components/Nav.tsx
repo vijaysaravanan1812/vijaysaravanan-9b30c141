@@ -31,7 +31,7 @@ export function Nav() {
   }, []);
 
   useEffect(() => {
-    const t = setInterval(() => setRoleIdx((i) => (i + 1) % roles.length), 2400);
+    const t = setInterval(() => setRoleIdx((i) => (i + 1) % roles.length), 3200);
     return () => clearInterval(t);
   }, [roles.length]);
 
