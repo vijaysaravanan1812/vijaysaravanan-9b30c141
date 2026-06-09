@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { act, cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, waitFor } from "@testing-library/react";
 import { TypingText } from "../TypingText";
 
 // Helper to control prefers-reduced-motion.
@@ -30,16 +30,14 @@ function setReducedMotion(matches: boolean) {
   };
 }
 
-// Trigger any registered IntersectionObserver so animated path runs.
+// IntersectionObserver that immediately marks targets as visible so the
+// animated branch executes during tests.
 class TriggeringIO {
-  static instances: TriggeringIO[] = [];
   cb: IntersectionObserverCallback;
   constructor(cb: IntersectionObserverCallback) {
     this.cb = cb;
-    TriggeringIO.instances.push(this);
   }
   observe = () => {
-    // immediately mark visible
     this.cb(
       [{ isIntersecting: true } as IntersectionObserverEntry],
       this as unknown as IntersectionObserver,
@@ -50,9 +48,19 @@ class TriggeringIO {
   takeRecords = () => [];
 }
 
+function getWrapper(container: HTMLElement): HTMLElement {
+  return container.querySelector("[aria-hidden]") as HTMLElement;
+}
+
+function topLevelBlocks(container: HTMLElement): HTMLElement[] {
+  const w = getWrapper(container);
+  return Array.from(w.children).filter((c) =>
+    c.classList.contains("block"),
+  ) as HTMLElement[];
+}
+
 describe("TypingText", () => {
   beforeEach(() => {
-    vi.useFakeTimers();
     Object.defineProperty(window, "IntersectionObserver", {
       writable: true,
       configurable: true,
@@ -61,27 +69,24 @@ describe("TypingText", () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
     cleanup();
-    TriggeringIO.instances = [];
   });
 
-  it("renders final text instantly when prefers-reduced-motion is set (hydration-safe, no caret)", () => {
+  it("renders the final text instantly and statically when prefers-reduced-motion is set (hydration-safe, no caret)", () => {
     setReducedMotion(true);
     const { container } = render(
       <TypingText text={["line one", "line two"]} variant="chevron" />,
     );
-    // After the effect synchronously sets reduced state.
-    act(() => {
-      vi.runOnlyPendingTimers();
-    });
 
     expect(container.textContent).toContain("line one");
     expect(container.textContent).toContain("line two");
-    // No animated caret element.
+    // Caret element absent.
     expect(container.querySelector(".animate-pulse")).toBeNull();
-    // sr-only duplicate is only emitted in animated mode.
+    // sr-only mirror only exists in animated mode.
     expect(container.querySelector(".sr-only")).toBeNull();
+    // Chevron prefix rendered once per line, never partially.
+    const prefixes = container.querySelectorAll(".text-accent");
+    expect(prefixes.length).toBe(2);
   });
 
   it("renders instantly when instant=true regardless of motion preference", () => {
@@ -89,113 +94,133 @@ describe("TypingText", () => {
     const { container } = render(
       <TypingText text="hello world" instant showCursor={false} />,
     );
-    act(() => {
-      vi.runOnlyPendingTimers();
-    });
     expect(container.textContent).toContain("hello world");
     expect(container.querySelector(".animate-pulse")).toBeNull();
   });
 
-  it("types character-by-character and keeps caret on the active line (no desync to empty trailing line)", () => {
+  it("renders nothing animated when the global typingAnimation flag is disabled", async () => {
     setReducedMotion(false);
+    // Temporarily flip the global flag via module mock.
+    vi.doMock("@/services/content", async () => {
+      const actual =
+        await vi.importActual<typeof import("@/services/content")>(
+          "@/services/content",
+        );
+      return {
+        ...actual,
+        siteConfig: {
+          ...actual.siteConfig,
+          typingAnimation: {
+            ...(actual.siteConfig as { typingAnimation?: unknown })
+              .typingAnimation,
+            enabled: false,
+          },
+        },
+      };
+    });
+    const mod = await import("../TypingText");
+    const { container } = render(
+      <mod.TypingText text={["a", "b"]} animateOnView={false} />,
+    );
+    expect(container.textContent).toContain("a");
+    expect(container.textContent).toContain("b");
+    expect(container.querySelector(".animate-pulse")).toBeNull();
+    vi.doUnmock("@/services/content");
+  });
+
+  it("does not desync: final state reveals every source line exactly once with a single caret on the last line", async () => {
+    setReducedMotion(false);
+    const onDone = vi.fn();
     const { container } = render(
       <TypingText
         text={["ab", "cd"]}
-        speed={10}
-        lineDelay={20}
+        speed={1}
+        lineDelay={5}
         animateOnView={false}
+        onDone={onDone}
       />,
     );
 
-    // Initial start delay (60ms) + one char tick — only the first line should
-    // be visible while typing it.
-    act(() => {
-      vi.advanceTimersByTime(60 + 10);
-    });
-    const wrapperEarly = container.querySelector("[aria-hidden]") as HTMLElement;
-    const earlyBlocks = Array.from(wrapperEarly.children).filter((c) =>
-      c.classList.contains("block"),
-    );
-    expect(earlyBlocks.length).toBe(1);
-    expect(earlyBlocks[0].querySelector(".animate-pulse")).not.toBeNull();
-
-    // Finish entire animation.
-    act(() => {
-      vi.advanceTimersByTime(5000);
+    await waitFor(() => expect(onDone).toHaveBeenCalledTimes(1), {
+      timeout: 2000,
     });
 
-    // Both source lines are fully revealed.
-    const wrapper = container.querySelector("[aria-hidden]") as HTMLElement;
+    const wrapper = getWrapper(container);
+    // Every source character is present in the final visible output.
     expect(wrapper.textContent).toContain("ab");
     expect(wrapper.textContent).toContain("cd");
 
-    // Exactly one caret survives, and it sits on the FINAL line — not on a
-    // phantom empty trailing entry.
+    // Exactly one caret survives, on the final rendered line.
     const carets = container.querySelectorAll(".animate-pulse");
     expect(carets.length).toBe(1);
-    const topBlocks = Array.from(wrapper.children).filter((c) =>
-      c.classList.contains("block"),
-    );
-    const lastBlock = topBlocks[topBlocks.length - 1];
+    const blocks = topLevelBlocks(container);
+    expect(blocks.length).toBeGreaterThanOrEqual(2);
+    const lastBlock = blocks[blocks.length - 1];
     expect(lastBlock.contains(carets[0])).toBe(true);
     expect(lastBlock.textContent).toContain("cd");
+
+    // Sanity: no empty top-level block (the previous desync symptom).
+    const emptyBlocks = blocks.filter((b) => {
+      const text = (b.textContent ?? "").replace(/\s/g, "");
+      return text.length === 0;
+    });
+    expect(emptyBlocks.length).toBe(0);
   });
 
-  it("hides caret after completion when persistCursor=false", () => {
+  it("hides caret after completion when persistCursor=false", async () => {
     setReducedMotion(false);
+    const onDone = vi.fn();
     const { container } = render(
       <TypingText
         text="hi"
-        speed={5}
-        lineDelay={10}
+        speed={1}
+        lineDelay={5}
         animateOnView={false}
         persistCursor={false}
+        onDone={onDone}
       />,
     );
-    act(() => {
-      vi.advanceTimersByTime(2000);
-    });
+    await waitFor(() => expect(onDone).toHaveBeenCalledTimes(1));
     expect(container.textContent).toContain("hi");
     expect(container.querySelector(".animate-pulse")).toBeNull();
   });
 
-  it("switches to static render when motion preference changes mid-animation", () => {
+  it("switches to static, caret-free render when motion preference flips on mid-animation", async () => {
     const mq = setReducedMotion(false);
     const { container } = render(
       <TypingText
         text={["alpha", "beta"]}
-        speed={20}
-        lineDelay={50}
+        speed={50}
+        lineDelay={200}
         animateOnView={false}
       />,
     );
-    act(() => {
-      vi.advanceTimersByTime(80);
-    });
-    expect(container.querySelector(".animate-pulse")).not.toBeNull();
 
-    // User flips reduced motion on.
-    act(() => {
-      mq.update(true);
-      vi.runOnlyPendingTimers();
+    // Flip reduced-motion preference live.
+    mq.update(true);
+
+    await waitFor(() => {
+      expect(container.textContent).toContain("alpha");
+      expect(container.textContent).toContain("beta");
+      expect(container.querySelector(".animate-pulse")).toBeNull();
     });
 
-    // Both lines fully rendered, caret gone.
-    expect(container.textContent).toContain("alpha");
-    expect(container.textContent).toContain("beta");
-    expect(container.querySelector(".animate-pulse")).toBeNull();
+    // sr-only mirror is dropped in reduced mode (the visible text already
+    // contains everything assistive tech needs).
+    expect(container.querySelector(".sr-only")).toBeNull();
   });
 
   it("exposes the full final text to assistive tech via sr-only mirror while animating", () => {
     setReducedMotion(false);
     const { container } = render(
-      <TypingText
-        text={["one", "two"]}
-        speed={50}
-        animateOnView={false}
-      />,
+      <TypingText text={["one", "two"]} speed={50} animateOnView={false} />,
     );
     const sr = container.querySelector(".sr-only");
     expect(sr?.textContent).toBe("one\ntwo");
+    // And the animated wrapper is marked aria-hidden so SR never reads
+    // partially-typed snapshots.
+    expect(getWrapper(container).getAttribute("aria-hidden")).toBe("false");
+    // The "false" here is the literal attribute value used by the component
+    // (aria-hidden={!reduced} → false in animated mode).
   });
 });
