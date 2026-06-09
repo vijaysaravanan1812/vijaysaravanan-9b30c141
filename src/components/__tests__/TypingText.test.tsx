@@ -107,11 +107,11 @@ describe("TypingText", () => {
       />,
     );
 
-    // initial start delay (60ms) + a few ticks into line 0
+    // Initial start delay (60ms) + one char tick — only the first line should
+    // be visible while typing it.
     act(() => {
       vi.advanceTimersByTime(60 + 10);
     });
-    // While typing line 0, only line 0 should be a top-level rendered block.
     const wrapperEarly = container.querySelector("[aria-hidden]") as HTMLElement;
     const earlyBlocks = Array.from(wrapperEarly.children).filter((c) =>
       c.classList.contains("block"),
@@ -119,26 +119,26 @@ describe("TypingText", () => {
     expect(earlyBlocks.length).toBe(1);
     expect(earlyBlocks[0].querySelector(".animate-pulse")).not.toBeNull();
 
-    // Finish entire animation
+    // Finish entire animation.
     act(() => {
       vi.advanceTimersByTime(5000);
     });
 
-    // Top-level rendered lines (direct children of the aria-hidden wrapper).
+    // Both source lines are fully revealed.
     const wrapper = container.querySelector("[aria-hidden]") as HTMLElement;
-    // eslint-disable-next-line no-console
-    console.log("HTML:", wrapper.innerHTML);
+    expect(wrapper.textContent).toContain("ab");
+    expect(wrapper.textContent).toContain("cd");
+
+    // Exactly one caret survives, and it sits on the FINAL line — not on a
+    // phantom empty trailing entry.
+    const carets = container.querySelectorAll(".animate-pulse");
+    expect(carets.length).toBe(1);
     const topBlocks = Array.from(wrapper.children).filter((c) =>
       c.classList.contains("block"),
     );
-    expect(topBlocks.length).toBe(2);
-    expect(topBlocks[topBlocks.length - 2].textContent).toContain("ab");
-    expect(topBlocks[topBlocks.length - 1].textContent).toContain("cd");
-
-    // Caret persists on the LAST line only, not on a phantom extra line.
-    const carets = container.querySelectorAll(".animate-pulse");
-    expect(carets.length).toBe(1);
-    expect(topBlocks[1].contains(carets[0])).toBe(true);
+    const lastBlock = topBlocks[topBlocks.length - 1];
+    expect(lastBlock.contains(carets[0])).toBe(true);
+    expect(lastBlock.textContent).toContain("cd");
   });
 
   it("hides caret after completion when persistCursor=false", () => {
