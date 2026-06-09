@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { siteConfig } from "@/services/content";
 
 export type TypingVariant = "plain" | "chevron" | "dollar" | "prompt" | "info";
@@ -42,9 +42,17 @@ function prefixFor(variant: TypingVariant): string {
   }
 }
 
-function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined" || !window.matchMedia) return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function useReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setReduced(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+  return reduced;
 }
 
 /**
@@ -69,20 +77,18 @@ export function TypingText({
   instant = false,
   onDone,
 }: TypingTextProps) {
+  const motionReduced = useReducedMotion();
   const cfg = siteConfig.typingAnimation;
   const enabled = cfg?.enabled ?? true;
   const effectiveSpeed = speed ?? cfg?.speed ?? 35;
   const effectiveLineDelay = lineDelay ?? cfg?.lineDelay ?? 500;
   const effectiveShowCursor = showCursor ?? cfg?.showCursor ?? true;
 
-  const lines = Array.isArray(text) ? text : [text];
-  const finalText = lines.join("\n");
+  const lines = useMemo(() => Array.isArray(text) ? text : [text], [text]);
+  const finalText = useMemo(() => lines.join("\n"), [lines]);
   const linePrefix = prefix ?? prefixFor(variant);
 
-  const reduced =
-    instant ||
-    !enabled ||
-    (typeof window !== "undefined" && prefersReducedMotion());
+  const reduced = instant || !enabled || motionReduced;
 
   const ref = useRef<HTMLElement | null>(null);
   const [started, setStarted] = useState(!animateOnView || reduced);
@@ -170,7 +176,7 @@ export function TypingText({
   const showCaret = effectiveShowCursor && !reduced && (persistCursor || !done);
 
   // Active (currently-typing) line index. After completion, caret sits on last line.
-  const activeIdx = reduced || done
+  const activeIdx = done
     ? typed.length - 1
     : (() => {
         for (let i = 0; i < typed.length; i++) {
@@ -186,18 +192,27 @@ export function TypingText({
       style={style}
     >
       <span aria-hidden={!reduced}>
-        {typed.map((seg, i) => {
-          if (!reduced && i > activeIdx) return null;
-          return (
-            <span key={i} className="block">
-              {linePrefix && (
-                <span className="text-accent select-none">{linePrefix}</span>
-              )}
-              <span>{seg}</span>
-              {i === activeIdx && showCaret && <Caret />}
-            </span>
-          );
-        })}
+        {reduced
+          ? lines.map((line, i) => (
+              <span key={i} className="block">
+                {linePrefix && (
+                  <span className="text-accent select-none">{linePrefix}</span>
+                )}
+                <span>{line}</span>
+              </span>
+            ))
+          : typed.map((seg, i) => {
+              if (i > activeIdx) return null;
+              return (
+                <span key={i} className="block">
+                  {linePrefix && (
+                    <span className="text-accent select-none">{linePrefix}</span>
+                  )}
+                  <span>{seg}</span>
+                  {i === activeIdx && showCaret && <Caret />}
+                </span>
+              );
+            })}
       </span>
       {!reduced && <span className="sr-only">{finalText}</span>}
     </Tag>
