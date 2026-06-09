@@ -3,6 +3,7 @@ import { siteConfig, visibleNavSections } from "@/services/content";
 import { Menu, Moon, Sun, Search } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { SearchPalette } from "./SearchPalette";
+import { TypingText } from "./TypingText";
 import {
   Sheet,
   SheetContent,
@@ -30,7 +31,7 @@ export function Nav() {
   }, []);
 
   useEffect(() => {
-    const t = setInterval(() => setRoleIdx((i) => (i + 1) % roles.length), 2400);
+    const t = setInterval(() => setRoleIdx((i) => (i + 1) % roles.length), 3200);
     return () => clearInterval(t);
   }, [roles.length]);
 
@@ -83,7 +84,14 @@ export function Nav() {
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <a href="#top" className="text-sm font-medium tracking-tight">
-            <span key={roleIdx} className="inline-block animate-fade-in">{roles[roleIdx]}</span>
+            <TypingText
+              key={roleIdx}
+              as="span"
+              text={roles[roleIdx]}
+              speed={70}
+              animateOnView={false}
+              persistCursor
+            />
           </a>
 
           <div className="flex items-center gap-2">
