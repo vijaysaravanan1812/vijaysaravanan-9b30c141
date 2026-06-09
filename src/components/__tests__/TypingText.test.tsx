@@ -106,13 +106,14 @@ describe("TypingText", () => {
         await vi.importActual<typeof import("@/services/content")>(
           "@/services/content",
         );
+      const cfg = actual.siteConfig as Record<string, unknown>;
       return {
         ...actual,
         siteConfig: {
-          ...actual.siteConfig,
+          ...cfg,
           typingAnimation: {
-            ...(actual.siteConfig as { typingAnimation?: unknown })
-              .typingAnimation,
+            ...((cfg.typingAnimation as Record<string, unknown> | undefined) ??
+              {}),
             enabled: false,
           },
         },
