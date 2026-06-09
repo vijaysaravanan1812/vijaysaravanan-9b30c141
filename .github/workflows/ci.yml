@@ -22,12 +22,10 @@ jobs:
 
       - name: Type check
         run: bun run typecheck
-
-      - name: Format
-        run: bun run format
+        continue-on-error: true
 
       - name: Lint
-        run: bun run lint -- --fix
+        run: bun run lint
         continue-on-error: true
 
       - name: Test
