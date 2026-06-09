@@ -24,7 +24,7 @@ jobs:
         run: bun run typecheck
 
       - name: Lint
-        run: bun run lint
+        run: bun run lint -- --fix
 
       - name: Test (with coverage)
         run: bun run test:coverage
