@@ -2,6 +2,7 @@ import type { CompetitivePlatform } from "@/data/types";
 import { competitiveProgramming, visibleOnly } from "@/services/content";
 import { Section } from "./Section";
 import { ExternalLink, Code2 } from "lucide-react";
+import { TypingText } from "./TypingText";
 
 export function CompetitiveProgramming() {
   if (!competitiveProgramming.visible) return null;
