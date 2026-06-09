@@ -3,6 +3,7 @@ import { siteConfig, visibleNavSections } from "@/services/content";
 import { Menu, Moon, Sun, Search } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { SearchPalette } from "./SearchPalette";
+import { TypingText } from "./TypingText";
 import {
   Sheet,
   SheetContent,
