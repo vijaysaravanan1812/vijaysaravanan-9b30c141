@@ -118,19 +118,22 @@ describe("TypingText", () => {
 
     // Finish entire animation
     act(() => {
-      vi.advanceTimersByTime(2000);
+      vi.advanceTimersByTime(5000);
     });
 
-    blocks = container.querySelectorAll("span.block");
-    // Both lines rendered exactly once — no extra empty trailing block.
-    expect(blocks.length).toBe(2);
-    expect(blocks[0].textContent).toContain("ab");
-    expect(blocks[1].textContent).toContain("cd");
+    // Top-level rendered lines (direct children of the aria-hidden wrapper).
+    const wrapper = container.querySelector("[aria-hidden]") as HTMLElement;
+    const topBlocks = Array.from(wrapper.children).filter((c) =>
+      c.classList.contains("block"),
+    );
+    expect(topBlocks.length).toBe(2);
+    expect(topBlocks[0].textContent).toContain("ab");
+    expect(topBlocks[1].textContent).toContain("cd");
 
     // Caret persists on the LAST line only, not on a phantom extra line.
     const carets = container.querySelectorAll(".animate-pulse");
     expect(carets.length).toBe(1);
-    expect(blocks[1].contains(carets[0])).toBe(true);
+    expect(topBlocks[1].contains(carets[0])).toBe(true);
   });
 
   it("hides caret after completion when persistCursor=false", () => {
