@@ -111,10 +111,13 @@ describe("TypingText", () => {
     act(() => {
       vi.advanceTimersByTime(60 + 10);
     });
-    // While typing line 0, only line 0 should be rendered, with caret on it.
-    let blocks = container.querySelectorAll("span.block");
-    expect(blocks.length).toBe(1);
-    expect(blocks[0].querySelector(".animate-pulse")).not.toBeNull();
+    // While typing line 0, only line 0 should be a top-level rendered block.
+    const wrapperEarly = container.querySelector("[aria-hidden]") as HTMLElement;
+    const earlyBlocks = Array.from(wrapperEarly.children).filter((c) =>
+      c.classList.contains("block"),
+    );
+    expect(earlyBlocks.length).toBe(1);
+    expect(earlyBlocks[0].querySelector(".animate-pulse")).not.toBeNull();
 
     // Finish entire animation
     act(() => {
