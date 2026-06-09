@@ -33,6 +33,7 @@ The full documentation set lives under [`docs/`](./docs/README.md). Quick links:
 - **Future AI** — [`docs/future-ai.md`](./docs/future-ai.md)
 - **Analytics Dashboard (planned)** — [`docs/analytics-dashboard.md`](./docs/analytics-dashboard.md)
 - **Yearly Maintenance** — [`docs/yearly-maintenance.md`](./docs/yearly-maintenance.md)
+- **Learning Roadmap** — [`docs/learning-roadmap.md`](./docs/learning-roadmap.md) (5-level skill guide for future maintainers)
 - **Licensing** — [`docs/licensing.md`](./docs/licensing.md) and [`LICENSE`](./LICENSE)
 - **Security** — [`SECURITY.md`](./SECURITY.md)
 - **JSON Schemas** — [`public/schema/`](./public/schema/README.md)
