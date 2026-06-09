@@ -100,7 +100,7 @@ describe("TypingText", () => {
 
   it("renders nothing animated when the global typingAnimation flag is disabled", async () => {
     setReducedMotion(false);
-    // Temporarily flip the global flag via module mock.
+    vi.resetModules();
     vi.doMock("@/services/content", async () => {
       const actual =
         await vi.importActual<typeof import("@/services/content")>(
@@ -127,6 +127,7 @@ describe("TypingText", () => {
     expect(container.textContent).toContain("b");
     expect(container.querySelector(".animate-pulse")).toBeNull();
     vi.doUnmock("@/services/content");
+    vi.resetModules();
   });
 
   it("does not desync: final state reveals every source line exactly once with a single caret on the last line", async () => {
