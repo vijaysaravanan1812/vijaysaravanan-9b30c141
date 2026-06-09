@@ -28,6 +28,12 @@ jobs:
 
       - run: bun run build
 
+      - name: Find index.html
+        run: find dist -name "index.html"
+
+      - name: List dist structure
+        run: ls -la dist/ && ls -la dist/client/ 2>/dev/null || true
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist/client
