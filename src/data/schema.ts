@@ -24,6 +24,15 @@ export const siteConfigSchema = z.object({
   schemaVersion,
   theme: z.enum(["dark", "light"]).optional(),
   analyticsEnabled: z.boolean().optional().default(false),
+  typingAnimation: z
+    .object({
+      enabled: z.boolean().optional().default(true),
+      speed: z.number().int().positive().optional().default(35),
+      lineDelay: z.number().int().nonnegative().optional().default(500),
+      showCursor: z.boolean().optional().default(true),
+    })
+    .optional()
+    .default({ enabled: true, speed: 35, lineDelay: 500, showCursor: true }),
   resumeArchive: z
     .array(
       z.object({
