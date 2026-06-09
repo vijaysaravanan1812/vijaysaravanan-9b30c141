@@ -14,7 +14,7 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
-    base: "/vijaysaravanan/",
+    base: "/vijaysaravanan-9b30c141/",
     plugins: [dataSchemaValidator()],
   },
 });
