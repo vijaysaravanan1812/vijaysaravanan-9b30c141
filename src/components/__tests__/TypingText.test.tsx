@@ -126,12 +126,14 @@ describe("TypingText", () => {
 
     // Top-level rendered lines (direct children of the aria-hidden wrapper).
     const wrapper = container.querySelector("[aria-hidden]") as HTMLElement;
+    // eslint-disable-next-line no-console
+    console.log("HTML:", wrapper.innerHTML);
     const topBlocks = Array.from(wrapper.children).filter((c) =>
       c.classList.contains("block"),
     );
     expect(topBlocks.length).toBe(2);
-    expect(topBlocks[0].textContent).toContain("ab");
-    expect(topBlocks[1].textContent).toContain("cd");
+    expect(topBlocks[topBlocks.length - 2].textContent).toContain("ab");
+    expect(topBlocks[topBlocks.length - 1].textContent).toContain("cd");
 
     // Caret persists on the LAST line only, not on a phantom extra line.
     const carets = container.querySelectorAll(".animate-pulse");
