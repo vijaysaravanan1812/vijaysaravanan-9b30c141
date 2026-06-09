@@ -219,10 +219,9 @@ describe("TypingText", () => {
     );
     const sr = container.querySelector(".sr-only");
     expect(sr?.textContent).toBe("one\ntwo");
-    // And the animated wrapper is marked aria-hidden so SR never reads
-    // partially-typed snapshots.
-    expect(getWrapper(container).getAttribute("aria-hidden")).toBe("false");
-    // The "false" here is the literal attribute value used by the component
-    // (aria-hidden={!reduced} → false in animated mode).
+    // While animating, the visual wrapper is hidden from SR so partially
+    // typed snapshots aren't announced — the sr-only mirror is the source of
+    // truth for assistive tech.
+    expect(getWrapper(container).getAttribute("aria-hidden")).toBe("true");
   });
 });
