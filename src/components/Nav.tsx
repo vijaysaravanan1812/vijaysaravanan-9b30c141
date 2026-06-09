@@ -84,7 +84,14 @@ export function Nav() {
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <a href="#top" className="text-sm font-medium tracking-tight">
-            <span key={roleIdx} className="inline-block animate-fade-in">{roles[roleIdx]}</span>
+            <TypingText
+              key={roleIdx}
+              as="span"
+              text={roles[roleIdx]}
+              speed={70}
+              animateOnView={false}
+              persistCursor
+            />
           </a>
 
           <div className="flex items-center gap-2">
