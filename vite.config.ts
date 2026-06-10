@@ -23,23 +23,27 @@ export default defineConfig({
       dir: "dist",
       publicDir: "dist/client",
     },
-  },
+    // Tell Nitro's prerenderer which URLs to render. It runs the built worker
+    // over HTTP and writes the resulting HTML into publicDir. Must include the
+    // basepath, otherwise the router doesn't match and you get [404] Not Found.
+    // (Cast: this passthrough key isn't in @lovable.dev/vite-tanstack-config's
+    // narrowed type, but it's forwarded to nitro() verbatim.)
+    prerender: {
+      crawlLinks: true,
+      routes: [BASE_PATH],
+      failOnError: false,
+    },
+  } as never,
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
     router: { basepath: BASE_PATH },
-    // Prerender the homepage (and any reachable internal links) to real .html files
-    // so static hosts (GH Pages / Netlify) have an index.html to serve.
-    // The path must include BASE_PATH so it matches the router's basepath.
     pages: [{ path: BASE_PATH }],
-    prerender: {
-      enabled: true,
-      crawlLinks: true,
-    },
   },
   vite: {
     base: BASE_PATH,
     plugins: [dataSchemaValidator()],
   },
 });
+
