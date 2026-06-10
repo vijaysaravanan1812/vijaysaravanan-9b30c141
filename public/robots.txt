@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vijaysaravanan.lovable.app/sitemap.xml
+Sitemap: https://vijaysaravanan1812.github.io/vijaysaravanan-9b30c141/sitemap.xml

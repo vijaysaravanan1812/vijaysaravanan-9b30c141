@@ -27,15 +27,18 @@ if (!js) {
 }
 
 const cssTag = css ? `\n  <link rel="stylesheet" href="${base}assets/${css}"/>` : "";
-// Note: Do NOT add <base href>. JS module dynamic import() ignores <base href>,
-// so we rely on Vite's `base` config to rewrite all asset/import URLs to absolute
-// paths under the subpath. All href/src below are already absolute via `${base}`.
+// Load the entry as both a modulepreload (fallback) and a module script.
+// Some privacy-focused browsers/extensions strip a lone <script type="module">
+// tag; the modulepreload link ensures the bundle is fetched and warmed.
+// Note: We keep type="module" because Vite outputs ESM with import statements —
+// a plain <script defer> would throw a syntax error on the first `import`.
 const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Vijay Saravanan</title>${cssTag}
+  <link rel="modulepreload" href="${base}assets/${js}"/>
   <script type="module" src="${base}assets/${js}"></script>
 </head>
 <body><div id="root"></div></body>
