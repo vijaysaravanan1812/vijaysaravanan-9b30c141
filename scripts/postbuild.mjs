@@ -30,6 +30,7 @@ const cssTag = css ? `\n  <link rel="stylesheet" href="${base}assets/${css}"/>` 
 const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
+  <base href="${base}"/>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Vijay Saravanan</title>${cssTag}
