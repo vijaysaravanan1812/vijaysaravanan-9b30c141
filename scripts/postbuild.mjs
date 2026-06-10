@@ -27,10 +27,12 @@ if (!js) {
 }
 
 const cssTag = css ? `\n  <link rel="stylesheet" href="${base}assets/${css}"/>` : "";
+// Note: Do NOT add <base href>. JS module dynamic import() ignores <base href>,
+// so we rely on Vite's `base` config to rewrite all asset/import URLs to absolute
+// paths under the subpath. All href/src below are already absolute via `${base}`.
 const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
-  <base href="${base}"/>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Vijay Saravanan</title>${cssTag}
