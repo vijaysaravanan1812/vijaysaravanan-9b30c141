@@ -29,10 +29,10 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
     router: { basepath: BASE_PATH },
-    client: { base: BASE_PATH },
     // Prerender the homepage (and any reachable internal links) to real .html files
     // so static hosts (GH Pages / Netlify) have an index.html to serve.
-    pages: [{ path: "/" }],
+    // The path must include BASE_PATH so it matches the router's basepath.
+    pages: [{ path: BASE_PATH }],
     prerender: {
       enabled: true,
       crawlLinks: true,
