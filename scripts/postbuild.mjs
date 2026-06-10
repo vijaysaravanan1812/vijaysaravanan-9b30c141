@@ -27,23 +27,37 @@ if (!js) {
 }
 
 const cssTag = css ? `\n  <link rel="stylesheet" href="${base}assets/${css}"/>` : "";
-// Load the entry as both a modulepreload (fallback) and a module script.
-// Some privacy-focused browsers/extensions strip a lone <script type="module">
-// tag; the modulepreload link ensures the bundle is fetched and warmed.
-// Note: We keep type="module" because Vite outputs ESM with import statements —
-// a plain <script defer> would throw a syntax error on the first `import`.
+
+// TanStack Start's client entry unconditionally calls hydrate(router), which
+// throws "Invariant failed: Expected to find bootstrap data on window.$_TSR"
+// when the SSR bootstrap script is missing. For a pure static SPA we inject a
+// minimal window.$_TSR shim with an empty matches/manifest so the hydrate
+// path takes the "SPA mode" branch and falls through to router.load(), which
+// then matches the current URL client-side.
+const tsrBootstrap = `
+  <script>
+    window.$_TSR = {
+      matches: [],
+      router: { matches: [], manifest: { routes: {} }, dehydratedData: undefined, lastMatchId: "__root__" },
+      buffer: [],
+      initialized: false,
+      t: new Map(),
+    };
+  </script>`;
+
 const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Vijay Saravanan</title>${cssTag}
+  <title>Vijay Saravanan</title>${cssTag}${tsrBootstrap}
   <link rel="modulepreload" href="${base}assets/${js}"/>
   <script type="module" src="${base}assets/${js}"></script>
 </head>
 <body><div id="root"></div></body>
 </html>
 `;
+
 
 writeFileSync(join(CLIENT_DIR, "index.html"), html);
 console.log(
