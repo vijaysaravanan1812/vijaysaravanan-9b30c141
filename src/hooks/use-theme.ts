@@ -19,7 +19,9 @@ export function useTheme() {
     document.documentElement.classList.toggle("dark", theme === "dark");
     try {
       localStorage.setItem(KEY, theme);
-    } catch {}
+    } catch {
+      // ignore storage errors (e.g. private mode, quota exceeded)
+    }
   }, [theme]);
 
   return { theme, toggle: () => setTheme((t) => (t === "dark" ? "light" : "dark")) };

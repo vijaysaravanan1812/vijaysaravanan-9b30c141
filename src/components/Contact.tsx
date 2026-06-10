@@ -4,10 +4,10 @@ import { Section } from "./Section";
 import { ArrowRight } from "lucide-react";
 
 export function Contact() {
-  if (!contact.visible) return null;
-  const links = visibleOnly(contact.links);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
+  if (!contact.visible) return null;
+  const links = visibleOnly(contact.links);
 
   return (
     <Section id="contact" eyebrow="get in touch" title="Contact">
