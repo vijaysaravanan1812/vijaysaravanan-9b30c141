@@ -1648,17 +1648,52 @@ docker compose up --build
 
 Then open <http://localhost:3000>.
 
-### Custom base path
+### Environment variables / build args
 
-The image defaults to serving at `/`. If you need a subpath (e.g. behind a reverse proxy at `/app/`):
+| Name | Stage | Default | Purpose |
+|---|---|---|---|
+| `BASE_PATH` | build (`ARG`) | `/` | URL prefix the app is served from. Passed to Vite (`base`) and TanStack Router (`basepath`). Use `/` for root domains (most Docker deploys, Cloud Run, Fly, Railway, Render). Use `/sub/` only when fronted by a reverse proxy mounting the app at a subpath. |
+| `PORT` | runtime | `3000` | nginx listens on `3000` inside the container. Remap on the host with `-p <host>:3000`. To change the in-container port, edit `EXPOSE` and the `listen` directive in the Dockerfile. |
+
+Pass build args like this:
 
 ```bash
-docker build --build-arg BASE_PATH=/app/ -t portfolio .
+docker build --build-arg BASE_PATH=/ -t portfolio .
+docker build --build-arg BASE_PATH=/app/ -t portfolio .   # subpath deploy
 ```
 
-### Why not GitHub Pages for SSR?
+Or via compose (`docker-compose.yml` → `services.portfolio.build.args`).
 
-This project is **fully static**, so GitHub Pages works fine. If you later switch TanStack Start to SSR (`target: "node-server"` or similar), GitHub Pages cannot run a Node server — it only serves static files. In that case use one of:
+### Verification
+
+After `docker run -p 3000:3000 portfolio`:
+
+```bash
+curl -I http://localhost:3000/             # 200, text/html
+curl -I http://localhost:3000/about        # 200 (SPA fallback to index.html)
+curl -I http://localhost:3000/assets/<hash>.css   # 200, long-cache headers
+```
+
+Open <http://localhost:3000> in a browser and click through nav routes — refreshing on any nested route must still return the app, not a 404 (handled by the `try_files $uri $uri/ /index.html;` rule in the bundled nginx config).
+
+### Troubleshooting
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `bun install` fails in builder | Private registry / proxy not reachable from Docker | Add `--network=host` to `docker build`, or configure `~/.bunfig.toml` and `COPY` it into the builder stage |
+| Build fails: `Cannot find module` | Stale lockfile vs. `package.json` | Run `bun install` locally to refresh `bun.lock`, then rebuild image |
+| Container starts but `/` returns 404 | `dist/client/index.html` missing — postbuild didn't run | Confirm `bun run build` (not `vite build`) is the build command; check builder logs for `[postbuild] Wrote dist/client/index.html` |
+| Deep links 404 on refresh | SPA fallback missing | The shipped nginx config handles this; if you customized it, ensure `try_files $uri $uri/ /index.html;` is present |
+| Assets 404, paths look like `/app/assets/...` but you deployed at `/` | Image was built with wrong `BASE_PATH` | Rebuild with `--build-arg BASE_PATH=/` |
+| Blank page, console shows MIME-type errors | Browser cached an old `index.html` referencing deleted hashes | Hard refresh / clear cache; the nginx config marks `/assets/*` immutable but `index.html` is uncached |
+| `port is already allocated` | Host port 3000 in use | Run with a different host port: `docker run -p 8080:3000 portfolio` |
+| `permission denied` writing logs | Running rootless Docker against an old base | Already mitigated — nginx:alpine runs the worker as `nginx` user; rebuild with `--no-cache` if upgrading |
+| Image too large | `node_modules` or `.git` leaking into context | Confirm `.dockerignore` is at repo root and not overridden; rebuild from a clean checkout |
+| Compose can't find Dockerfile | Wrong working dir | Run `docker compose up --build` from the repo root |
+
+### Why not GitHub Pages if you switch to SSR?
+
+This project is **fully static**, so GitHub Pages works today. If you later switch TanStack Start to SSR (e.g. `target: "node-server"`), GitHub Pages cannot run a Node process — it only serves static files. In that case use one of:
 
 | Platform | Why |
 |---|---|
@@ -1669,3 +1704,4 @@ This project is **fully static**, so GitHub Pages works fine. If you later switc
 | **Fly.io** | Global edge deployment, `fly launch` reads the Dockerfile directly |
 
 All five accept the Dockerfile in this repo without modification.
+
