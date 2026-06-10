@@ -19,4 +19,8 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
 
 export const startInstance = createStart(() => ({
   requestMiddleware: [errorMiddleware],
+  // Disable SSR — this project deploys as a static SPA (GitHub Pages, Netlify,
+  // Docker/nginx). Without SSR-generated HTML, the client must not attempt to
+  // hydrate dehydrated state, or it throws "Invariant failed" at boot.
+  defaultSsr: false,
 }));
