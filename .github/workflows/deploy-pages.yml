@@ -17,6 +17,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Project-site base path. Change to "/" for a user/org site or custom domain.
+      BASE_PATH: /vijaysaravanan-9b30c141/
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,8 +32,22 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Build
+      - name: Build (static)
         run: bun run build
+
+      - name: SPA fallback (copy index.html -> 404.html)
+        run: |
+          if [ -f dist/client/index.html ]; then
+            cp dist/client/index.html dist/client/404.html
+          else
+            echo "ERROR: dist/client/index.html was not produced by the build." >&2
+            ls -la dist || true
+            ls -la dist/client || true
+            exit 1
+          fi
+
+      - name: Disable Jekyll (allow files starting with _)
+        run: touch dist/client/.nojekyll
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -38,7 +55,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./dist/client
 
   deploy:
     needs: build

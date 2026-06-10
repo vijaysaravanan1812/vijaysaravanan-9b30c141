@@ -1,0 +1,17 @@
+# Netlify configuration for static deploy.
+# The Vite + TanStack Start build produces a fully prerendered site in
+# dist/client/. BASE_PATH is left unset so assets are served from "/".
+
+[build]
+  command = "bun run build"
+  publish = "dist/client"
+
+[build.environment]
+  # Pin Node for predictable installs; Bun is auto-detected from bun.lockb.
+  NODE_VERSION = "20"
+
+# SPA fallback: any unknown path serves index.html so client-side routing works.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
