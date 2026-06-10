@@ -12,12 +12,9 @@ import { dataSchemaValidator } from "./plugins/data-schema-validator";
 // deploys (Netlify, custom domains, Lovable hosting).
 const BASE_PATH = process.env.BASE_PATH ?? "/";
 
-// Static SPA build for Netlify / GitHub Pages / any static host.
-// We use TanStack Start's built-in SPA mode (`spa.enabled` + `spa.prerender.enabled`)
-// to generate a single index.html shell that mounts the React app client-side.
-// This avoids Nitro's route-by-route prerender crawler (which 404s when the
-// router basepath doesn't exactly match `/`) and produces the index.html that
-// GitHub Pages / Netlify need at the root of the published directory.
+// Static build for Netlify / GitHub Pages / any static host.
+// A `postbuild` script in package.json synthesizes dist/client/index.html from
+// the emitted client assets so the static host has a root document to serve.
 export default defineConfig({
   nitro: {
     preset: "static",
@@ -25,26 +22,11 @@ export default defineConfig({
       dir: "dist",
       publicDir: "dist/client",
     },
-    // Disable Nitro's static-preset auto-prerender. It crawls "/" by default,
-    // which 404s when the TanStack router is mounted under a basepath. We let
-    // TanStack Start's own SPA prerender (below) write the index.html instead.
-    // (Cast: this passthrough key isn't in the wrapper's narrowed type, but
-    // it's forwarded to nitro() verbatim.)
-    prerender: { crawlLinks: false, routes: [] },
-  } as never,
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     server: { entry: "server" },
     router: { basepath: BASE_PATH },
-    // SPA mode: render a single static HTML shell that mounts the React app
-    // client-side. outputPath "/index" makes the shell land at
-    // <publicDir>/index.html — the file GitHub Pages / Netlify serve at the
-    // site root. maskPath "/" matches our index route inside the router.
-    spa: {
-      enabled: true,
-      maskPath: "/",
-      prerender: { enabled: true, crawlLinks: false, outputPath: "/index" },
-    },
   },
   vite: {
     base: BASE_PATH,
