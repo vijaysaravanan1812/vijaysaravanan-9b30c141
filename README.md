@@ -113,50 +113,45 @@ Because the output is plain HTML, CSS, and JavaScript, it can be served by any s
 
 ### GitHub Pages
 
-**What already works**
+This site deploys automatically to GitHub Pages on every push to `main` (or `master`) via `.github/workflows/deploy-pages.yml`.
 
-- Static assets
-- JSON content
-- Resume downloads (`public/resumes/`)
-- SPA routing via hash navigation (all sections live on `/` with `#section` anchors)
+**What to edit, which file, and why**
 
-**Required configuration**
+| What you want | File to edit | Why |
+|---|---|---|
+| Change the deployed URL path (e.g. `username.github.io/repo-name/`) | `.github/workflows/deploy-pages.yml` → `env.BASE_PATH` | The build reads this env variable to prefix all asset URLs and router paths. Set it to `/repository-name/` for project pages, or `/` for user/org sites or custom domains. |
+| Verify asset paths are correct | `vite.config.ts` → `base: BASE_PATH` | Vite uses `base` to generate root-relative asset URLs. Without the correct base, JS/CSS files 404. |
+| Verify router knows the base path | `src/router.tsx` → `basepath` | TanStack Router needs the same base path so `<Link>` and `useNavigate` generate correct URLs. It reads `import.meta.env.BASE_URL` which Vite injects from the `base` config. |
+| Verify the generated HTML shell | `scripts/postbuild.mjs` | After the Vite build, this script creates `dist/client/index.html` from the emitted assets. It injects `<base href="...">` so relative asset paths resolve correctly under a subpath. |
+| Enable SPA routing on direct links | `.github/workflows/deploy-pages.yml` → SPA fallback step | GitHub Pages serves `404.html` for unknown paths. The workflow copies `index.html` to `404.html` so client-side routing works when users visit `/about` directly. |
 
-1. If the repository is **not** a user/organization site (`username.github.io`), set the base path in `vite.config.ts`:
+**Quick setup checklist**
 
-   ```ts
-   import { defineConfig } from "@lovable.dev/vite-tanstack-config";
-
-   export default defineConfig({
-     vite: {
-       base: "/repository-name/",
-     },
-   });
+1. **Set the base path** in `.github/workflows/deploy-pages.yml`:
+   ```yaml
+   env:
+     BASE_PATH: /your-repo-name/   # ← change this to your repository name
    ```
+   For user/org sites (`username.github.io` with no repo suffix), use `/`.
 
-   Without `base`, asset URLs will be root-relative and 404 on project pages.
-
-2. Enable GitHub Pages in repository settings:
+2. **Enable GitHub Pages** in repository settings:
    - Go to **Settings → Pages**.
    - Set **Source** to **GitHub Actions**.
 
-3. The workflow `.github/workflows/deploy-pages.yml` runs automatically on every push to `main` (or `master`).
+3. Push to `main`. The workflow runs automatically:
+   ```
+   Checkout → Setup Bun → bun install → bun run build
+        ↓
+   postbuild script writes dist/client/index.html (with <base> tag)
+        ↓
+   Copy index.html → 404.html (SPA fallback)
+        ↓
+   Upload dist/client → Deploy to GitHub Pages
+   ```
 
 **Manual trigger**
 
 You can also deploy on-demand from the **Actions → Deploy to GitHub Pages → Run workflow** tab.
-
-**What the workflow does**
-
-```
-git push → main
-       ↓
-GitHub Actions (ubuntu-latest)
-       ↓
-Checkout → Setup Bun → bun install → bun run build
-       ↓
-Upload dist/ → Deploy to GitHub Pages
-```
 
 **Migration effort:** Minimal. No React code changes required.
 
