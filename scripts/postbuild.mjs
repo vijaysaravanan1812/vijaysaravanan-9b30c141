@@ -40,4 +40,6 @@ const html = `<!DOCTYPE html>
 `;
 
 writeFileSync(join(CLIENT_DIR, "index.html"), html);
-console.log(`[postbuild] Wrote ${CLIENT_DIR}/index.html (base="${base}", js="${js}", css="${css ?? "none"}")`);
+console.log(
+  `[postbuild] Wrote ${CLIENT_DIR}/index.html (base="${base}", js="${js}", css="${css ?? "none"}")`,
+);
