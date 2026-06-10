@@ -15,10 +15,13 @@ const BASE_PATH = process.env.BASE_PATH ?? "/";
 // Static build for Netlify / GitHub Pages / any static host. Do not force the
 // Nitro static preset here; CI only needs the TanStack client output, and the
 // postbuild script synthesizes dist/client/index.html from the emitted assets.
+// TanStack Router expects basepath without a trailing slash (except for root "/").
+const routerBasepath = BASE_PATH === "/" ? "/" : BASE_PATH.replace(/\/$/, "");
+
 export default defineConfig({
   tanstackStart: {
     target: "static",
-    router: { basepath: BASE_PATH },
+    router: { basepath: routerBasepath },
   },
   vite: {
     base: BASE_PATH,
