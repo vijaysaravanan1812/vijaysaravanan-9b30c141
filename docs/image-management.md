@@ -13,13 +13,13 @@ All images live under `public/images/`. They are served as-is at `/images/<name>
 
 ## Compression Guidelines
 
-| Use | Format | Target Size |
-|---|---|---|
-| Photo / hero | JPEG (quality 80) or WebP | ≤ 200 KB |
-| Screenshot | PNG or WebP | ≤ 300 KB |
-| Avatar | JPEG / WebP | ≤ 80 KB |
-| Logo / icon | SVG | ≤ 20 KB |
-| Favicon | ICO + PNG fallback | ≤ 10 KB |
+| Use          | Format                    | Target Size |
+| ------------ | ------------------------- | ----------- |
+| Photo / hero | JPEG (quality 80) or WebP | ≤ 200 KB    |
+| Screenshot   | PNG or WebP               | ≤ 300 KB    |
+| Avatar       | JPEG / WebP               | ≤ 80 KB     |
+| Logo / icon  | SVG                       | ≤ 20 KB     |
+| Favicon      | ICO + PNG fallback        | ≤ 10 KB     |
 
 Run images through `squoosh.app`, `imagemin`, or `cwebp` before committing.
 
@@ -39,6 +39,7 @@ Run images through `squoosh.app`, `imagemin`, or `cwebp` before committing.
 ## Accessibility (Alt Text)
 
 Every image rendered by a component must have meaningful `alt` text:
+
 - Describe what the image conveys, not "image of...".
 - Decorative images: `alt=""`.
 - Store alt text alongside the image path in the JSON entry: `{ "image": "/images/foo.webp", "alt": "..." }`.

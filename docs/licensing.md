@@ -13,6 +13,7 @@ Anyone may fork the source code, modify it, and use it for their own portfolio, 
 License: **All Rights Reserved** to the portfolio owner.
 
 This includes:
+
 - Text in `src/data/*.json` (bio, summaries, descriptions).
 - Images in `public/images/` unless explicitly marked otherwise.
 - The resume PDF in `public/resume.pdf`.

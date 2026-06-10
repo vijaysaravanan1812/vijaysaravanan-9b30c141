@@ -40,8 +40,6 @@ The full documentation set lives under [`docs/`](./docs/README.md). Quick links:
 
 ---
 
-
-
 ## Table of contents
 
 1. [Stack](#stack)
@@ -176,11 +174,11 @@ Upload dist/ → Deploy to GitHub Pages
 
 **Required configuration**
 
-| Setting | Value |
-| --- | --- |
-| Framework | Vite |
-| Build Command | `bun run build` |
-| Output Directory | `dist` |
+| Setting          | Value           |
+| ---------------- | --------------- |
+| Framework        | Vite            |
+| Build Command    | `bun run build` |
+| Output Directory | `dist`          |
 
 **Migration effort:** None. Connect the GitHub repository and deploy.
 
@@ -190,10 +188,10 @@ Upload dist/ → Deploy to GitHub Pages
 
 **Required configuration**
 
-| Setting | Value |
-| --- | --- |
-| Build Command | `bun run build` |
-| Publish Directory | `dist` |
+| Setting           | Value           |
+| ----------------- | --------------- |
+| Build Command     | `bun run build` |
+| Publish Directory | `dist`          |
 
 **Migration effort:** None.
 
@@ -203,10 +201,10 @@ Upload dist/ → Deploy to GitHub Pages
 
 **Required configuration**
 
-| Setting | Value |
-| --- | --- |
-| Build Command | `bun run build` |
-| Output Directory | `dist` |
+| Setting          | Value           |
+| ---------------- | --------------- |
+| Build Command    | `bun run build` |
+| Output Directory | `dist`          |
 
 **Migration effort:** None.
 
@@ -294,15 +292,15 @@ server {
 
 Moving from one domain to another requires **zero** application changes.
 
-| What | Needs changing? |
-| --- | --- |
-| React components | **No** |
-| JSON content | **No** |
-| Search logic | **No** |
-| Navigation | **No** |
-| Visibility logic | **No** |
-| DNS records | **Yes** — point A/CNAME to new host |
-| SSL certificate | **Yes** — provision for new domain |
+| What             | Needs changing?                      |
+| ---------------- | ------------------------------------ |
+| React components | **No**                               |
+| JSON content     | **No**                               |
+| Search logic     | **No**                               |
+| Navigation       | **No**                               |
+| Visibility logic | **No**                               |
+| DNS records      | **Yes** — point A/CNAME to new host  |
+| SSL certificate  | **Yes** — provision for new domain   |
 | Hosting provider | **Yes** — deploy `dist/` to new host |
 
 ---
@@ -428,15 +426,15 @@ PostgreSQL / MySQL / MongoDB
 
 ### Vendor Lock-In Analysis
 
-| Component | Vendor Locked? | Migration Difficulty |
-| --- | --- | --- |
-| React UI | **No** | Easy — React is open source and portable |
-| JSON Content | **No** | Easy — plain text, any editor, any framework |
-| Vite Build | **No** | Easy — any bundler can consume the same source |
-| Tailwind Styles | **No** | Easy — CSS is standard; tokens live in `src/styles.css` |
-| Search | **No** | Easy — client-side substring match, no external service |
-| Theme System | **No** | Easy — CSS custom properties + `localStorage` |
-| Hosting (Vercel/Netlify/etc) | **No** | Easy — `dist/` is a static folder; move it anywhere |
+| Component                    | Vendor Locked? | Migration Difficulty                                    |
+| ---------------------------- | -------------- | ------------------------------------------------------- |
+| React UI                     | **No**         | Easy — React is open source and portable                |
+| JSON Content                 | **No**         | Easy — plain text, any editor, any framework            |
+| Vite Build                   | **No**         | Easy — any bundler can consume the same source          |
+| Tailwind Styles              | **No**         | Easy — CSS is standard; tokens live in `src/styles.css` |
+| Search                       | **No**         | Easy — client-side substring match, no external service |
+| Theme System                 | **No**         | Easy — CSS custom properties + `localStorage`           |
+| Hosting (Vercel/Netlify/etc) | **No**         | Easy — `dist/` is a static folder; move it anywhere     |
 
 **Goal:** No vendor lock-in. Every layer can be replaced independently without a rewrite.
 
@@ -446,13 +444,13 @@ PostgreSQL / MySQL / MongoDB
 
 **Backups**
 
-| Strategy | How |
-| --- | --- |
-| Primary | GitHub repository |
-| Mirror | GitLab / Codeberg / Bitbucket second remote |
-| Local | External SSD or NAS with periodic `git clone --mirror` |
-| Cloud | Encrypted archive (Restic / rclone → S3 / B2 / GDrive) |
-| Cold | Annual zip of `src/data/` + `public/resumes/` to long-term storage |
+| Strategy | How                                                                |
+| -------- | ------------------------------------------------------------------ |
+| Primary  | GitHub repository                                                  |
+| Mirror   | GitLab / Codeberg / Bitbucket second remote                        |
+| Local    | External SSD or NAS with periodic `git clone --mirror`             |
+| Cloud    | Encrypted archive (Restic / rclone → S3 / B2 / GDrive)             |
+| Cold     | Annual zip of `src/data/` + `public/resumes/` to long-term storage |
 
 **Recovery process**
 
@@ -510,7 +508,7 @@ src/data/
 
 ### The golden rules
 
-1. **Every object that can be shown/hidden has its own `visible: boolean`** — the file root *and* every item inside `items` / `stats` / `socials` / `categories` / `links`. Both required.
+1. **Every object that can be shown/hidden has its own `visible: boolean`** — the file root _and_ every item inside `items` / `stats` / `socials` / `categories` / `links`. Both required.
 2. **Order in JSON = order on the page.** No sort logic, no `order` field.
 3. **Section order and nav labels live in `site-config.json → sections`.**
 4. **Save → hot reload.** Restart only when adding a brand-new file (so the validator picks it up).
@@ -518,12 +516,12 @@ src/data/
 
 ### Visibility model
 
-| Goal | Edit | Value |
-| --- | --- | --- |
-| Hide a single item | the item's `visible` | `false` |
-| Hide section + nav link, keep data | the section file's root `visible` | `false` |
-| Hide nav link only (section still reachable by anchor) | `site-config.json → sections[id].visible` | `false` |
-| Remove a section permanently | delete the file *and* its entry in `site-config.json → sections` | — |
+| Goal                                                   | Edit                                                             | Value   |
+| ------------------------------------------------------ | ---------------------------------------------------------------- | ------- |
+| Hide a single item                                     | the item's `visible`                                             | `false` |
+| Hide section + nav link, keep data                     | the section file's root `visible`                                | `false` |
+| Hide nav link only (section still reachable by anchor) | `site-config.json → sections[id].visible`                        | `false` |
+| Remove a section permanently                           | delete the file _and_ its entry in `site-config.json → sections` | —       |
 
 A section auto-hides when its root says visible but **zero items are visible**. No empty heading is ever rendered.
 
@@ -572,7 +570,7 @@ Templates are tested against the Zod schemas (`src/data/__tests__/templates.test
 │    - visibleOnly / featuredOnly / isSectionRenderable       │
 │    - autoStats()                                            │
 └─────────────────────┬───────────────────────────────────────┘
-                      │ uses                          
+                      │ uses
                       ▼
 ┌─────────────────────────────────────────────────────────────┐
 │  Content source         src/services/content-source.ts      │
@@ -663,10 +661,10 @@ Each file has:
 Single source of truth: `src/services/content.ts`.
 
 ```ts
-visibleOnly(items)        // strips items where visible === false
-featuredOnly(items)       // visible AND featured === true
-isSectionRenderable(id)   // nav AND root visible AND at least one visible item
-visibleNavSections()      // sections to actually render
+visibleOnly(items); // strips items where visible === false
+featuredOnly(items); // visible AND featured === true
+isSectionRenderable(id); // nav AND root visible AND at least one visible item
+visibleNavSections(); // sections to actually render
 ```
 
 ### How sections auto-hide
@@ -705,9 +703,9 @@ Items opt in with `"featured": true`. `<Featured />` (in `src/components/Feature
       "problem": "Single-node KV blew up at 10k qps.",
       "outcome": "Sharded + replicated; sustained 80k qps p99 < 12 ms.",
       "github": "https://github.com/...",
-      "demo": ""
-    }
-  ]
+      "demo": "",
+    },
+  ],
 }
 ```
 
@@ -756,14 +754,14 @@ Reusable components  (<Projects />, <Skills />, …)
 
 ### Why these abstractions exist
 
-| Abstraction | Why |
-| --- | --- |
-| Zod schemas | Validate JSON at build + dev time; types are derived, never hand-written. |
-| `content.ts` chokepoint | If the origin changes, only this file is touched. |
-| `content-source.ts` | Lets multiple adapters coexist (JSON for dev, API for prod). |
-| `visibleOnly` / `isSectionRenderable` | UI never re-implements visibility — guarantees consistency. |
-| `<SectionBoundary>` | One bad section can't crash the page. |
-| `autoStats()` | Stats can never drift from reality — they're derived. |
+| Abstraction                           | Why                                                                       |
+| ------------------------------------- | ------------------------------------------------------------------------- |
+| Zod schemas                           | Validate JSON at build + dev time; types are derived, never hand-written. |
+| `content.ts` chokepoint               | If the origin changes, only this file is touched.                         |
+| `content-source.ts`                   | Lets multiple adapters coexist (JSON for dev, API for prod).              |
+| `visibleOnly` / `isSectionRenderable` | UI never re-implements visibility — guarantees consistency.               |
+| `<SectionBoundary>`                   | One bad section can't crash the page.                                     |
+| `autoStats()`                         | Stats can never drift from reality — they're derived.                     |
 
 ---
 
@@ -813,13 +811,13 @@ CMS API (REST / GraphQL)
 
 ### What changes vs. stays
 
-| Layer | Change? |
-| --- | --- |
-| Components (`src/components/*`) | **No.** |
-| `src/services/content.ts` | Minor — read from `contentSource.get(...)` instead of static imports. |
-| `src/services/content-source.ts` | **Yes** — add the CMS adapter. |
-| `src/data/schema.ts` | **No.** Schemas validate either origin. |
-| `src/data/*.json` | Can be archived; CMS becomes the source of truth. |
+| Layer                            | Change?                                                               |
+| -------------------------------- | --------------------------------------------------------------------- |
+| Components (`src/components/*`)  | **No.**                                                               |
+| `src/services/content.ts`        | Minor — read from `contentSource.get(...)` instead of static imports. |
+| `src/services/content-source.ts` | **Yes** — add the CMS adapter.                                        |
+| `src/data/schema.ts`             | **No.** Schemas validate either origin.                               |
+| `src/data/*.json`                | Can be archived; CMS becomes the source of truth.                     |
 
 ### Why the UI doesn't change
 
@@ -1071,13 +1069,13 @@ public/resumes/
 
 The portfolio is fully contained in git. Multiple independent copies = durable.
 
-| Layer | What | How |
-| --- | --- | --- |
-| Primary | GitHub | `origin` remote. |
-| Mirror | GitLab / Codeberg / Bitbucket | Add a second remote, push on every release. |
-| Local | External SSD / NAS | Periodic `git clone --mirror` or filesystem snapshot. |
-| Cloud | Restic / rclone → S3 / B2 / GDrive | Encrypted, scheduled. |
-| Cold | Annual export | Zip of `src/data/` + `public/resumes/` to long-term cold storage. |
+| Layer   | What                               | How                                                               |
+| ------- | ---------------------------------- | ----------------------------------------------------------------- |
+| Primary | GitHub                             | `origin` remote.                                                  |
+| Mirror  | GitLab / Codeberg / Bitbucket      | Add a second remote, push on every release.                       |
+| Local   | External SSD / NAS                 | Periodic `git clone --mirror` or filesystem snapshot.             |
+| Cloud   | Restic / rclone → S3 / B2 / GDrive | Encrypted, scheduled.                                             |
+| Cold    | Annual export                      | Zip of `src/data/` + `public/resumes/` to long-term cold storage. |
 
 ### Recovery
 
@@ -1196,18 +1194,18 @@ tests/
 └── helpers/      # shared utilities (render wrapper, readFixture, …)
 ```
 
-| Folder | Purpose |
-| --- | --- |
-| `unit/` | Pure utility functions with no React or DOM dependency. Fast. Deterministic. |
-| `integration/` | Multi-layer flows: raw JSON → Zod validation → content service → rendered React component. Catches breakage at the seams. |
-| `schemas/` | Every Zod schema is exercised against valid and invalid fixtures. New fields require new schema tests. |
-| `content/` | Tests `visibleOnly()`, `featuredOnly()`, `autoStats()`, and the loader helpers that decide what reaches the UI. |
-| `navigation/` | The hamburger menu, IntersectionObserver section tracking, dynamic generation from `site-config.json`, and desktop/mobile parity. |
-| `visibility/` | `isSectionRenderable()` and `visibleNavSections()` — the core contract that decides what appears on the page. |
-| `search/` | `SearchPalette` keyboard navigation, ESC-to-close, and search-index correctness (only visible items indexed). |
-| `migrations/` | `migrate.ts` — if you bump `schemaVersion`, these tests prove old data round-trips to the new shape without loss. |
-| `fixtures/` | Reusable JSON payloads. Never duplicate JSON inline in a test; import a fixture. |
-| `helpers/` | `render.tsx` wraps React Testing Library with providers. `content.ts` reads fixtures from disk. |
+| Folder         | Purpose                                                                                                                           |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `unit/`        | Pure utility functions with no React or DOM dependency. Fast. Deterministic.                                                      |
+| `integration/` | Multi-layer flows: raw JSON → Zod validation → content service → rendered React component. Catches breakage at the seams.         |
+| `schemas/`     | Every Zod schema is exercised against valid and invalid fixtures. New fields require new schema tests.                            |
+| `content/`     | Tests `visibleOnly()`, `featuredOnly()`, `autoStats()`, and the loader helpers that decide what reaches the UI.                   |
+| `navigation/`  | The hamburger menu, IntersectionObserver section tracking, dynamic generation from `site-config.json`, and desktop/mobile parity. |
+| `visibility/`  | `isSectionRenderable()` and `visibleNavSections()` — the core contract that decides what appears on the page.                     |
+| `search/`      | `SearchPalette` keyboard navigation, ESC-to-close, and search-index correctness (only visible items indexed).                     |
+| `migrations/`  | `migrate.ts` — if you bump `schemaVersion`, these tests prove old data round-trips to the new shape without loss.                 |
+| `fixtures/`    | Reusable JSON payloads. Never duplicate JSON inline in a test; import a fixture.                                                  |
+| `helpers/`     | `render.tsx` wraps React Testing Library with providers. `content.ts` reads fixtures from disk.                                   |
 
 Tests inside `src/**/__tests__/` are still picked up; they remain as
 white-box tests next to the code they cover.
@@ -1231,12 +1229,12 @@ bun run test:ui         # Vitest UI in browser (http://localhost:51204/__vitest_
 
 Enforced by CI in `vitest.config.ts`:
 
-| Metric | Minimum |
-| --- | --- |
-| Statements | 90 % |
-| Branches | 85 % |
-| Functions | 90 % |
-| Lines | 90 % |
+| Metric     | Minimum |
+| ---------- | ------- |
+| Statements | 90 %    |
+| Branches   | 85 %    |
+| Functions  | 90 %    |
+| Lines      | 90 %    |
 
 If any metric falls below its threshold, the run fails with:
 
@@ -1256,10 +1254,10 @@ they gain conditional logic.
 
 ```yaml
 - bun install --frozen-lockfile
-- bun run typecheck   # TypeScript --noEmit
-- bun run lint        # ESLint
+- bun run typecheck # TypeScript --noEmit
+- bun run lint # ESLint
 - bun run test:coverage
-- bun run build       # production build
+- bun run build # production build
 ```
 
 Any step failure blocks the merge.
@@ -1279,10 +1277,10 @@ The HTML report shows per-file/per-line coverage. Red lines are untested; green 
 
 Download from the GitHub Actions run → **Artifacts** section:
 
-| Artifact | Path | Contents |
-| --- | --- | --- |
-| `coverage-html` | `coverage/` | Full V8 HTML coverage report. Open `index.html` locally. |
-| `test-results` | `test-results/` | JUnit XML (`junit.xml`) for test-result parsing in PR review tools. |
+| Artifact        | Path            | Contents                                                            |
+| --------------- | --------------- | ------------------------------------------------------------------- |
+| `coverage-html` | `coverage/`     | Full V8 HTML coverage report. Open `index.html` locally.            |
+| `test-results`  | `test-results/` | JUnit XML (`junit.xml`) for test-result parsing in PR review tools. |
 
 Both artifacts upload with `if: always()` — they are available even when tests fail.
 Retention: **30 days**.
@@ -1400,14 +1398,14 @@ oblivious.
 The following are protected by automated tests. A PR that breaks any of these
 will fail CI:
 
-| Guarantee | Protected By |
-| --- | --- |
-| **Visibility logic** | `tests/visibility/` — `visible: false` removes items; empty sections auto-hide. |
-| **Navigation generation** | `tests/navigation/` — menu items match `visibleNavSections()` exactly. |
-| **Content loading** | `tests/content/` — `visibleOnly()`, `featuredOnly()`, `autoStats()` correctness. |
-| **Search** | `tests/search/` — only visible items indexed; keyboard navigation works. |
-| **Schema validation** | `tests/schemas/` + `src/data/__tests__/` — every JSON file is valid Zod. |
-| **Migration logic** | `tests/migrations/` — `schemaVersion` upgrades are lossless. |
+| Guarantee                 | Protected By                                                                     |
+| ------------------------- | -------------------------------------------------------------------------------- |
+| **Visibility logic**      | `tests/visibility/` — `visible: false` removes items; empty sections auto-hide.  |
+| **Navigation generation** | `tests/navigation/` — menu items match `visibleNavSections()` exactly.           |
+| **Content loading**       | `tests/content/` — `visibleOnly()`, `featuredOnly()`, `autoStats()` correctness. |
+| **Search**                | `tests/search/` — only visible items indexed; keyboard navigation works.         |
+| **Schema validation**     | `tests/schemas/` + `src/data/__tests__/` — every JSON file is valid Zod.         |
+| **Migration logic**       | `tests/migrations/` — `schemaVersion` upgrades are lossless.                     |
 
 ---
 
@@ -1417,7 +1415,6 @@ will fail CI:
 bunx vitest run tests/schemas
 bunx vitest run -t "visibleOnly"
 ```
-
 
 ---
 
@@ -1508,7 +1505,7 @@ Flip one flag — history is preserved:
 ```
 
 If every platform is hidden (or the section's own `visible` is `false`), the
-whole section *and its nav entry* auto-hide.
+whole section _and its nav entry_ auto-hide.
 
 ### Supported platforms (out of the box)
 

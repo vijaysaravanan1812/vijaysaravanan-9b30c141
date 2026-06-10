@@ -42,7 +42,10 @@ describe("empty sections auto-hide", () => {
     ["experience", experience.items as readonly { visible: boolean }[]],
     ["projects", projects.items as readonly { visible: boolean }[]],
     ["skills", skills.categories as readonly { visible: boolean }[]],
-    ["competitive-programming", competitiveProgramming.platforms as readonly { visible: boolean }[]],
+    [
+      "competitive-programming",
+      competitiveProgramming.platforms as readonly { visible: boolean }[],
+    ],
   ] as const)("%s renderable iff at least one visible child", (id, items) => {
     const hasVisible = visibleOnly(items).length > 0;
     expect(isSectionRenderable(id)).toBe(hasVisible);

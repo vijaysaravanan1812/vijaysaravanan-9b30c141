@@ -14,12 +14,14 @@ Every renderable object (every file root, every item in `items`/`categories`/`st
 ## Consequences
 
 **Positive**
+
 - History is preserved — flip a flag instead of deleting.
 - UI never renders an empty heading.
 - Nav, search, sitemap, stats, and JSON-LD all agree on what's public.
 - New maintainers learn one rule that applies everywhere.
 
 **Negative**
+
 - One extra required field per object. Acceptable cost.
 - Forgetting `visible` is a build error — annoying, but better than silently shipping unfinished content.
 

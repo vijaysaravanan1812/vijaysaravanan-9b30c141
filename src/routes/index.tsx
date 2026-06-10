@@ -21,17 +21,23 @@ import { SkipLink } from "@/components/SkipLink";
 import { ResumeArchive } from "@/components/ResumeArchive";
 
 // Below-the-fold sections: lazy-loaded to keep first paint small.
-const Timeline      = lazy(() => import("@/components/Timeline").then((m) => ({ default: m.Timeline })));
-const OpenSource    = lazy(() => import("@/components/OpenSource").then((m) => ({ default: m.OpenSource })));
-const Talks         = lazy(() => import("@/components/Talks").then((m) => ({ default: m.Talks })));
-const Awards        = lazy(() => import("@/components/Awards").then((m) => ({ default: m.Awards })));
-const Blog          = lazy(() => import("@/components/Blog").then((m) => ({ default: m.Blog })));
-const Startups      = lazy(() => import("@/components/Startups").then((m) => ({ default: m.Startups })));
-const Products      = lazy(() => import("@/components/Products").then((m) => ({ default: m.Products })));
-const Patents       = lazy(() => import("@/components/Patents").then((m) => ({ default: m.Patents })));
-const Mentoring     = lazy(() => import("@/components/Mentoring").then((m) => ({ default: m.Mentoring })));
-const Media         = lazy(() => import("@/components/Media").then((m) => ({ default: m.Media })));
-const Testimonials  = lazy(() => import("@/components/Testimonials").then((m) => ({ default: m.Testimonials })));
+const Timeline = lazy(() => import("@/components/Timeline").then((m) => ({ default: m.Timeline })));
+const OpenSource = lazy(() =>
+  import("@/components/OpenSource").then((m) => ({ default: m.OpenSource })),
+);
+const Talks = lazy(() => import("@/components/Talks").then((m) => ({ default: m.Talks })));
+const Awards = lazy(() => import("@/components/Awards").then((m) => ({ default: m.Awards })));
+const Blog = lazy(() => import("@/components/Blog").then((m) => ({ default: m.Blog })));
+const Startups = lazy(() => import("@/components/Startups").then((m) => ({ default: m.Startups })));
+const Products = lazy(() => import("@/components/Products").then((m) => ({ default: m.Products })));
+const Patents = lazy(() => import("@/components/Patents").then((m) => ({ default: m.Patents })));
+const Mentoring = lazy(() =>
+  import("@/components/Mentoring").then((m) => ({ default: m.Mentoring })),
+);
+const Media = lazy(() => import("@/components/Media").then((m) => ({ default: m.Media })));
+const Testimonials = lazy(() =>
+  import("@/components/Testimonials").then((m) => ({ default: m.Testimonials })),
+);
 
 const SITE_URL = "https://vijaysaravanan.lovable.app";
 const desc = profile.summary.slice(0, 155);
@@ -67,7 +73,10 @@ export const Route = createFileRoute("/")({
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: `${profile.name} — ${profile.role}` },
         { name: "twitter:description", content: desc },
-        { name: "keywords", content: `${profile.name}, ${profile.role}, portfolio, ${stats.projects} projects` },
+        {
+          name: "keywords",
+          content: `${profile.name}, ${profile.role}, portfolio, ${stats.projects} projects`,
+        },
       ],
       links: [
         { rel: "canonical", href: SITE_URL },
@@ -97,33 +106,83 @@ function Index() {
       <SkipLink />
       <Nav />
       <main id="main">
-        <B name="Hero"><Hero /></B>
-        <B name="About"><About /></B>
-        <B name="Featured"><Featured /></B>
-        <B name="Experience"><Experience /></B>
-        <B name="Projects"><Projects /></B>
-        <B name="Skills"><Skills /></B>
-        <B name="CompetitiveProgramming"><CompetitiveProgramming /></B>
-        <B name="Stats"><Stats /></B>
-        <B name="Education"><Education /></B>
-        <B name="Publications"><Publications /></B>
-        <B name="Certifications"><Certifications /></B>
-        <B name="Achievements"><Achievements /></B>
+        <B name="Hero">
+          <Hero />
+        </B>
+        <B name="About">
+          <About />
+        </B>
+        <B name="Featured">
+          <Featured />
+        </B>
+        <B name="Experience">
+          <Experience />
+        </B>
+        <B name="Projects">
+          <Projects />
+        </B>
+        <B name="Skills">
+          <Skills />
+        </B>
+        <B name="CompetitiveProgramming">
+          <CompetitiveProgramming />
+        </B>
+        <B name="Stats">
+          <Stats />
+        </B>
+        <B name="Education">
+          <Education />
+        </B>
+        <B name="Publications">
+          <Publications />
+        </B>
+        <B name="Certifications">
+          <Certifications />
+        </B>
+        <B name="Achievements">
+          <Achievements />
+        </B>
         <Suspense fallback={null}>
-          <B name="Timeline"><Timeline /></B>
-          <B name="OpenSource"><OpenSource /></B>
-          <B name="Talks"><Talks /></B>
-          <B name="Awards"><Awards /></B>
-          <B name="Blog"><Blog /></B>
-          <B name="Startups"><Startups /></B>
-          <B name="Products"><Products /></B>
-          <B name="Patents"><Patents /></B>
-          <B name="Mentoring"><Mentoring /></B>
-          <B name="Media"><Media /></B>
-          <B name="Testimonials"><Testimonials /></B>
+          <B name="Timeline">
+            <Timeline />
+          </B>
+          <B name="OpenSource">
+            <OpenSource />
+          </B>
+          <B name="Talks">
+            <Talks />
+          </B>
+          <B name="Awards">
+            <Awards />
+          </B>
+          <B name="Blog">
+            <Blog />
+          </B>
+          <B name="Startups">
+            <Startups />
+          </B>
+          <B name="Products">
+            <Products />
+          </B>
+          <B name="Patents">
+            <Patents />
+          </B>
+          <B name="Mentoring">
+            <Mentoring />
+          </B>
+          <B name="Media">
+            <Media />
+          </B>
+          <B name="Testimonials">
+            <Testimonials />
+          </B>
         </Suspense>
-        <B name="ResumeArchive"><ResumeArchive /></B>
-        <B name="Contact"><Contact /></B>
+        <B name="ResumeArchive">
+          <ResumeArchive />
+        </B>
+        <B name="Contact">
+          <Contact />
+        </B>
       </main>
       <Footer />
     </div>

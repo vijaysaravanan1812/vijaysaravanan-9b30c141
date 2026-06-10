@@ -36,9 +36,7 @@ export function OpenSource() {
               )}
             </div>
             {c.description && (
-              <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
-                {c.description}
-              </p>
+              <p className="mt-3 text-xs text-muted-foreground leading-relaxed">{c.description}</p>
             )}
           </div>
         ))}

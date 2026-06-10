@@ -8,16 +8,16 @@ Defined as CSS variables in `src/styles.css`. Use Tailwind utility classes that 
 
 ### Colors (semantic)
 
-| Token | Purpose |
-|---|---|
-| `--background` | Page background |
-| `--foreground` | Default text |
-| `--primary` / `--primary-foreground` | Primary action |
-| `--secondary` / `--secondary-foreground` | Secondary surfaces |
-| `--muted` / `--muted-foreground` | De-emphasized text/surfaces |
-| `--accent` / `--accent-foreground` | Accent highlights |
+| Token                                        | Purpose                        |
+| -------------------------------------------- | ------------------------------ |
+| `--background`                               | Page background                |
+| `--foreground`                               | Default text                   |
+| `--primary` / `--primary-foreground`         | Primary action                 |
+| `--secondary` / `--secondary-foreground`     | Secondary surfaces             |
+| `--muted` / `--muted-foreground`             | De-emphasized text/surfaces    |
+| `--accent` / `--accent-foreground`           | Accent highlights              |
 | `--destructive` / `--destructive-foreground` | Errors and destructive actions |
-| `--border`, `--input`, `--ring` | Form/UI structure |
+| `--border`, `--input`, `--ring`              | Form/UI structure              |
 
 Both light and dark themes define values for every token. Components must work in both.
 
@@ -35,13 +35,13 @@ Tailwind's 4px base scale (`p-2`, `p-4`, `p-6`, etc.). Avoid one-off pixel value
 
 ## Breakpoints
 
-| Name | Min width |
-|---|---|
-| `sm` | 640px |
-| `md` | 768px |
-| `lg` | 1024px |
-| `xl` | 1280px |
-| `2xl` | 1536px |
+| Name  | Min width |
+| ----- | --------- |
+| `sm`  | 640px     |
+| `md`  | 768px     |
+| `lg`  | 1024px    |
+| `xl`  | 1280px    |
+| `2xl` | 1536px    |
 
 Mobile-first: write base styles for mobile, layer breakpoint utilities upward.
 

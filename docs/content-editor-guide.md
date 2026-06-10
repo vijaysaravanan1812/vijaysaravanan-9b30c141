@@ -7,6 +7,7 @@ This guide is for editing the portfolio's content without writing code. All cont
 ## Add a Project
 
 Open `src/data/projects.json` and add an entry:
+
 ```json
 {
   "id": "my-new-project",
@@ -33,6 +34,7 @@ Set `"archived": true` to retire a project without deleting history. See [Archiv
 ## Add a Publication
 
 Open `src/data/publications.json`:
+
 ```json
 { "title": "...", "venue": "...", "year": 2026, "url": "..." }
 ```
@@ -40,6 +42,7 @@ Open `src/data/publications.json`:
 ## Add a Certification
 
 Open `src/data/certifications.json`:
+
 ```json
 { "name": "...", "issuer": "...", "year": 2026, "url": "..." }
 ```
@@ -55,6 +58,7 @@ Drop the new PDF into `public/` as `resume.pdf`. The link in the header / contac
 ## Add a Social Link
 
 Edit `src/data/profile.json`:
+
 ```json
 {
   "socials": [

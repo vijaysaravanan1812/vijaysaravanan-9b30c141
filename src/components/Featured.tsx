@@ -1,6 +1,4 @@
-import {
-  projects, publications, achievements, featuredOnly,
-} from "@/services/content";
+import { projects, publications, achievements, featuredOnly } from "@/services/content";
 import { Section } from "./Section";
 import { Star } from "lucide-react";
 
@@ -23,7 +21,12 @@ export function Featured() {
         {fr.length > 0 && (
           <Group title="Research">
             {fr.map((p, i) => (
-              <Card key={i} title={p.title} subtitle={[p.venue, p.year].filter(Boolean).join(" · ")} detail={p.authors} />
+              <Card
+                key={i}
+                title={p.title}
+                subtitle={[p.venue, p.year].filter(Boolean).join(" · ")}
+                detail={p.authors}
+              />
             ))}
           </Group>
         )}

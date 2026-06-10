@@ -14,11 +14,13 @@ Use TypeScript with `"strict": true`. Derive every type from its Zod schema via 
 ## Consequences
 
 **Positive**
+
 - Compiler refuses to build when a component reads a removed field.
 - Autocomplete documents the schema for free.
 - Types and runtime validation can never disagree — both come from the same Zod schema.
 
 **Negative**
+
 - Slightly slower iteration than untyped JS. Mitigated by Vite's fast incremental builds.
 
 ## Alternatives considered

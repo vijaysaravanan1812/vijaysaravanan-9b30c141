@@ -5,6 +5,7 @@ Status: **planned**. Not implemented.
 ## Goal
 
 Expose a feed at `/feed.xml` containing the latest:
+
 - Blog posts (`blog.json`)
 - Talks (`talks.json`)
 - Publications (`publications.json`)
@@ -16,22 +17,22 @@ So readers can subscribe via any RSS reader without polling the site.
 Add a server route at `src/routes/feed[.]xml.ts`:
 
 ```ts
-import { createFileRoute } from '@tanstack/react-router'
-import { getFeedItems } from '@/services/content/feed.functions'
+import { createFileRoute } from "@tanstack/react-router";
+import { getFeedItems } from "@/services/content/feed.functions";
 
-export const Route = createFileRoute('/feed.xml')({
+export const Route = createFileRoute("/feed.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const items = await getFeedItems()
-        const xml = renderRss(items)
+        const items = await getFeedItems();
+        const xml = renderRss(items);
         return new Response(xml, {
-          headers: { 'Content-Type': 'application/rss+xml' }
-        })
-      }
-    }
-  }
-})
+          headers: { "Content-Type": "application/rss+xml" },
+        });
+      },
+    },
+  },
+});
 ```
 
 `renderRss` builds an RSS 2.0 document from the merged, visibility-filtered, date-sorted list of blog/talk/publication entries.

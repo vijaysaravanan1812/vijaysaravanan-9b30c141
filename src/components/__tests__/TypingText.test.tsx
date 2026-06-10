@@ -9,10 +9,8 @@ function setReducedMotion(matches: boolean) {
     matches,
     media: "(prefers-reduced-motion: reduce)",
     onchange: null,
-    addEventListener: (_: string, cb: (e: MediaQueryListEvent) => void) =>
-      listeners.add(cb),
-    removeEventListener: (_: string, cb: (e: MediaQueryListEvent) => void) =>
-      listeners.delete(cb),
+    addEventListener: (_: string, cb: (e: MediaQueryListEvent) => void) => listeners.add(cb),
+    removeEventListener: (_: string, cb: (e: MediaQueryListEvent) => void) => listeners.delete(cb),
     dispatchEvent: vi.fn(),
   };
   Object.defineProperty(window, "matchMedia", {
@@ -23,9 +21,7 @@ function setReducedMotion(matches: boolean) {
   return {
     update(next: boolean) {
       mql.matches = next;
-      listeners.forEach((cb) =>
-        cb({ matches: next } as unknown as MediaQueryListEvent),
-      );
+      listeners.forEach((cb) => cb({ matches: next } as unknown as MediaQueryListEvent));
     },
   };
 }
@@ -54,9 +50,7 @@ function getWrapper(container: HTMLElement): HTMLElement {
 
 function topLevelBlocks(container: HTMLElement): HTMLElement[] {
   const w = getWrapper(container);
-  return Array.from(w.children).filter((c) =>
-    c.classList.contains("block"),
-  ) as HTMLElement[];
+  return Array.from(w.children).filter((c) => c.classList.contains("block")) as HTMLElement[];
 }
 
 describe("TypingText", () => {
@@ -74,9 +68,7 @@ describe("TypingText", () => {
 
   it("renders the final text instantly and statically when prefers-reduced-motion is set (hydration-safe, no caret)", () => {
     setReducedMotion(true);
-    const { container } = render(
-      <TypingText text={["line one", "line two"]} variant="chevron" />,
-    );
+    const { container } = render(<TypingText text={["line one", "line two"]} variant="chevron" />);
 
     expect(container.textContent).toContain("line one");
     expect(container.textContent).toContain("line two");
@@ -91,9 +83,7 @@ describe("TypingText", () => {
 
   it("renders instantly when instant=true regardless of motion preference", () => {
     setReducedMotion(false);
-    const { container } = render(
-      <TypingText text="hello world" instant showCursor={false} />,
-    );
+    const { container } = render(<TypingText text="hello world" instant showCursor={false} />);
     expect(container.textContent).toContain("hello world");
     expect(container.querySelector(".animate-pulse")).toBeNull();
   });
@@ -103,26 +93,21 @@ describe("TypingText", () => {
     vi.resetModules();
     vi.doMock("@/services/content", async () => {
       const actual =
-        await vi.importActual<typeof import("@/services/content")>(
-          "@/services/content",
-        );
+        await vi.importActual<typeof import("@/services/content")>("@/services/content");
       const cfg = actual.siteConfig as Record<string, unknown>;
       return {
         ...actual,
         siteConfig: {
           ...cfg,
           typingAnimation: {
-            ...((cfg.typingAnimation as Record<string, unknown> | undefined) ??
-              {}),
+            ...((cfg.typingAnimation as Record<string, unknown> | undefined) ?? {}),
             enabled: false,
           },
         },
       };
     });
     const mod = await import("../TypingText");
-    const { container } = render(
-      <mod.TypingText text={["a", "b"]} animateOnView={false} />,
-    );
+    const { container } = render(<mod.TypingText text={["a", "b"]} animateOnView={false} />);
     expect(container.textContent).toContain("a");
     expect(container.textContent).toContain("b");
     expect(container.querySelector(".animate-pulse")).toBeNull();
@@ -190,12 +175,7 @@ describe("TypingText", () => {
   it("switches to static, caret-free render when motion preference flips on mid-animation", async () => {
     const mq = setReducedMotion(false);
     const { container } = render(
-      <TypingText
-        text={["alpha", "beta"]}
-        speed={50}
-        lineDelay={200}
-        animateOnView={false}
-      />,
+      <TypingText text={["alpha", "beta"]} speed={50} lineDelay={200} animateOnView={false} />,
     );
 
     // Flip reduced-motion preference live.

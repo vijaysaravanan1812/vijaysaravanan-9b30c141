@@ -15,7 +15,12 @@ export function Publications() {
             <div className="flex items-start justify-between gap-3">
               <h3 className="text-base font-semibold">{p.title}</h3>
               {p.link && (
-                <a href={p.link} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-accent">
+                <a
+                  href={p.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-muted-foreground hover:text-accent"
+                >
                   <ExternalLink className="h-4 w-4" />
                 </a>
               )}

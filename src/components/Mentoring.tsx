@@ -15,7 +15,9 @@ export function Mentoring() {
               {m.role && <span className="text-accent">{m.role}</span>}
               {m.duration && <span>{m.duration}</span>}
             </div>
-            {m.detail && <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{m.detail}</p>}
+            {m.detail && (
+              <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{m.detail}</p>
+            )}
           </div>
         ))}
       </div>

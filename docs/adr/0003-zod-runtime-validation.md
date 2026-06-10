@@ -14,12 +14,14 @@ Validate every JSON payload with Zod at module-eval time in `src/services/conten
 ## Consequences
 
 **Positive**
+
 - Invalid content fails the build with a precise field path (`items.3.visible — missing required …`).
 - The same schemas validate JSON today and CMS/API payloads tomorrow.
 - Types are derived (`z.infer`) — single source of truth.
 - Tests can validate every real JSON file against its schema.
 
 **Negative**
+
 - A small runtime + bundle cost. Negligible for a portfolio.
 - Schema updates must be coordinated with data updates. Mitigated by `schemaVersion` + `migrate.ts`.
 

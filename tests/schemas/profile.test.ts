@@ -13,9 +13,7 @@ describe("profileSchema fixtures", () => {
     expect(res.success).toBe(false);
     if (!res.success) {
       const paths = res.error.issues.map((i) => i.path.join("."));
-      expect(paths).toEqual(
-        expect.arrayContaining(["name", "stats.0.visible", "socials.0.type"])
-      );
+      expect(paths).toEqual(expect.arrayContaining(["name", "stats.0.visible", "socials.0.type"]));
     }
   });
 });

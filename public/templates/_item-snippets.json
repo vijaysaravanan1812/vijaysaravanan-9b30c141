@@ -58,17 +58,105 @@
   "profile.social": { "type": "github", "url": "https://github.com/your-handle", "visible": true },
   "contact.link": { "label": "GitHub", "url": "https://github.com/your-handle", "visible": true },
   "site-config.section": { "id": "section-id", "label": "Section Label", "visible": true },
-  "site-config.resumeArchive": { "year": 2026, "label": "Vijay Saravanan — Resume", "url": "/resumes/resume_2026.pdf", "visible": true },
-  "timeline.item": { "visible": true, "year": "2026", "title": "Joined Company", "description": "Short note about the milestone." },
-  "open-source.item": { "visible": true, "project": "tanstack/router", "repository": "tanstack/router", "description": "Fixed X.", "url": "https://github.com/tanstack/router/pull/123" },
-  "talks.item": { "visible": true, "featured": false, "title": "Talk Title", "kind": "conference", "venue": "QCon", "date": "2026-05-01", "url": "", "description": "" },
-  "awards.item": { "visible": true, "title": "Award Name", "issuer": "Org", "year": 2026, "detail": "" },
-  "blog.item": { "visible": true, "title": "Post Title", "date": "2026-06-01", "summary": "What it's about.", "url": "https://example.com/post", "tags": ["systems"] },
-  "startups.item": { "visible": true, "name": "Startup Name", "role": "Founder", "tagline": "What you built.", "url": "", "duration": "2026 — Present", "detail": "" },
-  "products.item": { "visible": true, "name": "Product Name", "tagline": "One line.", "url": "", "description": "" },
-  "patents.item": { "visible": true, "title": "Patent Title", "number": "US-12345", "year": 2026, "url": "", "detail": "" },
-  "mentoring.item": { "visible": true, "program": "Program Name", "role": "Mentor", "duration": "2026", "detail": "" },
-  "media.item": { "visible": true, "title": "Article Title", "outlet": "Outlet", "date": "2026-06-01", "url": "" },
-  "testimonials.item": { "visible": true, "quote": "Their work shipped reliably and on time.", "author": "Name", "role": "Title", "company": "Company" },
-  "projects.item.featured": { "visible": true, "featured": true, "title": "Featured Project", "tags": ["Tag"], "stack": ["TypeScript"], "duration": "Q1 2026", "problem": "What was broken.", "outcome": "What you shipped.", "github": "", "demo": "" }
+  "site-config.resumeArchive": {
+    "year": 2026,
+    "label": "Vijay Saravanan — Resume",
+    "url": "/resumes/resume_2026.pdf",
+    "visible": true
+  },
+  "timeline.item": {
+    "visible": true,
+    "year": "2026",
+    "title": "Joined Company",
+    "description": "Short note about the milestone."
+  },
+  "open-source.item": {
+    "visible": true,
+    "project": "tanstack/router",
+    "repository": "tanstack/router",
+    "description": "Fixed X.",
+    "url": "https://github.com/tanstack/router/pull/123"
+  },
+  "talks.item": {
+    "visible": true,
+    "featured": false,
+    "title": "Talk Title",
+    "kind": "conference",
+    "venue": "QCon",
+    "date": "2026-05-01",
+    "url": "",
+    "description": ""
+  },
+  "awards.item": {
+    "visible": true,
+    "title": "Award Name",
+    "issuer": "Org",
+    "year": 2026,
+    "detail": ""
+  },
+  "blog.item": {
+    "visible": true,
+    "title": "Post Title",
+    "date": "2026-06-01",
+    "summary": "What it's about.",
+    "url": "https://example.com/post",
+    "tags": ["systems"]
+  },
+  "startups.item": {
+    "visible": true,
+    "name": "Startup Name",
+    "role": "Founder",
+    "tagline": "What you built.",
+    "url": "",
+    "duration": "2026 — Present",
+    "detail": ""
+  },
+  "products.item": {
+    "visible": true,
+    "name": "Product Name",
+    "tagline": "One line.",
+    "url": "",
+    "description": ""
+  },
+  "patents.item": {
+    "visible": true,
+    "title": "Patent Title",
+    "number": "US-12345",
+    "year": 2026,
+    "url": "",
+    "detail": ""
+  },
+  "mentoring.item": {
+    "visible": true,
+    "program": "Program Name",
+    "role": "Mentor",
+    "duration": "2026",
+    "detail": ""
+  },
+  "media.item": {
+    "visible": true,
+    "title": "Article Title",
+    "outlet": "Outlet",
+    "date": "2026-06-01",
+    "url": ""
+  },
+  "testimonials.item": {
+    "visible": true,
+    "quote": "Their work shipped reliably and on time.",
+    "author": "Name",
+    "role": "Title",
+    "company": "Company"
+  },
+  "projects.item.featured": {
+    "visible": true,
+    "featured": true,
+    "title": "Featured Project",
+    "tags": ["Tag"],
+    "stack": ["TypeScript"],
+    "duration": "Q1 2026",
+    "problem": "What was broken.",
+    "outcome": "What you shipped.",
+    "github": "",
+    "demo": ""
+  }
 }

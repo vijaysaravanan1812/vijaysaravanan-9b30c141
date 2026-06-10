@@ -18,9 +18,7 @@ export function Section({ id, title, eyebrow, children }: SectionProps) {
     >
       <div className="mx-auto max-w-5xl px-6">
         {eyebrow && (
-          <div className="mb-3 text-xs tracking-[0.2em] text-muted-foreground">
-            // {eyebrow}
-          </div>
+          <div className="mb-3 text-xs tracking-[0.2em] text-muted-foreground">// {eyebrow}</div>
         )}
         {title && <h2 className="section-title mb-12">{title}</h2>}
         {children}

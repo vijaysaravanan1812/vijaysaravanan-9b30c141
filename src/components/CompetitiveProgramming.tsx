@@ -3,7 +3,6 @@ import { competitiveProgramming, visibleOnly } from "@/services/content";
 import { Section } from "./Section";
 import { ExternalLink, Code2 } from "lucide-react";
 
-
 export function CompetitiveProgramming() {
   if (!competitiveProgramming.visible) return null;
   const platforms = visibleOnly(competitiveProgramming.platforms);
@@ -106,15 +105,7 @@ function PlatformCard({ p }: { p: CompetitivePlatform }) {
   );
 }
 
-function Stat({
-  label,
-  value,
-  sub,
-}: {
-  label: string;
-  value: string | number;
-  sub?: string;
-}) {
+function Stat({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
     <div>
       <div className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">

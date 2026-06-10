@@ -23,15 +23,15 @@ The roadmap is structured in **five levels**. Each level builds on the previous 
 
 **Audience:** anyone who wants to update résumé, projects, skills, or any other content. **No programming required.**
 
-| Technology | What it is | Why this project uses it | Tasks it enables |
-| --- | --- | --- | --- |
-| **HTML** | The markup language of the web — describes structure (headings, paragraphs, links). | Every page the browser shows is HTML under the hood, even though we write React components. | Reading error messages; understanding what `<h1>`, `<a>`, `<img>` mean. |
-| **CSS** | A styling language — colors, spacing, layout. | Visual design is built on top of CSS (via Tailwind utility classes). | Recognising a class like `text-lg` or `bg-primary` in a component. |
-| **JavaScript** | The programming language of the browser. | React, Vite, and every dependency in `package.json` are JavaScript / TypeScript. | Reading code without panicking; understanding `if`, arrays, `map`. |
-| **JSON** | A plain-text data format: keys, values, arrays, objects. | **All content** in this site lives in JSON files under `src/data/`. | Adding projects, hiding items, reordering sections — Level 1 is mostly JSON editing. |
-| **Git** | A version-control system that tracks every change to every file. | Every edit is committed; you can always roll back. | Cloning the repo, committing changes, pulling updates. |
-| **GitHub** | A web platform that hosts Git repositories and runs CI/CD. | The repo lives on GitHub; Actions runs tests and deploys to GitHub Pages. | Editing files in the browser, opening PRs, watching builds. |
-| **Markdown** | A lightweight text format used by `README.md` and every file under `docs/`. | All human-facing documentation is Markdown. | Editing the README; writing new docs. |
+| Technology     | What it is                                                                          | Why this project uses it                                                                    | Tasks it enables                                                                     |
+| -------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **HTML**       | The markup language of the web — describes structure (headings, paragraphs, links). | Every page the browser shows is HTML under the hood, even though we write React components. | Reading error messages; understanding what `<h1>`, `<a>`, `<img>` mean.              |
+| **CSS**        | A styling language — colors, spacing, layout.                                       | Visual design is built on top of CSS (via Tailwind utility classes).                        | Recognising a class like `text-lg` or `bg-primary` in a component.                   |
+| **JavaScript** | The programming language of the browser.                                            | React, Vite, and every dependency in `package.json` are JavaScript / TypeScript.            | Reading code without panicking; understanding `if`, arrays, `map`.                   |
+| **JSON**       | A plain-text data format: keys, values, arrays, objects.                            | **All content** in this site lives in JSON files under `src/data/`.                         | Adding projects, hiding items, reordering sections — Level 1 is mostly JSON editing. |
+| **Git**        | A version-control system that tracks every change to every file.                    | Every edit is committed; you can always roll back.                                          | Cloning the repo, committing changes, pulling updates.                               |
+| **GitHub**     | A web platform that hosts Git repositories and runs CI/CD.                          | The repo lives on GitHub; Actions runs tests and deploys to GitHub Pages.                   | Editing files in the browser, opening PRs, watching builds.                          |
+| **Markdown**   | A lightweight text format used by `README.md` and every file under `docs/`.         | All human-facing documentation is Markdown.                                                 | Editing the README; writing new docs.                                                |
 
 ### What you can do with only Level 1
 
@@ -48,17 +48,17 @@ The roadmap is structured in **five levels**. Each level builds on the previous 
 
 **Audience:** anyone who wants to modify the look & feel, add a new UI section, or build a new component.
 
-| Technology | Where it's used | What you need to know |
-| --- | --- | --- |
-| **TypeScript** | Every `.ts` / `.tsx` file. `tsconfig.json` enables `strict` mode. | Basic types (`string`, `number`, `boolean`, arrays, interfaces); `z.infer` from Zod schemas. |
-| **React 19** | Every component under `src/components/`. | Function components, JSX, conditional rendering, lists. |
-| **React Components** | One file per component (e.g. `Projects.tsx`, `Hero.tsx`). | Composition — small components combine into larger pages. |
-| **Props** | How a parent passes data to a child. | Typed via interfaces; never `any`. |
-| **State** | Local UI state via `useState`. | Used sparingly — content is static; state is mostly for menus, modals, search input. |
-| **Hooks** | `useEffect`, `useMemo`, plus project hooks under `src/hooks/`. | Rules of Hooks (top level, same order, in components only). |
-| **Tailwind CSS v4** | All styling. Tokens defined in `src/styles.css`. | Utility classes; **never** hard-code colors — use semantic tokens (`bg-primary`, `text-foreground`). |
-| **Responsive Design** | Tailwind breakpoints (`sm:`, `md:`, `lg:`). | Mobile-first — design for small screens first, then enhance. |
-| **Accessibility** | Semantic HTML, ARIA labels, focus management, contrast. | WCAG 2.2 AA target — see [`docs/design-system.md`](./design-system.md). |
+| Technology            | Where it's used                                                   | What you need to know                                                                                |
+| --------------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **TypeScript**        | Every `.ts` / `.tsx` file. `tsconfig.json` enables `strict` mode. | Basic types (`string`, `number`, `boolean`, arrays, interfaces); `z.infer` from Zod schemas.         |
+| **React 19**          | Every component under `src/components/`.                          | Function components, JSX, conditional rendering, lists.                                              |
+| **React Components**  | One file per component (e.g. `Projects.tsx`, `Hero.tsx`).         | Composition — small components combine into larger pages.                                            |
+| **Props**             | How a parent passes data to a child.                              | Typed via interfaces; never `any`.                                                                   |
+| **State**             | Local UI state via `useState`.                                    | Used sparingly — content is static; state is mostly for menus, modals, search input.                 |
+| **Hooks**             | `useEffect`, `useMemo`, plus project hooks under `src/hooks/`.    | Rules of Hooks (top level, same order, in components only).                                          |
+| **Tailwind CSS v4**   | All styling. Tokens defined in `src/styles.css`.                  | Utility classes; **never** hard-code colors — use semantic tokens (`bg-primary`, `text-foreground`). |
+| **Responsive Design** | Tailwind breakpoints (`sm:`, `md:`, `lg:`).                       | Mobile-first — design for small screens first, then enhance.                                         |
+| **Accessibility**     | Semantic HTML, ARIA labels, focus management, contrast.           | WCAG 2.2 AA target — see [`docs/design-system.md`](./design-system.md).                              |
 
 ### Common Level 2 tasks
 
@@ -72,15 +72,15 @@ The roadmap is structured in **five levels**. Each level builds on the previous 
 
 **Audience:** maintainers extending the system itself — adding new content types, changing how content flows, modifying search.
 
-| Technology / Concept | Purpose |
-| --- | --- |
-| **Vite 7** | Dev server + production bundler. Fast HMR. Config in `vite.config.ts`. |
-| **TanStack Start** | The framework around React: file-based routing, server functions, SSR-friendly. |
-| **Routing** | Files in `src/routes/` define URLs. `__root.tsx` is the shell; `index.tsx` is the homepage. |
-| **Search Architecture** | `SearchPalette.tsx` indexes content from the content service. See [search flow](./architecture/search-flow.md). |
-| **Theme System** | `use-theme.ts` + CSS variables in `styles.css`. Dark by default. See [theme flow](./architecture/theme-flow.md). |
-| **Content Service** | `src/services/content.ts` — the **only** module the rest of the app uses to read data. |
-| **Visibility Logic** | `visibleOnly`, `featuredOnly`, `isSectionRenderable` in `content.ts`. See [visibility flow](./architecture/visibility-flow.md). |
+| Technology / Concept           | Purpose                                                                                                                                       |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Vite 7**                     | Dev server + production bundler. Fast HMR. Config in `vite.config.ts`.                                                                        |
+| **TanStack Start**             | The framework around React: file-based routing, server functions, SSR-friendly.                                                               |
+| **Routing**                    | Files in `src/routes/` define URLs. `__root.tsx` is the shell; `index.tsx` is the homepage.                                                   |
+| **Search Architecture**        | `SearchPalette.tsx` indexes content from the content service. See [search flow](./architecture/search-flow.md).                               |
+| **Theme System**               | `use-theme.ts` + CSS variables in `styles.css`. Dark by default. See [theme flow](./architecture/theme-flow.md).                              |
+| **Content Service**            | `src/services/content.ts` — the **only** module the rest of the app uses to read data.                                                        |
+| **Visibility Logic**           | `visibleOnly`, `featuredOnly`, `isSectionRenderable` in `content.ts`. See [visibility flow](./architecture/visibility-flow.md).               |
 | **Content Source Abstraction** | `src/services/content-source.ts` — the seam that lets us swap JSON for a CMS/API/DB later. See [ADR-0004](./adr/0004-content-abstraction.md). |
 
 ### How content flows
@@ -100,16 +100,16 @@ See also: [content flow](./architecture/content-flow.md), [rendering flow](./arc
 
 **Audience:** maintainers protecting the long-term health of the codebase.
 
-| Technology | Why it exists | How it protects the project |
-| --- | --- | --- |
-| **Zod** | Runtime schema validation. | Invalid JSON fails the build with a precise field path — bad data can never reach production. See [ADR-0003](./adr/0003-zod-runtime-validation.md). |
-| **Schema Validation** | Build-time check via `plugins/data-schema-validator.ts`. | Every JSON save is re-validated; mistakes surface instantly. |
-| **Testing** | Multi-layer test suite under `tests/`. | Schemas, visibility, navigation, search, content all covered. |
-| **Vitest** | Test runner. | Fast, Vite-native; `bun run test`, `bun run test:watch`, `bun run test:coverage`. |
-| **React Testing Library** | Component tests focused on user-visible behavior. | Prevents UI regressions when refactoring. |
-| **GitHub Actions** | CI/CD platform. Workflows in `.github/workflows/`. | Runs typecheck, lint, tests, and coverage on every push. |
-| **CI/CD** | Continuous integration & deployment. | Broken code never reaches the deployed site. |
-| **Coverage Reports** | Uploaded as workflow artifacts. | Lets you spot untested files before they cause regressions. |
+| Technology                | Why it exists                                            | How it protects the project                                                                                                                         |
+| ------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Zod**                   | Runtime schema validation.                               | Invalid JSON fails the build with a precise field path — bad data can never reach production. See [ADR-0003](./adr/0003-zod-runtime-validation.md). |
+| **Schema Validation**     | Build-time check via `plugins/data-schema-validator.ts`. | Every JSON save is re-validated; mistakes surface instantly.                                                                                        |
+| **Testing**               | Multi-layer test suite under `tests/`.                   | Schemas, visibility, navigation, search, content all covered.                                                                                       |
+| **Vitest**                | Test runner.                                             | Fast, Vite-native; `bun run test`, `bun run test:watch`, `bun run test:coverage`.                                                                   |
+| **React Testing Library** | Component tests focused on user-visible behavior.        | Prevents UI regressions when refactoring.                                                                                                           |
+| **GitHub Actions**        | CI/CD platform. Workflows in `.github/workflows/`.       | Runs typecheck, lint, tests, and coverage on every push.                                                                                            |
+| **CI/CD**                 | Continuous integration & deployment.                     | Broken code never reaches the deployed site.                                                                                                        |
+| **Coverage Reports**      | Uploaded as workflow artifacts.                          | Lets you spot untested files before they cause regressions.                                                                                         |
 
 ### Adding a new test
 
@@ -124,14 +124,14 @@ See also: [content flow](./architecture/content-flow.md), [rendering flow](./arc
 
 **Audience:** maintainers considering migrating off the current static-JSON model.
 
-| Technology | When it becomes useful | How the current architecture supports it |
-| --- | --- | --- |
-| **CMS** (Strapi, Sanity, Contentful) | Non-developers need a UI to edit content. | Swap `jsonContentSource` for a CMS adapter — components untouched. See [future-cms-migration](./architecture/future-cms-migration.md). |
-| **REST APIs** | Content must come from a server (multi-author, dynamic). | Adapter fetches at build or request time; Zod re-validates. See [future-api-migration](./architecture/future-api-migration.md). |
-| **GraphQL** | Multiple clients need shaped queries. | Same adapter seam; replace the fetch layer with a typed GraphQL client. |
-| **Databases** (Postgres, SQLite) | Persistent reads/writes, comments, analytics. | See [future-database-migration](./architecture/future-database-migration.md). |
-| **Static Site Hosting** (GitHub Pages, Vercel, Netlify, S3, VPS) | Already supported today — `dist/` is fully static. | Pick any provider; see the Hosting & Deployment guide in the README. |
-| **AI Assistants** | Smart search, summarization, content drafting. | See [`docs/future-ai.md`](./future-ai.md). |
+| Technology                                                       | When it becomes useful                                   | How the current architecture supports it                                                                                               |
+| ---------------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **CMS** (Strapi, Sanity, Contentful)                             | Non-developers need a UI to edit content.                | Swap `jsonContentSource` for a CMS adapter — components untouched. See [future-cms-migration](./architecture/future-cms-migration.md). |
+| **REST APIs**                                                    | Content must come from a server (multi-author, dynamic). | Adapter fetches at build or request time; Zod re-validates. See [future-api-migration](./architecture/future-api-migration.md).        |
+| **GraphQL**                                                      | Multiple clients need shaped queries.                    | Same adapter seam; replace the fetch layer with a typed GraphQL client.                                                                |
+| **Databases** (Postgres, SQLite)                                 | Persistent reads/writes, comments, analytics.            | See [future-database-migration](./architecture/future-database-migration.md).                                                          |
+| **Static Site Hosting** (GitHub Pages, Vercel, Netlify, S3, VPS) | Already supported today — `dist/` is fully static.       | Pick any provider; see the Hosting & Deployment guide in the README.                                                                   |
+| **AI Assistants**                                                | Smart search, summarization, content drafting.           | See [`docs/future-ai.md`](./future-ai.md).                                                                                             |
 
 The single thing that makes all of these migrations cheap is the **content-source abstraction** ([ADR-0004](./adr/0004-content-abstraction.md)). Keep it intact.
 
@@ -214,7 +214,9 @@ See also: [Content Editor Guide](./content-editor-guide.md).
 
 ```markdown
 # Title
+
 ## Subtitle
+
 ### Smaller subtitle
 ```
 
@@ -256,15 +258,15 @@ bun run test
 ### Emphasis
 
 ```markdown
-**bold**   *italic*   ~~strikethrough~~
+**bold** _italic_ ~~strikethrough~~
 ```
 
 ### Tables
 
 ```markdown
 | Column A | Column B |
-| --- | --- |
-| Cell 1 | Cell 2 |
+| -------- | -------- |
+| Cell 1   | Cell 2   |
 ```
 
 ### Images
@@ -304,13 +306,13 @@ Use whichever resources are current when you're reading this — the names below
 
 ## Summary
 
-| Goal | Minimum level required |
-| --- | --- |
-| Update résumé, projects, skills | Level 1 |
-| Edit the README or docs | Level 1 |
-| Change UI / add a section | Level 2 |
-| Add a new content type | Level 3 |
-| Modify validation, tests, or CI | Level 4 |
-| Migrate off JSON to a CMS/API/DB | Level 5 |
+| Goal                             | Minimum level required |
+| -------------------------------- | ---------------------- |
+| Update résumé, projects, skills  | Level 1                |
+| Edit the README or docs          | Level 1                |
+| Change UI / add a section        | Level 2                |
+| Add a new content type           | Level 3                |
+| Modify validation, tests, or CI  | Level 4                |
+| Migrate off JSON to a CMS/API/DB | Level 5                |
 
 Keep this document up to date as the stack evolves. If a technology is removed or replaced, update the relevant level and link to the ADR that records the decision.

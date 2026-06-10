@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ## [Unreleased]
 
 ### Added
+
 - Comprehensive documentation set under `docs/` covering architecture, data model, releases, dependencies, design system, licensing, maintenance, and future roadmap.
 - `docs/architecture/` with Mermaid diagrams for current and future states.
 - `public/schema/` exporting JSON Schemas from Zod definitions.
@@ -14,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 - Archive support documented (`archived: true` on content entries).
 
 ### Changed
+
 - README updated to act as an entry point linking into `docs/`.
 
 ---
@@ -23,12 +25,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 Future major version. Reserved for breaking changes (schema rename, route restructure, content provider replacement).
 
 ### Added
+
 - _placeholder_
 
 ### Changed
+
 - _placeholder_
 
 ### Removed
+
 - _placeholder_
 
 ---
@@ -36,6 +41,7 @@ Future major version. Reserved for breaking changes (schema rename, route restru
 ## [1.1.0] - TBD
 
 ### Added
+
 - Testing infrastructure (`tests/`), CI workflow, coverage thresholds.
 - GitHub Pages deploy workflow.
 - Hosting & Deployment Guide in README.
@@ -45,6 +51,7 @@ Future major version. Reserved for breaking changes (schema rename, route restru
 ## [1.0.0] - Initial Release
 
 ### Added
+
 - Portfolio scaffold with React + TanStack Start + Vite.
 - JSON-driven content under `src/data/`.
 - Zod schema validation.
@@ -60,20 +67,26 @@ Future major version. Reserved for breaking changes (schema rename, route restru
 ## [X.Y.Z] - YYYY-MM-DD
 
 ### Added
+
 - New features.
 
 ### Changed
+
 - Changes in existing functionality.
 
 ### Deprecated
+
 - Soon-to-be removed features.
 
 ### Removed
+
 - Removed features.
 
 ### Fixed
+
 - Bug fixes.
 
 ### Security
+
 - Vulnerability fixes.
 ```

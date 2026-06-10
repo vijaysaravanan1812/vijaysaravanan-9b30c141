@@ -9,11 +9,6 @@ describe("visibility helpers (pure)", () => {
     expect(out[0].meta.n).toBe(1);
   });
   it("featuredOnly returns [] when nothing is featured", () => {
-    expect(
-      featuredOnly([
-        { visible: true, featured: false },
-        { visible: true },
-      ])
-    ).toEqual([]);
+    expect(featuredOnly([{ visible: true, featured: false }, { visible: true }])).toEqual([]);
   });
 });

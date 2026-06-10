@@ -4,7 +4,9 @@ interface Props {
   name: string;
   children: ReactNode;
 }
-interface State { error: Error | null; }
+interface State {
+  error: Error | null;
+}
 
 /**
  * Wrap each section so a render or validation error degrades to a

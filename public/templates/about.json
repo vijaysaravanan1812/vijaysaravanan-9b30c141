@@ -7,10 +7,6 @@
   ],
   "principles": {
     "title": "How I work",
-    "items": [
-      "Ship small, ship often.",
-      "Measure before optimizing.",
-      "Write it down."
-    ]
+    "items": ["Ship small, ship often.", "Measure before optimizing.", "Write it down."]
   }
 }

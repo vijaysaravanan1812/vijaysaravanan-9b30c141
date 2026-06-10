@@ -18,12 +18,12 @@ This portfolio is a static React application backed by JSON content files. Every
 
 ### Layer Responsibilities
 
-| Layer | Responsibility | Replaceable? |
-|---|---|---|
-| UI Components | Render data, handle interaction, accessibility. Never reads JSON directly. | No |
-| Content Service | Public API consumed by UI. Returns typed, filtered, visibility-aware data. | No |
-| Content Provider | Adapter that fetches raw content (JSON today, CMS/API/DB tomorrow). | YES — swap freely |
-| Storage | Where the data lives. | YES — JSON → CMS/API/DB |
+| Layer            | Responsibility                                                             | Replaceable?            |
+| ---------------- | -------------------------------------------------------------------------- | ----------------------- |
+| UI Components    | Render data, handle interaction, accessibility. Never reads JSON directly. | No                      |
+| Content Service  | Public API consumed by UI. Returns typed, filtered, visibility-aware data. | No                      |
+| Content Provider | Adapter that fetches raw content (JSON today, CMS/API/DB tomorrow).        | YES — swap freely       |
+| Storage          | Where the data lives.                                                      | YES — JSON → CMS/API/DB |
 
 ## Diagrams
 

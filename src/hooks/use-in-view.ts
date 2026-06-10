@@ -13,7 +13,7 @@ export function useInView<T extends HTMLElement>(threshold = 0.15) {
           obs.disconnect();
         }
       },
-      { threshold }
+      { threshold },
     );
     obs.observe(el);
     return () => obs.disconnect();

@@ -16,7 +16,9 @@ export function Skills() {
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
               {c.items.map((s) => (
-                <span key={s} className="chip">{s}</span>
+                <span key={s} className="chip">
+                  {s}
+                </span>
               ))}
             </div>
           </div>

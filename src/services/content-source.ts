@@ -6,11 +6,28 @@
 import * as bundled from "./content";
 
 export type SectionKey =
-  | "siteConfig" | "profile" | "about" | "experience" | "projects"
-  | "skills" | "education" | "publications" | "certifications"
-  | "achievements" | "contact" | "timeline" | "openSource" | "talks"
-  | "awards" | "blog" | "startups" | "products" | "patents"
-  | "mentoring" | "media" | "testimonials";
+  | "siteConfig"
+  | "profile"
+  | "about"
+  | "experience"
+  | "projects"
+  | "skills"
+  | "education"
+  | "publications"
+  | "certifications"
+  | "achievements"
+  | "contact"
+  | "timeline"
+  | "openSource"
+  | "talks"
+  | "awards"
+  | "blog"
+  | "startups"
+  | "products"
+  | "patents"
+  | "mentoring"
+  | "media"
+  | "testimonials";
 
 export interface ContentSource {
   get<K extends SectionKey>(key: K): (typeof bundled)[K];

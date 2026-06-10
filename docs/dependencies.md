@@ -3,6 +3,7 @@
 ## Update Workflow
 
 Routine refresh (monthly):
+
 ```bash
 bun update            # respects semver ranges
 bun run typecheck
@@ -12,9 +13,11 @@ bun run build
 ```
 
 Major version bump:
+
 ```bash
 bun add <pkg>@latest
 ```
+
 Read the package's changelog, run the full suite, and commit only after a green build.
 
 ## Version Pinning
@@ -40,6 +43,7 @@ Read the package's changelog, run the full suite, and commit only after a green 
 ## When to Pin Exactly
 
 Pin exact versions (no caret) when:
+
 - A regression in the package broke production.
 - A package is unstable (pre-1.0) and minor bumps have shipped breaking changes.
 
@@ -48,6 +52,7 @@ Document the pin reason in `CHANGELOG.md` and revisit each quarter.
 ## Replacing a Dependency
 
 Always prefer:
+
 1. Web standard APIs.
 2. Pure JS / TS implementation.
 3. A well-maintained package.

@@ -17,9 +17,7 @@ const ANSI = {
 function formatPath(p: (string | number)[]): string {
   if (p.length === 0) return "(root)";
   return p
-    .map((seg, i) =>
-      typeof seg === "number" ? `[${seg}]` : i === 0 ? String(seg) : `.${seg}`
-    )
+    .map((seg, i) => (typeof seg === "number" ? `[${seg}]` : i === 0 ? String(seg) : `.${seg}`))
     .join("");
 }
 
@@ -35,7 +33,7 @@ function formatZodError(file: string, error: z.ZodError): string {
 
 async function validateOne(
   dataDir: string,
-  file: DataFileName
+  file: DataFileName,
 ): Promise<{ ok: true } | { ok: false; message: string }> {
   const fullPath = path.join(dataDir, file);
   let raw: string;
@@ -77,7 +75,7 @@ async function validateAll(dataDir: string): Promise<string[]> {
       if (!known.has(f)) {
         // eslint-disable-next-line no-console
         console.warn(
-          `${ANSI.yellow}⚠ src/data/${f} has no schema — it will not be validated.${ANSI.reset}`
+          `${ANSI.yellow}⚠ src/data/${f} has no schema — it will not be validated.${ANSI.reset}`,
         );
       }
     }
@@ -97,14 +95,14 @@ export function dataSchemaValidator(): Plugin {
   let isDev = false;
 
   const runAndReport = async (
-    server?: { ws?: { send: (payload: unknown) => void } } | undefined
+    server?: { ws?: { send: (payload: unknown) => void } } | undefined,
   ) => {
     const errors = await validateAll(dataDir);
     if (errors.length === 0) {
       if (isDev) {
         // eslint-disable-next-line no-console
         console.log(
-          `${ANSI.green}✓ data schemas OK${ANSI.reset} ${ANSI.dim}(src/data validated)${ANSI.reset}`
+          `${ANSI.green}✓ data schemas OK${ANSI.reset} ${ANSI.dim}(src/data validated)${ANSI.reset}`,
         );
       }
       return;

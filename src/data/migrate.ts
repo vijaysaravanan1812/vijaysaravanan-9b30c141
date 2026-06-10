@@ -27,9 +27,7 @@ export function migrate(raw: unknown, target: string = CURRENT_SCHEMA_VERSION): 
     seen.add(from);
     const step = MIGRATIONS[from];
     if (!step) {
-      throw new Error(
-        `No migration registered from schemaVersion "${from}" to "${target}".`
-      );
+      throw new Error(`No migration registered from schemaVersion "${from}" to "${target}".`);
     }
     current = step.run(current);
     from = step.to;

@@ -34,7 +34,14 @@
     {
       "visible": true,
       "name": "Areas of Interest",
-      "items": ["Backend Engineering", "Cloud", "SaaS", "Operating Systems", "Networks", "Distributed Systems"]
+      "items": [
+        "Backend Engineering",
+        "Cloud",
+        "SaaS",
+        "Operating Systems",
+        "Networks",
+        "Distributed Systems"
+      ]
     }
   ]
 }

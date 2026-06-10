@@ -12,7 +12,7 @@
     { "label": "Hidden", "value": "0", "visible": false }
   ],
   "socials": [
-    { "type": "github",   "url": "https://github.com/x",   "visible": true },
+    { "type": "github", "url": "https://github.com/x", "visible": true },
     { "type": "linkedin", "url": "https://linkedin.com/x", "visible": false }
   ]
 }
