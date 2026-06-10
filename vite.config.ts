@@ -12,10 +12,12 @@ import { dataSchemaValidator } from "./plugins/data-schema-validator";
 // deploys (Netlify, custom domains, Lovable hosting).
 const BASE_PATH = process.env.BASE_PATH ?? "/";
 
-// Force a static Nitro build when the user runs `bun run build` themselves
-// (Netlify / GitHub Pages / any static host). Inside the Lovable sandbox the
-// preset is force-pinned to Cloudflare regardless of what we pass here, so
-// this is safe.
+// Static SPA build for Netlify / GitHub Pages / any static host.
+// We use TanStack Start's built-in SPA mode (`spa.enabled` + `spa.prerender.enabled`)
+// to generate a single index.html shell that mounts the React app client-side.
+// This avoids Nitro's route-by-route prerender crawler (which 404s when the
+// router basepath doesn't exactly match `/`) and produces the index.html that
+// GitHub Pages / Netlify need at the root of the published directory.
 export default defineConfig({
   nitro: {
     preset: "static",
@@ -23,23 +25,18 @@ export default defineConfig({
       dir: "dist",
       publicDir: "dist/client",
     },
-    // Tell Nitro's prerenderer which URLs to render. It runs the built worker
-    // over HTTP and writes the resulting HTML into publicDir. Must include the
-    // basepath, otherwise the router doesn't match and you get [404] Not Found.
-    // (Cast: this passthrough key isn't in @lovable.dev/vite-tanstack-config's
-    // narrowed type, but it's forwarded to nitro() verbatim.)
-    prerender: {
-      crawlLinks: true,
-      routes: [BASE_PATH],
-      failOnError: false,
-    },
-  } as never,
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
     server: { entry: "server" },
     router: { basepath: BASE_PATH },
-    pages: [{ path: BASE_PATH }],
+    // SPA mode: emit a single static index.html shell at the basepath.
+    // `maskPath` is the route the shell renders against; `/` matches our index route.
+    spa: {
+      enabled: true,
+      maskPath: "/",
+      prerender: { enabled: true, crawlLinks: false },
+    },
   },
   vite: {
     base: BASE_PATH,
