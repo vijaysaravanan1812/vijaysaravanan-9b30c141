@@ -1614,3 +1614,58 @@ How:
   becomes another way to author the same field.
 
 See `docs/adr/0004-content-abstraction.md` for the underlying decision.
+
+---
+
+## Docker Deployment
+
+This project builds to **static assets** (`dist/client/`) via TanStack Start's `target: "static"`. The Docker image uses a multi-stage build: a `bun` builder stage compiles the app, and an `nginx:alpine` runtime stage serves the static files on port `3000` with SPA fallback.
+
+### Project type detected
+
+- Static Vite / TanStack Start (no SSR runtime, no Node server required)
+- Build output: `dist/client/` (HTML + hashed `assets/`)
+- The generated `index.html` is produced by `scripts/postbuild.mjs`
+
+### Files
+
+- `Dockerfile` — multi-stage (bun → nginx)
+- `.dockerignore` — keeps the build context small
+- `docker-compose.yml` — one-command local run
+
+### Build & run
+
+```bash
+docker build -t portfolio .
+docker run -p 3000:3000 portfolio
+```
+
+Or with compose:
+
+```bash
+docker compose up --build
+```
+
+Then open <http://localhost:3000>.
+
+### Custom base path
+
+The image defaults to serving at `/`. If you need a subpath (e.g. behind a reverse proxy at `/app/`):
+
+```bash
+docker build --build-arg BASE_PATH=/app/ -t portfolio .
+```
+
+### Why not GitHub Pages for SSR?
+
+This project is **fully static**, so GitHub Pages works fine. If you later switch TanStack Start to SSR (`target: "node-server"` or similar), GitHub Pages cannot run a Node server — it only serves static files. In that case use one of:
+
+| Platform | Why |
+|---|---|
+| **Docker / VPS** | Full control, run the Node SSR process behind nginx/Caddy |
+| **Google Cloud Run** | Serverless containers, scales to zero, uses this Dockerfile as-is |
+| **Railway** | Auto-detects Dockerfile, zero-config deploys, free tier |
+| **Render** | Native Docker support, free static + paid web service tiers |
+| **Fly.io** | Global edge deployment, `fly launch` reads the Dockerfile directly |
+
+All five accept the Dockerfile in this repo without modification.
