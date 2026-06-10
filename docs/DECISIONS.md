@@ -16,13 +16,13 @@ Use **React 19** for UI components and **Vite 7** as the build tool, orchestrate
 
 ### Alternatives Considered
 
-| Alternative | Why Rejected |
-|-------------|-------------|
-| Next.js | Heavy framework with App Router complexity, server-centric architecture, and Vercel-optimized defaults. Overkill for a static portfolio. |
-| Gatsby | Plugin ecosystem is aging, build times are slow for large sites, and the GraphQL data layer adds unnecessary abstraction. |
-| Astro | Excellent for content sites, but React component reuse and ecosystem familiarity were prioritized over multi-framework islands. |
-| Plain HTML/CSS/JS | Would sacrifice component reusability, theming, search interactivity, and long-term maintainability. |
-| Svelte / Vue | Both are excellent, but React's ecosystem (Radix UI, TanStack Query, testing libraries) provides the richest accessibility and tooling support. |
+| Alternative       | Why Rejected                                                                                                                                    |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Next.js           | Heavy framework with App Router complexity, server-centric architecture, and Vercel-optimized defaults. Overkill for a static portfolio.        |
+| Gatsby            | Plugin ecosystem is aging, build times are slow for large sites, and the GraphQL data layer adds unnecessary abstraction.                       |
+| Astro             | Excellent for content sites, but React component reuse and ecosystem familiarity were prioritized over multi-framework islands.                 |
+| Plain HTML/CSS/JS | Would sacrifice component reusability, theming, search interactivity, and long-term maintainability.                                            |
+| Svelte / Vue      | Both are excellent, but React's ecosystem (Radix UI, TanStack Query, testing libraries) provides the richest accessibility and tooling support. |
 
 ### Consequences
 
@@ -45,13 +45,13 @@ Store all content as **static JSON files** under `src/data/*.json`, validated at
 
 ### Alternatives Considered
 
-| Alternative | Why Rejected |
-|-------------|-------------|
-| Headless CMS (Strapi, Contentful, Sanity) | Adds hosting cost, network dependency, API rate limits, and vendor lock-in. Requires an always-online service for a site that updates monthly at most. |
-| Markdown + frontmatter | Good for blog posts, but poor for highly structured data (nested objects, arrays with visibility flags, typed fields). Would require a parsing layer that duplicates what Zod already provides. |
-| Notion as CMS | Requires API keys, network calls, and has rate limits. Content is not version-controlled with the code. |
-| SQLite / PostgreSQL | Adds operational complexity (migrations, backups, connection strings) for data that changes infrequently and fits comfortably in JSON. |
-| YAML / TOML | Less tooling support than JSON. No native TypeScript import support. Zod has first-class JSON parsing. |
+| Alternative                               | Why Rejected                                                                                                                                                                                    |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Headless CMS (Strapi, Contentful, Sanity) | Adds hosting cost, network dependency, API rate limits, and vendor lock-in. Requires an always-online service for a site that updates monthly at most.                                          |
+| Markdown + frontmatter                    | Good for blog posts, but poor for highly structured data (nested objects, arrays with visibility flags, typed fields). Would require a parsing layer that duplicates what Zod already provides. |
+| Notion as CMS                             | Requires API keys, network calls, and has rate limits. Content is not version-controlled with the code.                                                                                         |
+| SQLite / PostgreSQL                       | Adds operational complexity (migrations, backups, connection strings) for data that changes infrequently and fits comfortably in JSON.                                                          |
+| YAML / TOML                               | Less tooling support than JSON. No native TypeScript import support. Zod has first-class JSON parsing.                                                                                          |
 
 ### Consequences
 
@@ -75,12 +75,12 @@ Use **TypeScript 5.8** with `strict: true` for all source code, tests, and tooli
 
 ### Alternatives Considered
 
-| Alternative | Why Rejected |
-|-------------|-------------|
-| JavaScript (ES2022) | No compile-time safety. Refactoring `visible` to `isVisible` across 20 files would be a global search-and-replace gamble. |
-| JSDoc types | Provides some IntelliSense but no compile-time enforcement. Cannot express complex generic types like `Visible<T>` or `Featurable<T>`. |
-| Flow | Largely abandoned by the community. Inferior ecosystem integration compared to TypeScript. |
-| Deno / Bun runtime types | Not relevant — the decision is about the type system, not the runtime. TypeScript compiles to JavaScript that runs everywhere. |
+| Alternative              | Why Rejected                                                                                                                           |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| JavaScript (ES2022)      | No compile-time safety. Refactoring `visible` to `isVisible` across 20 files would be a global search-and-replace gamble.              |
+| JSDoc types              | Provides some IntelliSense but no compile-time enforcement. Cannot express complex generic types like `Visible<T>` or `Featurable<T>`. |
+| Flow                     | Largely abandoned by the community. Inferior ecosystem integration compared to TypeScript.                                             |
+| Deno / Bun runtime types | Not relevant — the decision is about the type system, not the runtime. TypeScript compiles to JavaScript that runs everywhere.         |
 
 ### Consequences
 
@@ -104,13 +104,13 @@ Use **Zod 3.x** as the single source of truth for all data schemas. Every `src/d
 
 ### Alternatives Considered
 
-| Alternative | Why Rejected |
-|-------------|-------------|
-| JSON Schema + ajv | JSON Schema is verbose and lacks native TypeScript inference. Would require maintaining a separate type definition file. |
-| Yup | Similar to Zod but larger bundle size and less ergonomic for nested object arrays. |
-| io-ts | Powerful but has a steeper learning curve and heavier functional programming style. Zod's API is more approachable. |
-| Manual `if (!data.field) throw` | Fragile, repetitive, and produces poor error messages. Does not scale to 20+ schemas with nested structures. |
-| No validation | Would allow broken data to silently corrupt the UI or crash React components at render time. |
+| Alternative                     | Why Rejected                                                                                                             |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| JSON Schema + ajv               | JSON Schema is verbose and lacks native TypeScript inference. Would require maintaining a separate type definition file. |
+| Yup                             | Similar to Zod but larger bundle size and less ergonomic for nested object arrays.                                       |
+| io-ts                           | Powerful but has a steeper learning curve and heavier functional programming style. Zod's API is more approachable.      |
+| Manual `if (!data.field) throw` | Fragile, repetitive, and produces poor error messages. Does not scale to 20+ schemas with nested structures.             |
+| No validation                   | Would allow broken data to silently corrupt the UI or crash React components at render time.                             |
 
 ### Consequences
 
@@ -135,13 +135,13 @@ Render all content sections on a single route (`/`), with each section wrapped i
 
 ### Alternatives Considered
 
-| Alternative | Why Rejected |
-|-------------|-------------|
+| Alternative                                     | Why Rejected                                                                                                                                   |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Multi-page routes (`/about`, `/projects`, etc.) | Breaks the narrative flow. Requires full page reloads or complex route-level state sharing. Harder to maintain a consistent scroll experience. |
-| Virtual scrolling | Unnecessary complexity. The page is not infinite — all content is known at build time and fits in memory. |
-| Pagination | Inappropriate for a portfolio. Visitors should not click "Next" to see more achievements. |
-| Tabs / accordion layout | Hides content behind interaction barriers. Search engines and users scanning the page cannot see all content at once. |
-| Full-screen slide transitions | Flashy but frustrating for users who want to skim or search. Breaks browser find-in-page. |
+| Virtual scrolling                               | Unnecessary complexity. The page is not infinite — all content is known at build time and fits in memory.                                      |
+| Pagination                                      | Inappropriate for a portfolio. Visitors should not click "Next" to see more achievements.                                                      |
+| Tabs / accordion layout                         | Hides content behind interaction barriers. Search engines and users scanning the page cannot see all content at once.                          |
+| Full-screen slide transitions                   | Flashy but frustrating for users who want to skim or search. Breaks browser find-in-page.                                                      |
 
 ### Consequences
 
@@ -167,12 +167,12 @@ Use **hash anchors** (`#about`, `#projects`) for in-page section navigation. The
 
 ### Alternatives Considered
 
-| Alternative | Why Rejected |
-|-------------|-------------|
+| Alternative                                                    | Why Rejected                                                                                                                                                                          |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Full client-side routing (TanStack Router paths like `/about`) | Would create separate route files for each section, fragmenting the single-page experience. Each route would need its own loader and meta tags, duplicating the index page structure. |
-| Scroll-to without URL update | Breaks shareability. Users cannot copy a link that points to a specific section. |
-| Query params (`?section=projects`) | Ugly URLs. Harder to parse. Does not leverage native browser anchor behavior. |
-| Third-party scroll library | Adds dependency weight for behavior (`scrollIntoView`) that the browser natively supports. |
+| Scroll-to without URL update                                   | Breaks shareability. Users cannot copy a link that points to a specific section.                                                                                                      |
+| Query params (`?section=projects`)                             | Ugly URLs. Harder to parse. Does not leverage native browser anchor behavior.                                                                                                         |
+| Third-party scroll library                                     | Adds dependency weight for behavior (`scrollIntoView`) that the browser natively supports.                                                                                            |
 
 ### Consequences
 
@@ -196,13 +196,13 @@ Every section file has a top-level `visible: boolean`. Every item within arrays 
 
 ### Alternatives Considered
 
-| Alternative | Why Rejected |
-|-------------|-------------|
-| Commenting out JSON entries | Brittle. Comments are not valid in JSON. Would require a pre-processor or manual field removal. |
-| Separate "draft" and "published" files | Doubles the file count. Harder to migrate content from draft to published. No single source of truth. |
+| Alternative                                          | Why Rejected                                                                                                                |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Commenting out JSON entries                          | Brittle. Comments are not valid in JSON. Would require a pre-processor or manual field removal.                             |
+| Separate "draft" and "published" files               | Doubles the file count. Harder to migrate content from draft to published. No single source of truth.                       |
 | Date-based visibility (`publishAfter: "2025-01-01"`) | Adds complexity (time zones, clock skew, scheduler logic). Most content changes are manual decisions, not scheduled events. |
-| Deleting hidden items | Permanent data loss. The owner may want to re-enable a section later without reconstructing it from memory or Git history. |
-| CMS workflow states | Requires a CMS. This project intentionally avoids CMS dependencies. |
+| Deleting hidden items                                | Permanent data loss. The owner may want to re-enable a section later without reconstructing it from memory or Git history.  |
+| CMS workflow states                                  | Requires a CMS. This project intentionally avoids CMS dependencies.                                                         |
 
 ### Consequences
 
@@ -226,12 +226,12 @@ Target **static hosting** exclusively. The build produces a `dist/` folder conta
 
 ### Alternatives Considered
 
-| Alternative | Why Rejected |
-|-------------|-------------|
-| Server-side rendering (SSR) at runtime | Requires a running Node.js / edge process. Adds cost, complexity, and cold-start latency for a site with no dynamic data. |
-| Serverless functions for content | Overkill. Content is static JSON bundled at build time. No API endpoints are needed for portfolio display. |
-| Docker container deployment | Adds operational overhead (registry, orchestration, scaling) for a site that serves pre-built files. |
-| Managed platform (Vercel, Netlify) with SSR | These platforms support static hosting perfectly well. The decision is to use their *static* offering, not their serverless offering. |
+| Alternative                                 | Why Rejected                                                                                                                          |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Server-side rendering (SSR) at runtime      | Requires a running Node.js / edge process. Adds cost, complexity, and cold-start latency for a site with no dynamic data.             |
+| Serverless functions for content            | Overkill. Content is static JSON bundled at build time. No API endpoints are needed for portfolio display.                            |
+| Docker container deployment                 | Adds operational overhead (registry, orchestration, scaling) for a site that serves pre-built files.                                  |
+| Managed platform (Vercel, Netlify) with SSR | These platforms support static hosting perfectly well. The decision is to use their _static_ offering, not their serverless offering. |
 
 ### Consequences
 
@@ -257,12 +257,12 @@ All content access flows through `src/services/content.ts`. This file imports ra
 
 ### Alternatives Considered
 
-| Alternative | Why Rejected |
-|-------------|-------------|
-| Direct JSON imports in components | Would couple every component to the current file structure. Changing to a CMS would require editing 20+ component files. |
-| React Context + useReducer | Adds unnecessary runtime complexity. Content does not change after initial load. Context is useful for mutable state, not static data. |
-| TanStack Query for local JSON | Overkill. No network request, no caching strategy, no stale-while-revalidate needed. JSON is already in the bundle. |
-| Global window object | Breaks type safety. Introduces global mutable state. Impossible to test in isolation. |
+| Alternative                       | Why Rejected                                                                                                                           |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Direct JSON imports in components | Would couple every component to the current file structure. Changing to a CMS would require editing 20+ component files.               |
+| React Context + useReducer        | Adds unnecessary runtime complexity. Content does not change after initial load. Context is useful for mutable state, not static data. |
+| TanStack Query for local JSON     | Overkill. No network request, no caching strategy, no stale-while-revalidate needed. JSON is already in the bundle.                    |
+| Global window object              | Breaks type safety. Introduces global mutable state. Impossible to test in isolation.                                                  |
 
 ### Consequences
 
@@ -296,13 +296,13 @@ Coverage thresholds are enforced in CI: 90% statements, 90% functions, 90% lines
 
 ### Alternatives Considered
 
-| Alternative | Why Rejected |
-|-------------|-------------|
-| Manual QA before every deploy | Unreliable, time-consuming, and does not scale. Humans miss edge cases. |
-| No tests, trust Zod | Zod catches schema violations but cannot test *behavior*: "does hidden item X appear in the nav?" "does `autoStats()` count correctly?" |
-| Snapshot testing only | Snapshots break on every content change and provide no semantic understanding of what broke. |
-| End-to-end tests with Playwright | Useful, but slower and flakier than unit/integration tests. The test pyramid prioritizes fast, reliable lower-level tests. |
-| Linting only (ESLint, Prettier) | Catches code style, not logic correctness. Cannot verify that `visible: false` suppresses a section. |
+| Alternative                      | Why Rejected                                                                                                                            |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Manual QA before every deploy    | Unreliable, time-consuming, and does not scale. Humans miss edge cases.                                                                 |
+| No tests, trust Zod              | Zod catches schema violations but cannot test _behavior_: "does hidden item X appear in the nav?" "does `autoStats()` count correctly?" |
+| Snapshot testing only            | Snapshots break on every content change and provide no semantic understanding of what broke.                                            |
+| End-to-end tests with Playwright | Useful, but slower and flakier than unit/integration tests. The test pyramid prioritizes fast, reliable lower-level tests.              |
+| Linting only (ESLint, Prettier)  | Catches code style, not logic correctness. Cannot verify that `visible: false` suppresses a section.                                    |
 
 ### Consequences
 
@@ -317,20 +317,20 @@ Coverage thresholds are enforced in CI: 90% statements, 90% functions, 90% lines
 
 ## Summary Table
 
-| ADR | Decision | Status | Reversible? |
-|-----|----------|--------|-------------|
-| 001 | React 19 + Vite 7 + TanStack Start | Active | Yes — components are plain React |
-| 002 | JSON files for content | Active | Yes — abstraction layer supports CMS swap |
-| 003 | TypeScript strict mode everywhere | Active | No — would require full rewrite |
-| 004 | Zod for schema validation | Active | Yes — could swap for io-ts or Yup |
-| 005 | Single-page architecture | Active | Yes — could split into routes later |
-| 006 | Hash anchors for navigation | Active | Yes — could switch to query params |
-| 007 | Visibility flags on all content | Active | Yes — flags can be removed, data preserved |
-| 008 | Static hosting target | Active | Yes — could add SSR later if needed |
-| 009 | Content abstraction layer | Active | Yes — the point is to make it reversible |
-| 010 | Test-driven content validation | Active | Yes — test strategy can evolve |
+| ADR | Decision                           | Status | Reversible?                                |
+| --- | ---------------------------------- | ------ | ------------------------------------------ |
+| 001 | React 19 + Vite 7 + TanStack Start | Active | Yes — components are plain React           |
+| 002 | JSON files for content             | Active | Yes — abstraction layer supports CMS swap  |
+| 003 | TypeScript strict mode everywhere  | Active | No — would require full rewrite            |
+| 004 | Zod for schema validation          | Active | Yes — could swap for io-ts or Yup          |
+| 005 | Single-page architecture           | Active | Yes — could split into routes later        |
+| 006 | Hash anchors for navigation        | Active | Yes — could switch to query params         |
+| 007 | Visibility flags on all content    | Active | Yes — flags can be removed, data preserved |
+| 008 | Static hosting target              | Active | Yes — could add SSR later if needed        |
+| 009 | Content abstraction layer          | Active | Yes — the point is to make it reversible   |
+| 010 | Test-driven content validation     | Active | Yes — test strategy can evolve             |
 
 ---
 
-*Last updated: 2026-06-08*
-*See also: `docs/architecture/` for detailed system diagrams, `docs/data-model.md` for field-level data documentation, and `tests/README.md` for test suite organization.*
+_Last updated: 2026-06-08_
+_See also: `docs/architecture/` for detailed system diagrams, `docs/data-model.md` for field-level data documentation, and `tests/README.md` for test suite organization._

@@ -14,10 +14,12 @@ Wrap every section render in `<SectionBoundary>` (`src/components/SectionBoundar
 ## Consequences
 
 **Positive**
+
 - Resilient site. A typo in `talks.json` doesn't blank the page.
 - Easy to spot which section is broken in production.
 
 **Negative**
+
 - A swallowed error is one click further from a fix. Mitigated by clear fallback copy + console logs.
 
 ## Alternatives considered

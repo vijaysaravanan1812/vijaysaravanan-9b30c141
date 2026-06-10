@@ -4,15 +4,17 @@ import { TypingText } from "./TypingText";
 
 export function Timeline() {
   if (!timeline.visible) return null;
-  const items = visibleOnly(timeline.items).slice().sort((a, b) => {
-    const ay = Number(a.year) || 0;
-    const by = Number(b.year) || 0;
-    return by - ay;
-  });
+  const items = visibleOnly(timeline.items)
+    .slice()
+    .sort((a, b) => {
+      const ay = Number(a.year) || 0;
+      const by = Number(b.year) || 0;
+      return by - ay;
+    });
   if (items.length === 0) return null;
 
   const lines = items.map(
-    (t) => `[${t.year}] ${t.title}${t.description ? ` — ${t.description}` : ""}`
+    (t) => `[${t.year}] ${t.title}${t.description ? ` — ${t.description}` : ""}`,
   );
 
   return (

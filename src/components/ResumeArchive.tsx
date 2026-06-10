@@ -10,11 +10,7 @@ export function ResumeArchive() {
   if (items.length === 0) return null;
 
   return (
-    <section
-      id="resumes"
-      aria-label="Resume archive"
-      className="mx-auto max-w-5xl px-6 py-12"
-    >
+    <section id="resumes" aria-label="Resume archive" className="mx-auto max-w-5xl px-6 py-12">
       <div className="mb-4 text-xs tracking-[0.2em] text-muted-foreground">// resume archive</div>
       <ul className="grid gap-3 sm:grid-cols-2">
         {items.map((r) => (

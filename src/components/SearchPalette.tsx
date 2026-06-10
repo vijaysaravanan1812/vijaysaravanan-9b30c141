@@ -1,6 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  projects, publications, certifications, achievements, talks, openSource, blog, skills, awards,
+  projects,
+  publications,
+  certifications,
+  achievements,
+  talks,
+  openSource,
+  blog,
+  skills,
+  awards,
   competitiveProgramming,
   visibleOnly,
 } from "@/services/content";
@@ -102,7 +110,9 @@ function buildIndex(): Hit[] {
         p.rating != null ? `Rating ${p.rating}` : null,
         p.rank || null,
         p.problemsSolvedLabel || (p.problemsSolved != null ? `${p.problemsSolved} solved` : null),
-      ].filter(Boolean).join(" · ");
+      ]
+        .filter(Boolean)
+        .join(" · ");
       items.push({
         kind: "Competitive Programming",
         title: p.platform,
@@ -132,13 +142,21 @@ function highlight(text: string, q: string) {
   return (
     <>
       {text.slice(0, idx)}
-      <mark className="bg-accent/30 text-foreground rounded px-0.5">{text.slice(idx, idx + q.length)}</mark>
+      <mark className="bg-accent/30 text-foreground rounded px-0.5">
+        {text.slice(idx, idx + q.length)}
+      </mark>
       {text.slice(idx + q.length)}
     </>
   );
 }
 
-export function SearchPalette({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
+export function SearchPalette({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+}) {
   const [q, setQ] = useState("");
   const [active, setActive] = useState(0);
   const index = useMemo(buildIndex, []);
@@ -159,9 +177,16 @@ export function SearchPalette({ open, onOpenChange }: { open: boolean; onOpenCha
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onOpenChange(false);
-      else if (e.key === "ArrowDown") { e.preventDefault(); setActive((i) => Math.min(i + 1, results.length - 1)); }
-      else if (e.key === "ArrowUp")   { e.preventDefault(); setActive((i) => Math.max(i - 1, 0)); }
-      else if (e.key === "Enter")     { e.preventDefault(); pick(results[active]); }
+      else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActive((i) => Math.min(i + 1, results.length - 1));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActive((i) => Math.max(i - 1, 0));
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        pick(results[active]);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -201,7 +226,11 @@ export function SearchPalette({ open, onOpenChange }: { open: boolean; onOpenCha
             aria-label="Search portfolio"
             className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
           />
-          <button onClick={() => onOpenChange(false)} aria-label="Close search" className="text-muted-foreground hover:text-foreground">
+          <button
+            onClick={() => onOpenChange(false)}
+            aria-label="Close search"
+            className="text-muted-foreground hover:text-foreground"
+          >
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -222,7 +251,9 @@ export function SearchPalette({ open, onOpenChange }: { open: boolean; onOpenCha
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="text-sm font-medium">{highlight(h.title, q)}</div>
-                <span className="text-[0.65rem] uppercase tracking-wider text-accent">{h.kind}</span>
+                <span className="text-[0.65rem] uppercase tracking-wider text-accent">
+                  {h.kind}
+                </span>
               </div>
               {h.detail && (
                 <div className="mt-1 text-xs text-muted-foreground line-clamp-2">

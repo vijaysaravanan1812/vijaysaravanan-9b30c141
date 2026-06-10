@@ -40,7 +40,7 @@ export const siteConfigSchema = z.object({
         label: z.string().min(1),
         url: z.string().min(1),
         visible,
-      })
+      }),
     )
     .optional()
     .default([]),
@@ -51,7 +51,7 @@ export const siteConfigSchema = z.object({
         id: z.string().min(1),
         label: z.string().min(1),
         visible,
-      })
+      }),
     )
     .min(1, "sections must list at least one section"),
 });
@@ -69,15 +69,13 @@ export const profileSchema = z.object({
   summary: z.string().min(1),
   location: z.string().optional(),
   resumeUrl: z.string().min(1),
-  stats: z.array(
-    z.object({ label: z.string().min(1), value: z.string().min(1), visible })
-  ),
+  stats: z.array(z.object({ label: z.string().min(1), value: z.string().min(1), visible })),
   socials: z.array(
     z.object({
       type: z.enum(["github", "linkedin", "email", "twitter", "website"]),
       url: z.string().min(1),
       visible,
-    })
+    }),
   ),
 });
 
@@ -112,7 +110,7 @@ export const experienceSchema = z.object({
       duration: z.string().min(1),
       highlights: z.array(z.string().min(1)).min(1),
       stack: z.array(z.string().min(1)).optional(),
-    })
+    }),
   ),
 });
 
@@ -134,7 +132,7 @@ export const projectsSchema = z.object({
       outcome: z.string().min(1),
       github: z.string().optional().default(""),
       demo: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -149,7 +147,7 @@ export const skillsSchema = z.object({
       visible,
       name: z.string().min(1),
       items: z.array(z.string().min(1)),
-    })
+    }),
   ),
 });
 
@@ -167,7 +165,7 @@ export const educationSchema = z.object({
       duration: z.string().min(1),
       location: z.string().optional(),
       grade: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -187,7 +185,7 @@ export const publicationsSchema = z.object({
       year: z.union([z.string(), z.number()]).optional(),
       doi: z.string().optional(),
       link: z.string().optional(),
-    })
+    }),
   ),
 });
 
@@ -203,7 +201,7 @@ export const certificationsSchema = z.object({
       certificate: z.string().min(1),
       organization: z.string().optional(),
       year: z.union([z.string(), z.number()]).optional(),
-    })
+    }),
   ),
 });
 
@@ -220,7 +218,7 @@ export const achievementsSchema = z.object({
       category: z.string().min(1),
       title: z.string().min(1),
       detail: z.string().optional(),
-    })
+    }),
   ),
 });
 
@@ -238,7 +236,7 @@ export const contactSchema = z.object({
       label: z.string().min(1),
       url: z.string().min(1),
       visible,
-    })
+    }),
   ),
 });
 
@@ -254,7 +252,7 @@ export const timelineSchema = z.object({
       year: z.union([z.string(), z.number()]),
       title: z.string().min(1),
       description: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -271,7 +269,7 @@ export const openSourceSchema = z.object({
       repository: z.string().optional().default(""),
       description: z.string().optional().default(""),
       url: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -291,7 +289,7 @@ export const talksSchema = z.object({
       date: z.string().optional().default(""),
       url: z.string().optional().default(""),
       description: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -308,7 +306,7 @@ export const awardsSchema = z.object({
       issuer: z.string().optional().default(""),
       year: z.union([z.string(), z.number()]).optional(),
       detail: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -326,7 +324,7 @@ export const blogSchema = z.object({
       summary: z.string().optional().default(""),
       url: z.string().optional().default(""),
       tags: z.array(z.string()).optional().default([]),
-    })
+    }),
   ),
 });
 
@@ -345,7 +343,7 @@ export const startupsSchema = z.object({
       url: z.string().optional().default(""),
       duration: z.string().optional().default(""),
       detail: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -359,7 +357,7 @@ export const productsSchema = z.object({
       tagline: z.string().optional().default(""),
       url: z.string().optional().default(""),
       description: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -374,7 +372,7 @@ export const patentsSchema = z.object({
       year: z.union([z.string(), z.number()]).optional(),
       url: z.string().optional().default(""),
       detail: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -388,7 +386,7 @@ export const mentoringSchema = z.object({
       role: z.string().optional().default(""),
       duration: z.string().optional().default(""),
       detail: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -402,7 +400,7 @@ export const mediaSchema = z.object({
       outlet: z.string().optional().default(""),
       date: z.string().optional().default(""),
       url: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -416,7 +414,7 @@ export const testimonialsSchema = z.object({
       author: z.string().min(1),
       role: z.string().optional().default(""),
       company: z.string().optional().default(""),
-    })
+    }),
   ),
 });
 
@@ -429,7 +427,7 @@ export const testimonialsSchema = z.object({
 // null or empty.
 // ──────────────────────────────────────────────────────────────
 const cpNumOrNull = z.union([z.number(), z.null()]).optional();
-const cpStr       = z.string().optional().default("");
+const cpStr = z.string().optional().default("");
 
 export const competitiveProgrammingSchema = z.object({
   schemaVersion,
@@ -460,7 +458,7 @@ export const competitiveProgrammingSchema = z.object({
       lastUpdated: cpStr,
       peakContest: cpStr,
       peakContestRank: cpNumOrNull,
-    })
+    }),
   ),
 });
 

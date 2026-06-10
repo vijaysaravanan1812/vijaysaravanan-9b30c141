@@ -18,11 +18,10 @@ No external analytics service is required — the data is already in the repo.
 ## Feature Flag
 
 In `site-config.json`:
+
 ```json
 {
-  "sections": [
-    { "id": "analytics", "label": "Analytics", "visible": false }
-  ]
+  "sections": [{ "id": "analytics", "label": "Analytics", "visible": false }]
 }
 ```
 
@@ -42,14 +41,14 @@ Aggregation is a pure function over `projects.json`, `publications.json`, `talks
 
 ## Metric Definitions
 
-| Metric | Source | Bucket |
-|---|---|---|
-| Projects | `projects.json` | year derived from first commit / launch date |
-| Publications | `publications.json` | `year` field |
-| Talks | `talks.json` | `date` field, grouped by year |
-| Awards | `awards.json` | `year` field |
-| Certifications | `certifications.json` | `year` field |
-| OSS contributions | `open-source.json` | optional `since` field |
+| Metric            | Source                | Bucket                                       |
+| ----------------- | --------------------- | -------------------------------------------- |
+| Projects          | `projects.json`       | year derived from first commit / launch date |
+| Publications      | `publications.json`   | `year` field                                 |
+| Talks             | `talks.json`          | `date` field, grouped by year                |
+| Awards            | `awards.json`         | `year` field                                 |
+| Certifications    | `certifications.json` | `year` field                                 |
+| OSS contributions | `open-source.json`    | optional `since` field                       |
 
 ## Privacy
 

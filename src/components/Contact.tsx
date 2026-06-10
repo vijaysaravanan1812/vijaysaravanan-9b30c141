@@ -4,10 +4,10 @@ import { Section } from "./Section";
 import { ArrowRight } from "lucide-react";
 
 export function Contact() {
-  if (!contact.visible) return null;
-  const links = visibleOnly(contact.links);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
+  if (!contact.visible) return null;
+  const links = visibleOnly(contact.links);
 
   return (
     <Section id="contact" eyebrow="get in touch" title="Contact">
@@ -50,8 +50,18 @@ export function Contact() {
           className="rounded-lg border border-border bg-card/60 p-6 space-y-4"
         >
           <Field label="Name" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
-          <Field label="Email" type="email" value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
-          <Field label="Message" textarea value={form.message} onChange={(v) => setForm({ ...form, message: v })} />
+          <Field
+            label="Email"
+            type="email"
+            value={form.email}
+            onChange={(v) => setForm({ ...form, email: v })}
+          />
+          <Field
+            label="Message"
+            textarea
+            value={form.message}
+            onChange={(v) => setForm({ ...form, message: v })}
+          />
           <button
             type="submit"
             className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground hover:opacity-90"
@@ -66,16 +76,41 @@ export function Contact() {
 }
 
 function Field({
-  label, value, onChange, type = "text", textarea = false,
-}: { label: string; value: string; onChange: (v: string) => void; type?: string; textarea?: boolean }) {
-  const cls = "mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm outline-none focus:border-accent transition";
+  label,
+  value,
+  onChange,
+  type = "text",
+  textarea = false,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  type?: string;
+  textarea?: boolean;
+}) {
+  const cls =
+    "mt-1 w-full rounded-md border border-border bg-background/60 px-3 py-2 text-sm outline-none focus:border-accent transition";
   return (
     <label className="block">
-      <span className="text-xs tracking-[0.18em] text-muted-foreground">// {label.toUpperCase()}</span>
+      <span className="text-xs tracking-[0.18em] text-muted-foreground">
+        // {label.toUpperCase()}
+      </span>
       {textarea ? (
-        <textarea required rows={4} className={cls} value={value} onChange={(e) => onChange(e.target.value)} />
+        <textarea
+          required
+          rows={4}
+          className={cls}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
       ) : (
-        <input required type={type} className={cls} value={value} onChange={(e) => onChange(e.target.value)} />
+        <input
+          required
+          type={type}
+          className={cls}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
       )}
     </label>
   );

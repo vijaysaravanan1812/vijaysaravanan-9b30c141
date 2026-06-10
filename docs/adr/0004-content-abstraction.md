@@ -14,11 +14,13 @@ Introduce a `ContentSource` interface in `src/services/content-source.ts` with a
 ## Consequences
 
 **Positive**
+
 - Migration to a CMS / REST / GraphQL / DB changes one file (`content-source.ts`) + optionally the loader in `content.ts`. No component touched.
 - Multiple adapters can coexist (e.g. JSON in dev, API in prod).
 - Validation stays at the boundary — every adapter must pass payloads through the same Zod schemas.
 
 **Negative**
+
 - One extra indirection layer for developers to understand.
 
 ## Alternatives considered

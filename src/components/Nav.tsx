@@ -56,7 +56,7 @@ export function Nav() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
         if (visible[0]) setActiveId(visible[0].target.id);
       },
-      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.25, 0.5, 1] }
+      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.25, 0.5, 1] },
     );
     sections.forEach((s) => {
       const el = document.getElementById(s.id);
@@ -134,7 +134,10 @@ export function Nav() {
               Jump to any section of the portfolio
             </SheetDescription>
           </SheetHeader>
-          <nav className="mt-6 flex flex-col gap-1 overflow-y-auto max-h-[calc(100vh-8rem)]" aria-label="Primary">
+          <nav
+            className="mt-6 flex flex-col gap-1 overflow-y-auto max-h-[calc(100vh-8rem)]"
+            aria-label="Primary"
+          >
             {sections.map((s) => {
               const isActive = activeId === s.id;
               return (

@@ -22,9 +22,21 @@ export function Patents() {
                   </div>
                 </div>
               </div>
-              {p.url && <a href={p.url} target="_blank" rel="noreferrer" aria-label={p.title} className="text-muted-foreground hover:text-accent"><ExternalLink className="h-4 w-4" /></a>}
+              {p.url && (
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={p.title}
+                  className="text-muted-foreground hover:text-accent"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              )}
             </div>
-            {p.detail && <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.detail}</p>}
+            {p.detail && (
+              <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.detail}</p>
+            )}
           </div>
         ))}
       </div>

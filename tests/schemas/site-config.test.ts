@@ -3,9 +3,7 @@ import { siteConfigSchema } from "@/data/schema";
 
 describe("siteConfigSchema", () => {
   it("rejects empty rotatingRoles or sections", () => {
-    expect(
-      siteConfigSchema.safeParse({ rotatingRoles: [], sections: [] }).success
-    ).toBe(false);
+    expect(siteConfigSchema.safeParse({ rotatingRoles: [], sections: [] }).success).toBe(false);
   });
 
   it("requires id, label and visible per section", () => {

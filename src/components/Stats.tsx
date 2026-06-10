@@ -20,11 +20,7 @@ export function Stats() {
   if (entries.length === 0) return null;
 
   return (
-    <section
-      id="stats"
-      aria-label="Career statistics"
-      className="mx-auto max-w-5xl px-6 py-12"
-    >
+    <section id="stats" aria-label="Career statistics" className="mx-auto max-w-5xl px-6 py-12">
       <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
         {entries.map(([label, n]) => (
           <div key={label} className="rounded-lg border border-border bg-card/40 p-4 text-center">

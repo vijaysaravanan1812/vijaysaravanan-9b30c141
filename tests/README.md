@@ -1,6 +1,6 @@
 # tests/
 
-Project-wide test suite. The folder is partitioned by *intent*, not by file
+Project-wide test suite. The folder is partitioned by _intent_, not by file
 type, so a future contributor can find the test that protects a behaviour
 without grepping the codebase.
 

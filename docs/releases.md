@@ -37,6 +37,7 @@ git push origin v1.2.0
 Automatic on push to `main` via `.github/workflows/deploy-pages.yml`.
 
 Manual:
+
 ```bash
 bun install
 bun run build

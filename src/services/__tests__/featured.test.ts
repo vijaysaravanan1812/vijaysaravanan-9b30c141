@@ -1,17 +1,13 @@
 import { describe, it, expect } from "vitest";
-import {
-  featuredOnly,
-  autoStats,
-  visibleOnly,
-} from "@/services/content";
+import { featuredOnly, autoStats, visibleOnly } from "@/services/content";
 
 describe("featuredOnly", () => {
   it("returns only items that are visible AND featured", () => {
     const items = [
-      { visible: true,  featured: true,  id: "a" },
-      { visible: true,  featured: false, id: "b" },
-      { visible: false, featured: true,  id: "c" },
-      { visible: true,                   id: "d" },
+      { visible: true, featured: true, id: "a" },
+      { visible: true, featured: false, id: "b" },
+      { visible: false, featured: true, id: "c" },
+      { visible: true, id: "d" },
     ];
     expect(featuredOnly(items).map((i) => i.id)).toEqual(["a"]);
   });

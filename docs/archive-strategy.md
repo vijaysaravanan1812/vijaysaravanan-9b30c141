@@ -5,6 +5,7 @@ When a project, job, talk, or startup is no longer current but is part of the st
 ## How to Archive
 
 Add to the entry:
+
 ```json
 {
   "visible": false,
@@ -13,6 +14,7 @@ Add to the entry:
 ```
 
 Or, to keep it visible only on an archive page:
+
 ```json
 {
   "visible": true,
@@ -24,15 +26,15 @@ The content service treats `archived: true` as a flag for the UI to opt in or ou
 
 ## What to Archive vs Delete
 
-| Situation | Action |
-|---|---|
-| Project taken offline but historically significant | Archive |
-| Talk given years ago, recording still online | Archive |
-| Job at a company you worked at | Archive (never delete) |
-| Startup that wound down | Archive |
-| Draft entry never published | Delete |
-| Test data | Delete |
-| Duplicate entry | Delete |
+| Situation                                          | Action                 |
+| -------------------------------------------------- | ---------------------- |
+| Project taken offline but historically significant | Archive                |
+| Talk given years ago, recording still online       | Archive                |
+| Job at a company you worked at                     | Archive (never delete) |
+| Startup that wound down                            | Archive                |
+| Draft entry never published                        | Delete                 |
+| Test data                                          | Delete                 |
+| Duplicate entry                                    | Delete                 |
 
 ## Where Archived Content Goes
 

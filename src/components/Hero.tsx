@@ -11,7 +11,10 @@ export function Hero() {
   const socials = visibleOnly(profile.socials);
 
   return (
-    <section id="top" className="relative flex min-h-screen items-center overflow-hidden pt-24 pb-16">
+    <section
+      id="top"
+      className="relative flex min-h-screen items-center overflow-hidden pt-24 pb-16"
+    >
       <div className="absolute inset-0 grid-bg pointer-events-none" />
       <div className="absolute inset-0 glow pointer-events-none" />
 
@@ -39,7 +42,6 @@ export function Hero() {
           persistCursor={false}
           className="mt-4 text-xl italic text-accent md:text-2xl"
         />
-
 
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
           {profile.summary}
@@ -83,9 +85,7 @@ export function Hero() {
           <div className="mt-16 grid grid-cols-2 gap-8 border-t border-border pt-8 md:grid-cols-4">
             {stats.map((s) => (
               <div key={s.label}>
-                <div className="text-3xl font-bold tracking-tight text-foreground">
-                  {s.value}
-                </div>
+                <div className="text-3xl font-bold tracking-tight text-foreground">{s.value}</div>
                 <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
                   {s.label}
                 </div>

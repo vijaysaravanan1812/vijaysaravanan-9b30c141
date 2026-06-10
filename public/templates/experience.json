@@ -7,10 +7,7 @@
       "position": "Staff Engineer",
       "location": "Remote",
       "duration": "Jan 2024 — Present",
-      "highlights": [
-        "Shipped X that reduced Y by Z%.",
-        "Led a team of N on project P."
-      ],
+      "highlights": ["Shipped X that reduced Y by Z%.", "Led a team of N on project P."],
       "stack": ["Go", "Postgres", "Kafka"]
     }
   ]

@@ -14,12 +14,14 @@ Use TanStack Start v1 (Vite 7 under the hood) with file-based routing in `src/ro
 ## Consequences
 
 **Positive**
+
 - File-based routing with type-safe links.
 - Vite — fast dev server, modern bundler, large ecosystem.
 - Server functions available when needed (sitemap, future API integrations) without forcing a Node host.
 - TanStack Query integration is first-class for the day we add async content.
 
 **Negative**
+
 - Newer than Next.js, smaller community.
 - Some Node-only npm packages incompatible with the edge worker runtime (see `<server-runtime>` notes).
 

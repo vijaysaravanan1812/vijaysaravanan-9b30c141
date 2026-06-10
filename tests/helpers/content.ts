@@ -22,9 +22,7 @@ export function listDataFiles(): string[] {
 }
 
 export function listTemplates(): string[] {
-  return readdirSync(TEMPLATE_DIR).filter(
-    (f) => f.endsWith(".json") && !f.startsWith("_")
-  );
+  return readdirSync(TEMPLATE_DIR).filter((f) => f.endsWith(".json") && !f.startsWith("_"));
 }
 
 export function makeItem(visible: boolean, extra: Record<string, unknown> = {}) {
@@ -32,7 +30,7 @@ export function makeItem(visible: boolean, extra: Record<string, unknown> = {}) 
 }
 
 export function makeSectionConfig(
-  overrides: Partial<{ id: string; label: string; visible: boolean }> = {}
+  overrides: Partial<{ id: string; label: string; visible: boolean }> = {},
 ) {
   return { id: "test", label: "Test", visible: true, ...overrides };
 }

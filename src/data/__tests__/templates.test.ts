@@ -6,9 +6,7 @@ import { dataSchemas, type DataFileName } from "@/data/schema";
 const TEMPLATE_DIR = path.resolve(__dirname, "../../../public/templates");
 
 describe("public/templates JSON files", () => {
-  const files = readdirSync(TEMPLATE_DIR).filter(
-    (f) => f.endsWith(".json") && !f.startsWith("_")
-  );
+  const files = readdirSync(TEMPLATE_DIR).filter((f) => f.endsWith(".json") && !f.startsWith("_"));
 
   it.each(files)("%s validates against its schema", (file) => {
     const schema = dataSchemas[file as DataFileName];

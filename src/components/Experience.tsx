@@ -16,8 +16,7 @@ export function Experience() {
               <div className="absolute -left-[1.35rem] top-2 h-3 w-3 rounded-full bg-accent shadow-[0_0_0_4px] shadow-accent/15 md:-left-[1.75rem]" />
               <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2">
                 <h3 className="text-lg font-semibold">
-                  {item.position}{" "}
-                  <span className="text-accent">→ {item.company}</span>
+                  {item.position} <span className="text-accent">→ {item.company}</span>
                 </h3>
                 <span className="text-xs uppercase tracking-wider text-muted-foreground">
                   {item.duration}
@@ -36,22 +35,24 @@ export function Experience() {
                   </li>
                 ))}
               </ul>
-              {item.stack && item.stack.length > 0 && (() => {
-                const stack = item.stack;
-                return (
-                  <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <span className="text-xs text-muted-foreground/70">Stack:</span>
-                    {stack.map((t, i) => (
-                      <span key={t} className="text-xs text-accent">
-                        {t}
-                        {i < stack.length - 1 && (
-                          <span className="ml-2 text-muted-foreground/40">·</span>
-                        )}
-                      </span>
-                    ))}
-                  </div>
-                );
-              })()}
+              {item.stack &&
+                item.stack.length > 0 &&
+                (() => {
+                  const stack = item.stack;
+                  return (
+                    <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1">
+                      <span className="text-xs text-muted-foreground/70">Stack:</span>
+                      {stack.map((t, i) => (
+                        <span key={t} className="text-xs text-accent">
+                          {t}
+                          {i < stack.length - 1 && (
+                            <span className="ml-2 text-muted-foreground/40">·</span>
+                          )}
+                        </span>
+                      ))}
+                    </div>
+                  );
+                })()}
             </div>
           ))}
         </div>

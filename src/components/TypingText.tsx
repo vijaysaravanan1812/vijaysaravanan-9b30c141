@@ -34,11 +34,16 @@ export interface TypingTextProps {
 
 function prefixFor(variant: TypingVariant): string {
   switch (variant) {
-    case "chevron": return "> ";
-    case "dollar":  return "$ ";
-    case "prompt":  return "vijay@portfolio:~$ ";
-    case "info":    return "[INFO] ";
-    default:        return "";
+    case "chevron":
+      return "> ";
+    case "dollar":
+      return "$ ";
+    case "prompt":
+      return "vijay@portfolio:~$ ";
+    case "info":
+      return "[INFO] ";
+    default:
+      return "";
   }
 }
 
@@ -84,7 +89,7 @@ export function TypingText({
   const effectiveLineDelay = lineDelay ?? cfg?.lineDelay ?? 500;
   const effectiveShowCursor = showCursor ?? cfg?.showCursor ?? true;
 
-  const lines = useMemo(() => Array.isArray(text) ? text : [text], [text]);
+  const lines = useMemo(() => (Array.isArray(text) ? text : [text]), [text]);
   const finalText = useMemo(() => lines.join("\n"), [lines]);
   const linePrefix = prefix ?? prefixFor(variant);
 
@@ -92,9 +97,7 @@ export function TypingText({
 
   const ref = useRef<HTMLElement | null>(null);
   const [started, setStarted] = useState(!animateOnView || reduced);
-  const [typed, setTyped] = useState<string[]>(
-    reduced ? lines.slice() : lines.map(() => "")
-  );
+  const [typed, setTyped] = useState<string[]>(reduced ? lines.slice() : lines.map(() => ""));
   const [done, setDone] = useState(reduced);
 
   // Intersection observer — start on view.
@@ -112,7 +115,7 @@ export function TypingText({
           }
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -135,15 +138,18 @@ export function TypingText({
         setDone(true);
         onDone?.();
         if (loop) {
-          window.setTimeout(() => {
-            if (!cancelled) {
-              lineIdx = 0;
-              charIdx = 0;
-              setTyped(lines.map(() => ""));
-              setDone(false);
-              tick();
-            }
-          }, Math.max(effectiveLineDelay * 4, 1200));
+          window.setTimeout(
+            () => {
+              if (!cancelled) {
+                lineIdx = 0;
+                charIdx = 0;
+                setTyped(lines.map(() => ""));
+                setDone(false);
+                tick();
+              }
+            },
+            Math.max(effectiveLineDelay * 4, 1200),
+          );
         }
         return;
       }
@@ -186,18 +192,12 @@ export function TypingText({
       })();
 
   return (
-    <Tag
-      ref={ref as React.RefObject<HTMLDivElement>}
-      className={className}
-      style={style}
-    >
+    <Tag ref={ref as React.RefObject<HTMLDivElement>} className={className} style={style}>
       <span aria-hidden={!reduced}>
         {reduced
           ? lines.map((line, i) => (
               <span key={i} className="block">
-                {linePrefix && (
-                  <span className="text-accent select-none">{linePrefix}</span>
-                )}
+                {linePrefix && <span className="text-accent select-none">{linePrefix}</span>}
                 <span>{line}</span>
               </span>
             ))
@@ -205,9 +205,7 @@ export function TypingText({
               if (i > activeIdx) return null;
               return (
                 <span key={i} className="block">
-                  {linePrefix && (
-                    <span className="text-accent select-none">{linePrefix}</span>
-                  )}
+                  {linePrefix && <span className="text-accent select-none">{linePrefix}</span>}
                   <span>{seg}</span>
                   {i === activeIdx && showCaret && <Caret />}
                 </span>

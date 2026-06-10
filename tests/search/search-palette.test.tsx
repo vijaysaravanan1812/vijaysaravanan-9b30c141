@@ -2,11 +2,7 @@ import { describe, it, expect, afterEach } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { render, screen, cleanup } from "@testing-library/react";
 import { SearchPalette } from "@/components/SearchPalette";
-import {
-  visibleOnly,
-  projects,
-  competitiveProgramming,
-} from "@/services/content";
+import { visibleOnly, projects, competitiveProgramming } from "@/services/content";
 
 afterEach(() => cleanup());
 
@@ -29,28 +25,22 @@ describe("SearchPalette", () => {
     expect(document.body.textContent).toContain("Project");
   });
 
-
   it("does NOT surface hidden projects", async () => {
     const user = userEvent.setup();
     open();
     const hidden = projects.items.find((p) => !p.visible);
     if (!hidden) return;
     await user.type(screen.getByPlaceholderText(/search/i), hidden.title);
-    expect(
-      screen.queryAllByText(hidden.title).filter((el) => el.tagName !== "INPUT")
-    ).toHaveLength(0);
+    expect(screen.queryAllByText(hidden.title).filter((el) => el.tagName !== "INPUT")).toHaveLength(
+      0,
+    );
   });
 
   it("shows an empty state when nothing matches", async () => {
     const user = userEvent.setup();
     open();
-    await user.type(
-      screen.getByPlaceholderText(/search/i),
-      "zzzzzz-no-match-xyzzy"
-    );
-    expect(document.body.textContent?.toLowerCase()).toMatch(
-      /no results|nothing|no match/
-    );
+    await user.type(screen.getByPlaceholderText(/search/i), "zzzzzz-no-match-xyzzy");
+    expect(document.body.textContent?.toLowerCase()).toMatch(/no results|nothing|no match/);
   });
 
   it("indexes only visible competitive-programming platforms", async () => {
@@ -62,5 +52,4 @@ describe("SearchPalette", () => {
     await user.type(screen.getByPlaceholderText(/search/i), needle);
     expect(document.body.textContent).toContain(visiblePlatform.platform);
   });
-
 });

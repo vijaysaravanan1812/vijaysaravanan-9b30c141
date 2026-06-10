@@ -25,7 +25,13 @@ export function Talks() {
                 </div>
               </div>
               {t.url && (
-                <a href={t.url} target="_blank" rel="noreferrer" aria-label={`${t.title} link`} className="text-muted-foreground hover:text-accent">
+                <a
+                  href={t.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${t.title} link`}
+                  className="text-muted-foreground hover:text-accent"
+                >
                   <ExternalLink className="h-4 w-4" />
                 </a>
               )}

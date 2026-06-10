@@ -11,7 +11,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         const urls = [BASE_URL + "/", ...sections]
           .map(
             (u) =>
-              `  <url>\n    <loc>${u}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${u.endsWith("/") ? "1.0" : "0.7"}</priority>\n  </url>`
+              `  <url>\n    <loc>${u}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${u.endsWith("/") ? "1.0" : "0.7"}</priority>\n  </url>`,
           )
           .join("\n");
         const xml =

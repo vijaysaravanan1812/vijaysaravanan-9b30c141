@@ -14,6 +14,7 @@ Use plain JSON files under `src/data/`, bundled at build time via static `import
 ## Consequences
 
 **Positive**
+
 - Zero infra. No database, no CMS, no auth.
 - Diffable in git. Every content change is reviewable.
 - Portable. The folder copies cleanly into any future framework.
@@ -21,6 +22,7 @@ Use plain JSON files under `src/data/`, bundled at build time via static `import
 - Editable from any machine with a text editor.
 
 **Negative**
+
 - No content editor UI. Mitigated by Zod-driven dev overlay + templates under `public/templates/`.
 - All readers see the same content (no per-user personalization). Acceptable for a portfolio.
 - Adding a new section requires a build. Acceptable.

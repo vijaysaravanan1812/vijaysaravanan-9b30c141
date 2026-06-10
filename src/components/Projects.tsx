@@ -27,12 +27,24 @@ function ProjectCard({ project }: { project: Project }) {
         <h3 className="text-lg font-semibold tracking-tight">{project.title}</h3>
         <div className="flex items-center gap-2">
           {project.github && (
-            <a href={project.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="text-muted-foreground hover:text-accent">
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              className="text-muted-foreground hover:text-accent"
+            >
               <Github className="h-4 w-4" />
             </a>
           )}
           {project.demo && (
-            <a href={project.demo} target="_blank" rel="noreferrer" aria-label="Demo" className="text-muted-foreground hover:text-accent">
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Demo"
+              className="text-muted-foreground hover:text-accent"
+            >
               <ExternalLink className="h-4 w-4" />
             </a>
           )}
@@ -41,13 +53,17 @@ function ProjectCard({ project }: { project: Project }) {
 
       <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
         {project.tags?.map((t) => (
-          <span key={t} className="text-accent">{t}</span>
+          <span key={t} className="text-accent">
+            {t}
+          </span>
         ))}
         {project.tags?.length > 0 && project.stack?.length > 0 && (
           <span className="text-muted-foreground/40">|</span>
         )}
         {project.stack?.map((s) => (
-          <span key={s} className="text-muted-foreground">{s}</span>
+          <span key={s} className="text-muted-foreground">
+            {s}
+          </span>
         ))}
       </div>
 
@@ -73,8 +89,12 @@ function ProjectCard({ project }: { project: Project }) {
       )}
       {open && (
         <div className="mt-4 grid gap-2 rounded-md border border-border bg-background/50 p-4 text-xs text-muted-foreground animate-fade-in">
-          <div><span className="text-foreground">Duration:</span> {project.duration}</div>
-          <div><span className="text-foreground">Stack:</span> {project.stack?.join(", ")}</div>
+          <div>
+            <span className="text-foreground">Duration:</span> {project.duration}
+          </div>
+          <div>
+            <span className="text-foreground">Stack:</span> {project.stack?.join(", ")}
+          </div>
         </div>
       )}
     </article>

@@ -307,9 +307,7 @@ describe("item-level visibility within sections", () => {
     const visiblePlatforms = visibleOnly(competitiveProgramming.platforms);
     expect(visiblePlatforms.every((p) => p.visible)).toBe(true);
     if (competitiveProgramming.platforms.length > 0) {
-      expect(visiblePlatforms.length).toBeLessThanOrEqual(
-        competitiveProgramming.platforms.length
-      );
+      expect(visiblePlatforms.length).toBeLessThanOrEqual(competitiveProgramming.platforms.length);
     }
   });
 

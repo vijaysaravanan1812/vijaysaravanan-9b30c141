@@ -8,14 +8,14 @@
   "location": "Bengaluru, India",
   "resumeUrl": "/VijaySaravanan_Resume.pdf",
   "stats": [
-    { "label": "API Test Suites",   "value": "50+",  "visible": true },
-    { "label": "Manual QA Reduced", "value": "40%",  "visible": true },
-    { "label": "Ops/sec (BLINK DB)","value": "58K",  "visible": true },
-    { "label": "Concurrent Clients","value": "10K+", "visible": true }
+    { "label": "API Test Suites", "value": "50+", "visible": true },
+    { "label": "Manual QA Reduced", "value": "40%", "visible": true },
+    { "label": "Ops/sec (BLINK DB)", "value": "58K", "visible": true },
+    { "label": "Concurrent Clients", "value": "10K+", "visible": true }
   ],
   "socials": [
-    { "type": "github",   "url": "https://github.com/vijaysaravanan1812",          "visible": true },
-    { "type": "linkedin", "url": "https://linkedin.com/in/vijay-s-16b11a19b",      "visible": true },
-    { "type": "email",    "url": "mailto:vijaysaravanan1812@gmail.com",            "visible": true }
+    { "type": "github", "url": "https://github.com/vijaysaravanan1812", "visible": true },
+    { "type": "linkedin", "url": "https://linkedin.com/in/vijay-s-16b11a19b", "visible": true },
+    { "type": "email", "url": "mailto:vijaysaravanan1812@gmail.com", "visible": true }
   ]
 }

@@ -13,7 +13,7 @@ describe("visibleOnly()", () => {
       visibleOnly([
         { visible: true, id: "a" },
         { visible: false, id: "b" },
-      ]).map((i) => i.id)
+      ]).map((i) => i.id),
     ).toEqual(["a"]);
   });
   it("returns [] for empty input", () => {
@@ -37,14 +37,12 @@ describe("autoStats()", () => {
   it("counts only visible items per section", () => {
     const stats = autoStats();
     expect(stats.projects).toBe(visibleOnly(projects.items).length);
-    expect(stats.cpPlatformsActive).toBe(
-      visibleOnly(competitiveProgramming.platforms).length
-    );
+    expect(stats.cpPlatformsActive).toBe(visibleOnly(competitiveProgramming.platforms).length);
   });
   it("cpProblemsSolved aggregates problemsSolved across visible platforms", () => {
     const expected = visibleOnly(competitiveProgramming.platforms).reduce(
       (sum, p) => sum + (typeof p.problemsSolved === "number" ? p.problemsSolved : 0),
-      0
+      0,
     );
     expect(autoStats().cpProblemsSolved).toBe(expected);
   });

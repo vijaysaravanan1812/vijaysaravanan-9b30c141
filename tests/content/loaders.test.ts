@@ -1,11 +1,5 @@
 import { describe, it, expect } from "vitest";
-import {
-  siteConfig,
-  profile,
-  contact,
-  projects,
-  competitiveProgramming,
-} from "@/services/content";
+import { siteConfig, profile, contact, projects, competitiveProgramming } from "@/services/content";
 
 describe("content service loaders", () => {
   it("freezes parsed objects", () => {

@@ -18,7 +18,9 @@ export function Awards() {
               {a.issuer && <span>{a.issuer}</span>}
               {a.year && <span className="text-accent">{a.year}</span>}
             </div>
-            {a.detail && <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{a.detail}</p>}
+            {a.detail && (
+              <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{a.detail}</p>
+            )}
           </div>
         ))}
       </div>
