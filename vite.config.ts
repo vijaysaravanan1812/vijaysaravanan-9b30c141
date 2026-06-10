@@ -25,17 +25,23 @@ export default defineConfig({
       dir: "dist",
       publicDir: "dist/client",
     },
+    // Disable Nitro's static-preset auto-prerender. It crawls "/" by default,
+    // which 404s when the TanStack router is mounted under a basepath. We let
+    // TanStack Start's own SPA prerender (below) write the index.html instead.
+    prerender: { crawlLinks: false, routes: [] },
   },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     server: { entry: "server" },
     router: { basepath: BASE_PATH },
-    // SPA mode: emit a single static index.html shell at the basepath.
-    // `maskPath` is the route the shell renders against; `/` matches our index route.
+    // SPA mode: render a single static HTML shell that mounts the React app
+    // client-side. outputPath "/index" makes the shell land at
+    // <publicDir>/index.html — the file GitHub Pages / Netlify serve at the
+    // site root. maskPath "/" matches our index route inside the router.
     spa: {
       enabled: true,
       maskPath: "/",
-      prerender: { enabled: true, crawlLinks: false },
+      prerender: { enabled: true, crawlLinks: false, outputPath: "/index" },
     },
   },
   vite: {
