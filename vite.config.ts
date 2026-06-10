@@ -28,8 +28,10 @@ export default defineConfig({
     // Disable Nitro's static-preset auto-prerender. It crawls "/" by default,
     // which 404s when the TanStack router is mounted under a basepath. We let
     // TanStack Start's own SPA prerender (below) write the index.html instead.
+    // (Cast: this passthrough key isn't in the wrapper's narrowed type, but
+    // it's forwarded to nitro() verbatim.)
     prerender: { crawlLinks: false, routes: [] },
-  },
+  } as never,
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     server: { entry: "server" },
