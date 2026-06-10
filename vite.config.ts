@@ -12,20 +12,12 @@ import { dataSchemaValidator } from "./plugins/data-schema-validator";
 // deploys (Netlify, custom domains, Lovable hosting).
 const BASE_PATH = process.env.BASE_PATH ?? "/";
 
-// Static build for Netlify / GitHub Pages / any static host.
-// A `postbuild` script in package.json synthesizes dist/client/index.html from
-// the emitted client assets so the static host has a root document to serve.
+// Static build for Netlify / GitHub Pages / any static host. Do not force the
+// Nitro static preset here; CI only needs the TanStack client output, and the
+// postbuild script synthesizes dist/client/index.html from the emitted assets.
 export default defineConfig({
-  nitro: {
-    preset: "static",
-    output: {
-      dir: "dist",
-      publicDir: "dist/client",
-    },
-  },
   tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    server: { entry: "server" },
+    target: "static",
     router: { basepath: BASE_PATH },
   },
   vite: {
