@@ -73,7 +73,6 @@ async function validateAll(dataDir: string): Promise<string[]> {
     const known = new Set<string>(files);
     for (const f of present) {
       if (!known.has(f)) {
-        // eslint-disable-next-line no-console
         console.warn(
           `${ANSI.yellow}⚠ src/data/${f} has no schema — it will not be validated.${ANSI.reset}`,
         );
@@ -100,7 +99,6 @@ export function dataSchemaValidator(): Plugin {
     const errors = await validateAll(dataDir);
     if (errors.length === 0) {
       if (isDev) {
-        // eslint-disable-next-line no-console
         console.log(
           `${ANSI.green}✓ data schemas OK${ANSI.reset} ${ANSI.dim}(src/data validated)${ANSI.reset}`,
         );
@@ -122,7 +120,6 @@ export function dataSchemaValidator(): Plugin {
           id: "src/data/*.json",
         },
       });
-      // eslint-disable-next-line no-console
       console.error(friendly);
       return;
     }

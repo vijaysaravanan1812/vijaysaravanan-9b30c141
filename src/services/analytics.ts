@@ -7,7 +7,6 @@ import { siteConfig } from "./content";
 export function track(event: string, props?: Record<string, unknown>) {
   if (!siteConfig.analyticsEnabled) return;
   // Hook your provider here (Plausible, PostHog, GA). Console for now.
-  // eslint-disable-next-line no-console
   console.info("[analytics]", event, props ?? {});
 }
 
